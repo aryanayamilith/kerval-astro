@@ -1,0 +1,271 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { readFileSync } from "fs";
+import Papa from "papaparse";
+
+// 🟦 Cargar CSV
+const csvData = readFileSync("./src/data/transacciones.csv", "utf8");
+const { data: transacciones } = Papa.parse(csvData, { header: true });
+
+// 🟦 Extraer opciones únicas
+const sectores = [...new Set(transacciones.map((t) => t.Sector))].filter(Boolean);
+const tipos = [...new Set(transacciones.map((t) => t["Tipo de transacción"]))].filter(Boolean);
+---
+
+<BaseLayout
+  title="Transacciones Financieras en España | Kerval Advisory Partners"
+  description="Experiencia comprobada en operaciones financieras y estratégicas en España. Conoce nuestras transacciones de M&A, financiación e inversión."
+>
+
+  <!-- 🟦 Banner -->
+  <header style="position: relative; height: 350px; background: url('/images/banner-transacciones.jpg') center/cover no-repeat;">
+    <div style="position: absolute; inset: 0; background: rgba(0,32,96,0.65);"></div>
+    <div style="position: relative; z-index: 1; height: 100%; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; text-align:center;">
+      <h1 style="font-family:'Calibri', sans-serif; font-size: 3rem; margin:0;">Transacciones</h1>
+      <p style="font-family:'Calibri', sans-serif; font-size:1.5rem; margin-top:1rem; max-width:800px;">
+        Acompañamos a empresas en procesos de financiación, estrategia y crecimiento con resultados comprobados.
+      </p>
+    </div>
+  </header>
+
+  <!-- 🟦 Filtros -->
+  <section style="display:flex; justify-content:center; gap:1rem; padding:2rem 1rem; flex-wrap:wrap;">
+    <div>
+      <label for="sector" style="display:block; font-weight:bold; color:#002060; margin-bottom:.5rem; font-family:'Calibri', sans-serif;">Sector</label>
+      <select id="sector" style="padding:.55rem .7rem; border:1px solid #ccc; border-radius:4px; min-width:220px; font-family:'Calibri', sans-serif;">
+        <option value="Todos">Todos</option>
+        {sectores.map((s) => <option value={s}>{s}</option>)}
+      </select>
+    </div>
+
+    <div>
+      <label for="tipo" style="display:block; font-weight:bold; color:#002060; margin-bottom:.5rem; font-family:'Calibri', sans-serif;">Tipo de Transacción</label>
+      <select id="tipo" style="padding:.55rem .7rem; border:1px solid #ccc; border-radius:4px; min-width:220px; font-family:'Calibri', sans-serif;">
+        <option value="Todos">Todos</option>
+        {tipos.map((t) => <option value={t}>{t}</option>)}
+      </select>
+    </div>
+
+    <button id="btnAplicar" style="align-self:flex-end; padding:.7rem 1.5rem; background:#c00000; color:#fff; border:none; border-radius:4px; font-weight:bold; font-family:'Calibri', sans-serif; cursor:pointer;">
+      Aplicar
+    </button>
+  </section>
+
+  <!-- 🟦 Grid -->
+  <section id="grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; padding:0 1rem 2.5rem; max-width:1100px; margin:0 auto;">
+    {transacciones.map((t) => (
+      <article class="card" data-sector={t.Sector} data-tipo={t["Tipo de transacción"]}>
+        
+        <!-- Encabezado -->
+        <div class="card-header">
+          <div class="header-left">
+            <h4 class="sector">{t.Sector}</h4>
+            <h3 class="tipo">{t["Tipo de transacción"]}</h3>
+          </div>
+
+          <!-- 6️⃣ País -->
+{t.País && (
+  (() => {
+    const countryCodes = {
+      "España": "es",
+      "Perú": "pe",
+      "Estados Unidos": "us",
+      "Canadá": "ca",
+      "Portugal": "pt",
+      "Alemania": "de",
+      "Venezuela": "ve",
+      "Níger": "ne"
+    };
+
+    const code = countryCodes[t.País] || "default";
+
+    return (
+      <img
+        src={`/images/flags/${code}.png`}
+        alt={t.País}
+        class="flag"
+      />
+    );
+  })()
+)}
+        </div>
+
+        <hr class="divider" />
+
+       <!-- Cuerpo -->
+<div class="card-body">
+  <!-- 🟦 Compañía 1 -->
+  {t["Compañía 1"] && (
+    (() => {
+      const c1 = (t["Compañía 1"] || "").trim().toLowerCase();
+      const confidenciales = [
+        "confidencial",
+        "target confidencial",
+        "inversor confidencial",
+        "portfolio de farmacias",
+        "target",
+        "inversor"
+      ];
+
+      if (confidenciales.some((p) => c1.includes(p))) {
+        return <p class="confidencial">{t["Compañía 1"]}</p>;
+      }
+
+      return (
+        <img
+          src={`/images/transacciones/${t["Compañía 1"]
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/ñ/g, "n")
+            .replace(/\s+/g, "_")
+            .replace(/&/g, "y")
+            .replace(/[^a-z0-9_]/g, "")
+          }.svg`}
+          alt={t["Compañía 1"]}
+          loading="lazy"
+          class="logo"
+        />
+      );
+    })()
+  )}
+
+  <!-- 🟦 Descripción -->
+  {t.Descripción && (
+    <p class="descripcion">{t.Descripción}</p>
+  )}
+
+  <!-- 🟦 Compañía 2 -->
+  {t["Compañía 2"] && (
+    (() => {
+      const c2 = (t["Compañía 2"] || "").trim().toLowerCase();
+      const confidenciales = [
+        "confidencial",
+        "target confidencial",
+        "inversor confidencial",
+        "portfolio de farmacias",
+        "target",
+        "inversor"
+      ];
+
+      if (confidenciales.some((p) => c2.includes(p))) {
+        return <p class="confidencial">{t["Compañía 2"]}</p>;
+      }
+
+      return (
+        <img
+          src={`/images/transacciones/${t["Compañía 2"]
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/ñ/g, "n")
+            .replace(/\s+/g, "_")
+            .replace(/&/g, "y")
+            .replace(/[^a-z0-9_]/g, "")
+          }.svg`}
+          alt={t["Compañía 2"]}
+          loading="lazy"
+          class="logo"
+        />
+      );
+    })()
+  )}
+</div>
+      </article>
+    ))}
+  </section>
+
+  <script>
+    const sectorSelect = document.getElementById('sector');
+    const tipoSelect = document.getElementById('tipo');
+    const btnAplicar = document.getElementById('btnAplicar');
+    const cards = document.querySelectorAll('.card');
+
+    btnAplicar?.addEventListener('click', () => {
+      const s = sectorSelect.value;
+      const t = tipoSelect.value;
+
+      cards.forEach((c) => {
+        const matchS = s === 'Todos' || c.dataset.sector === s;
+        const matchT = t === 'Todos' || c.dataset.tipo === t;
+        c.style.display = matchS && matchT ? 'block' : 'none';
+      });
+    });
+  </script>
+
+  <style>
+    .card {
+      background: #f2f2f2;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+      font-family: 'Calibri', sans-serif;
+      color: #002060;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Encabezado */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .sector {
+      font-size: 0.95rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .tipo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .flag {
+      width: 32px;
+      height: auto;
+      align-self: flex-start;
+    }
+
+    .divider {
+      border: none;
+      border-top: 2px solid #c00000;
+      margin: 0.8rem 0 1rem;
+    }
+
+    .card-body {
+      text-align: center;
+    }
+
+    .logo {
+      max-width: 200px;
+      height: auto;
+      object-fit: contain;
+      margin: 0.5rem auto 1rem;
+      display: block;
+    }
+
+    .descripcion {
+      font-size: 0.95rem;
+      margin: 0.5rem 0 1rem;
+    }
+
+    .confidencial {
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+
+</BaseLayout>

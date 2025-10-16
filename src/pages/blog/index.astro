@@ -1,0 +1,216 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+// Obtener todos los artículos de la colección "blog"
+const posts: CollectionEntry<"blog">[] = await getCollection("blog");
+
+const CATS_ORDER = ["Todos", "Noticias", "Tendencias", "M&A", "Opinión"];
+const categorias = CATS_ORDER;
+
+// Ordenar los artículos por fecha descendente (YYYY-MM-DD)
+const sorted = posts
+  .filter((p: CollectionEntry<"blog">) => p.data?.title)
+  .sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+      (b.data.date || "").localeCompare(a.data.date || "")
+  );
+---
+
+<BaseLayout
+  title="Noticias sobre Asesoramiento Financiero | Kerval Advisory Partners"
+  description="Tendencias, análisis y casos de éxito en asesoramiento financiero y M&A en España. Blog oficial de Kerval Advisory Partners."
+>
+  <!-- Banner -->
+  <section style="position: relative; background: url('/images/blog-banner.jpg') center/cover no-repeat; color: white; text-align: center; padding: 6rem 2rem;">
+    <div style="position: absolute; inset: 0; background: rgba(0,32,96,0.7);"></div>
+    <div style="position: relative; z-index: 1;">
+      <h1 style="font-family: 'Calibri', sans-serif; font-size: 3rem; font-weight: bold; margin-bottom: 1rem;">
+        Blog & Noticias
+      </h1>
+      <p style="font-family: 'Calibri', sans-serif; font-size: 1.5rem; margin-bottom: 2rem;">
+        Insights estratégicos en Finanzas & Negocios
+      </p>
+      <a href="#posts" style="background-color: #c00000; color: white; font-family: 'Calibri', sans-serif; font-weight: bold; padding: 0.8rem 2rem; border-radius: 6px; display:inline-block;">
+        Ver artículos
+      </a>
+    </div>
+  </section>
+
+  <!-- Filtros + Buscador -->
+  <section style="display:flex; justify-content:space-between; align-items:center; padding: 2rem; gap:1rem; flex-wrap:wrap;">
+    <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+      {categorias.map((cat) => (
+        <button class="chip" data-cat={cat}>{cat}</button>
+      ))}
+    </div>
+    <div style="display:flex; align-items:center; border:1px solid #002060; border-radius:25px; padding:.5rem 1rem; background:white;">
+      <input id="search" type="text" placeholder="Buscar..." style="border:none; outline:none; font-family:'Calibri', sans-serif; font-size:1rem; color:#002060; width:150px;" />
+      <!-- Icono de lupa SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#002060" width="20" height="20" style="margin-left:.5rem;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <section 
+    id="posts" 
+    style="
+      display:grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 2rem; 
+      padding: 2rem;
+    "
+  >
+    {sorted.map(({ slug, data }) => (
+      <article 
+        class="post-card" 
+        data-cat={data.category}
+        style="
+          background: #f2f2f2; 
+          border-radius: 12px; 
+          overflow: hidden; 
+          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+          display: none;
+        "
+      >
+        {data.image && (
+          <img 
+            src={data.image} 
+            alt={data.title} 
+            style="width:100%; aspect-ratio:16/9; object-fit:cover;"
+          />
+        )}
+        <div style="padding:1.2rem;">
+          <p style="color:#c00000; font-weight:bold; margin-bottom:.3rem;">{data.category}</p>
+          <h3 style="color:#002060; font-weight:bold; margin-bottom:.6rem;">
+            <a href={`/blog/${slug}/`} style="color:#002060; text-decoration:none;">
+              {data.title}
+            </a>
+          </h3>
+          {data.description && (
+            <p style="font-size:.95rem; color:#333; margin-bottom:.8rem;">{data.description}</p>
+          )}
+          {data.date && (
+            <p style="font-size:.8rem; color:#777; margin:0;">{data.date}</p>
+          )}
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <!-- Botón "Ver más artículos" -->
+  <div style="text-align:center; padding:3rem 0;">
+    <button id="showMore" 
+      style="font-family:'Calibri',sans-serif; font-weight:bold; font-size:1.3rem; color:#002060; background:none; border:none; cursor:pointer;">
+      Ver más artículos
+      <span style="display:block; font-size:2rem; color:#c00000;">&#x25BC;</span>
+    </button>
+  </div>
+
+  <style>
+    .chip {
+      padding: 0.5rem 1rem;
+      border: 1px solid #002060;
+      border-radius: 25px;
+      background: white;
+      color: #002060;
+      font-family: 'Calibri', sans-serif;
+      font-weight: bold; /* ✅ TODAS EN NEGRITA */
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .chip.active {
+      background: #c00000;
+      border-color: #c00000;
+      color: #fff;
+    }
+
+    /* 📱 Responsive grid */
+    @media (max-width: 1024px) {
+      #posts {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      #posts {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+<script>
+  const chips = document.querySelectorAll('.chip');
+  const cards = document.querySelectorAll<HTMLElement>('.post-card');
+  const search = document.getElementById('search') as HTMLInputElement | null;
+  const showMoreBtn = document.getElementById('showMore') as HTMLButtonElement | null;
+  let activeCat = 'Todos';
+  let visible = 6; // artículos iniciales
+
+  // ✨ Aplica animación al mostrar los posts
+  function fadeIn(el: HTMLElement) {
+    el.style.opacity = '0';
+    el.style.display = 'block';
+    el.style.transition = 'opacity 0.5s ease';
+    requestAnimationFrame(() => {
+      el.style.opacity = '1';
+    });
+  }
+
+  function applyFilters() {
+    const q = (search?.value ?? '').toLowerCase();
+    let count = 0;
+    cards.forEach((card) => {
+      const cat = card.getAttribute('data-cat') ?? '';
+      const text = card.textContent?.toLowerCase() ?? '';
+      const matchCat = activeCat === 'Todos' || cat === activeCat;
+      const matchText = q === '' || text.includes(q);
+      if (matchCat && matchText && count < visible) {
+        fadeIn(card);
+        count++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    updateButton();
+  }
+
+  function updateButton() {
+    const totalVisible = Array.from(cards).filter((c) => c.style.display === 'block').length;
+    const totalFiltered = Array.from(cards).filter((c) => {
+      const cat = c.getAttribute('data-cat') ?? '';
+      const text = c.textContent?.toLowerCase() ?? '';
+      const matchCat = activeCat === 'Todos' || cat === activeCat;
+      const matchText = (search?.value ?? '') === '' || text.includes((search?.value ?? '').toLowerCase());
+      return matchCat && matchText;
+    }).length;
+    if (showMoreBtn) showMoreBtn.style.display = totalVisible < totalFiltered ? 'inline-block' : 'none';
+  }
+
+  if (showMoreBtn) {
+    showMoreBtn.addEventListener('click', () => {
+      visible += 6;
+      applyFilters();
+    });
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeCat = chip.getAttribute('data-cat') ?? 'Todos';
+      visible = 6;
+      applyFilters();
+    });
+  });
+
+  search?.addEventListener('input', () => {
+    visible = 6;
+    applyFilters();
+  });
+
+  document.querySelector('.chip[data-cat="Todos"]')?.classList.add('active');
+  applyFilters(); // Inicializa visibilidad
+</script>
+</BaseLayout>
