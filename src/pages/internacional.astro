@@ -93,15 +93,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     .internacional-respaldo h2 {
       color: #002060;
       font-family: 'Calibri';
-      font-size: 2.5rem;   /* Más grande */
-      font-weight: bold;   /* Negrita */
+      font-size: 2.5rem;
+      font-weight: bold;
       margin-bottom: 1.5rem;
     }
     .internacional-respaldo p {
       color: #002060;
       font-family: 'Calibri';
-      font-size: 1.3rem;   /* Más grande */
-      line-height: 1.8;    /* Mejor lectura */
+      font-size: 1.3rem;
+      line-height: 1.8;
       max-width: 900px;
       margin: 0 auto 2.5rem;
     }
@@ -128,15 +128,59 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     .metric h3 {
       color: #002060;
       font-family: 'Calibri';
-      font-size: 1.4rem;  /* Crece el título de cada ícono */
+      font-size: 1.4rem;
       font-weight: bold;
       margin-bottom: 0.5rem;
     }
     .metric p {
       color: #002060;
       font-family: 'Calibri';
-      font-size: 1.1rem;  /* Crece el texto descriptivo */
+      font-size: 1.1rem;
       line-height: 1.6;
+    }
+
+    /* 📱 SOLO MOBILE */
+    @media (max-width: 768px) {
+      .banner {
+        padding: 3.5rem 1.5rem; /* más bajo */
+      }
+      .banner h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 0.8rem;
+      }
+      .banner p {
+        font-size: 1.1rem;
+        line-height: 1.4;
+      }
+
+      .internacional-respaldo {
+        padding: 3rem 1.5rem;
+      }
+      .internacional-respaldo h2 {
+        font-size: 1.9rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+      }
+      .internacional-respaldo p {
+        font-size: 1.05rem;
+        margin-bottom: 2rem;
+      }
+      .internacional-respaldo .mapa {
+        width: 95%; /* agrandado */
+        margin-bottom: 2rem;
+      }
+      .metric img {
+        width: 48px;
+        margin-bottom: 0rem; /* menor espacio entre icono y título */
+      }
+      .metric h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0rem;
+      }
+      .metric p {
+        font-size: 1rem;
+      }
     }
   </style>
 

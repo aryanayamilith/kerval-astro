@@ -2,116 +2,94 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout 
+<BaseLayout
   title="Clientes de Kerval Advisory Partners | Asesoramiento Financiero en España"
   description="Empresas, inversores y grupos financieros confían en Kerval Advisory Partners como su asesor financiero en España. Confianza que construimos con resultados."
 >
+  <!-- ====== ESTILOS GLOBALES “BLINDADOS” PARA LOS PUNTOS ====== -->
+  <style is:global>
+    .dots{
+      display:flex;justify-content:center;align-items:center;
+      gap:12px;height:28px;margin-top:12px;overflow-anchor:none;
+    }
+    .dots > button{
+      all:unset;appearance:none;-webkit-appearance:none;display:block;
+      width:10px !important;height:10px !important;
+      min-width:10px !important;min-height:10px !important;
+      padding:0 !important;margin:0 !important;border:0 !important;outline:0 !important;
+      line-height:0;font-size:0;border-radius:50% !important;
+      background:#c7ccd4 !important;box-shadow:none !important;cursor:pointer;
+      transition:transform .2s ease, background-color .2s ease, opacity .2s ease;
+      opacity:.9;flex:0 0 auto;
+    }
+    .dots > button::before,.dots > button::after{content:none !important;display:none !important;}
+    .dots > button:hover{transform:scale(1.15);opacity:1;}
+    .dots > button[aria-current="true"]{background:#002060 !important;transform:scale(1.25);opacity:1;}
+    @media (max-width:768px){
+      .dots{gap:8px;height:24px;margin-top:10px;}
+      .dots > button{width:8px !important;height:8px !important;min-width:8px !important;min-height:8px !important;}
+    }
+  </style>
 
+  <!-- ====== ESTILOS DE LA PÁGINA ====== -->
   <style>
-    .banner {
-      background: url('/images/banner-clientes.jpg') center/cover no-repeat;
-      position: relative;
-      padding: 6rem 2rem;
-      text-align: center;
-      color: #fff;
+    /* ===== Banner ===== */
+    .banner{
+      background:url('/images/banner-clientes.jpg') center/cover no-repeat;
+      position:relative;padding:6rem 2rem;text-align:center;color:#fff;
     }
-    .banner::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0,32,96,0.7);
-    }
-    .banner > div { position: relative; z-index: 2; }
-    .banner h1 { font-family: 'Calibri'; font-size: 3rem; margin-bottom: 1rem; }
-    .banner p  { font-family: 'Calibri'; font-size: 1.5rem; }
+    .banner::before{content:"";position:absolute;inset:0;background:rgba(0,32,96,.7)}
+    .banner>div{position:relative;z-index:2}
+    .banner h1{font-family:'Calibri';font-size:3rem;margin-bottom:1rem}
+    .banner p{font-family:'Calibri';font-size:1.5rem}
 
-    .clientes-section {
-      display: flex;
-      gap: 2rem;
-      padding: 4rem 2rem;
-      align-items: flex-start;
-    }
-    .clientes-section:nth-child(even) { background: #f9f9f9; }
+    /* ===== Secciones ===== */
+    .clientes-section{display:block;padding:4rem 1.25rem;background:#fff}
+    .clientes-section:nth-of-type(even){background:#f9f9f9}
 
-    .clientes-info { flex: 1; text-align: center; }
-    .clientes-info img { width: 60px; margin-bottom: 1rem; }
-    .clientes-info h2 {
-      color: #c00000; font-family: 'Calibri';
-      font-weight: bold; font-size: 1.6rem;
+    .container{
+      max-width:1200px;margin-inline:auto;display:grid;
+      grid-template-columns:200px 1fr;gap:2rem;align-items:start;
     }
 
-    .clientes-text 
-    { 
-        flex: 3; color: #002060; 
-        font-family: 'Calibri'; 
+    .clientes-info{text-align:center}
+    .clientes-info img{width:60px;margin-bottom:1rem}
+    .clientes-info h2{color:#c00000;font-family:'Calibri';font-weight:bold;font-size:1.8rem;margin:.25rem 0 .75rem}
+
+    .clientes-text{color:#002060;font-family:'Calibri';line-height:1.6}
+
+    /* ===== Bloque carrusel (wrapper + dots) ===== */
+    .carousel{overflow-anchor:none;}
+
+    /* ===== Carrusel sin saltos (páginas apiladas) ===== */
+    .clientes-logos-wrapper{
+      position:relative;overflow:hidden;max-width:1200px;margin-inline:auto;width:100%;
+      margin-top:1.25rem;overflow-anchor:none;min-height:260px; /* reserva hasta medir */
     }
-
-    /* Carrusel */
-    .clientes-logos-wrapper { position: relative; margin-top: 5rem; }
-
-    .clientes-logos-page {
-      display: none;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1.5rem;
-      align-items: center;
-      justify-items: center;
+    .clientes-logos-page{
+      position:absolute;inset:0;display:grid;
+      grid-template-columns:repeat(5,1fr);gap:30px 32px;
+      justify-items:center;align-items:center;box-sizing:border-box;padding:0;
+      opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:0;
     }
-    .clientes-logos-page.active { display: grid; }
+    .clientes-logos-page.active{opacity:1;pointer-events:auto;}
 
-    .clientes-logos-page img {
-      max-height: 70px;
-      max-width: 150px;
-      object-fit: contain;
+    .clientes-logos-page img{
+      max-height:70px;max-width:160px;width:100%;object-fit:contain;transition:transform .2s ease;
     }
+    .clientes-logos-page img:hover{transform:scale(1.05)}
+    .logo-spacer{width:160px;height:70px;opacity:0}
 
-    /* Espaciadores invisibles para completar 5x3 */
-    .logo-spacer {
-      width: 150px;
-      height: 70px;
-      opacity: 0;
+    /* ===== Responsive ===== */
+    @media (max-width:992px){
+      .clientes-section{padding:3rem 1rem}
+      .container{grid-template-columns:1fr}
+      .clientes-info{order:-1}
     }
-
-    /* Flechas */
-    .carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  z-index: 20;
-  line-height: 0;
-  transition: transform 0.25s ease, filter 0.25s ease; /* animación suave */
-}
-
-.carousel-arrow img {
-  width: 44px;
-  height: 44px;
-  display: block;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .25));
-  transition: filter 0.25s ease, transform 0.2s ease;
-}
-
-.carousel-arrow.arrow-left {
-  left: -40px;
-}
-
-.carousel-arrow.arrow-right {
-  right: -40px;
-}
-
-/* Hover */
-.carousel-arrow:hover img {
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, .35)) brightness(0.8);
-  transform: scale(1.05);
-}
-
-/* Click (activo) */
-.carousel-arrow:active img {
-  filter: brightness(0.6) grayscale(40%);
-  transform: scale(0.95);
-}
+    @media (max-width:768px){
+      .clientes-logos-page{grid-template-columns:repeat(3,1fr);gap:16px 22px}
+      .clientes-logos-page img{max-height:55px;max-width:120px}
+    }
   </style>
 
   <!-- Banner -->
@@ -122,260 +100,257 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     </div>
   </section>
 
-  <!-- ===========================
-       EMPRESAS PRIVADAS (3 páginas)
-       =========================== -->
+  <!-- =========================== EMPRESAS PRIVADAS =========================== -->
   <section class="clientes-section">
-    <div class="clientes-info">
-      <img src="/images/icons/icon-privadas.svg" alt="Empresas Privadas" />
-      <h2>Empresas Privadas</h2>
-    </div>
+    <div class="container">
+      <div class="clientes-info">
+        <img src="/images/icons/icon-privadas.svg" alt="Empresas Privadas" />
+        <h2>Empresas Privadas</h2>
+      </div>
 
-    <div class="clientes-text">
-      <p>
-        Asesoramos a empresas familiares brindándoles apoyo con todos nuestros servicios a lo largo de todas las etapas de sus negocios mediante soluciones adaptadas a sus necesidades.
-      </p>
+      <div class="clientes-text">
+        <p>
+          Asesoramos a empresas familiares brindándoles apoyo con todos nuestros servicios
+          a lo largo de todas las etapas de sus negocios mediante soluciones adaptadas a
+          sus necesidades.
+        </p>
 
-  <div class="clientes-text">
-    <div class="clientes-logos-wrapper" data-carousel="privadas">
-      <button class="carousel-arrow arrow-left" aria-label="Anterior">
-        <img src="/images/icons/arrow-left.svg" alt="Anterior" />
-      </button>
-
-      <div class="clientes-logos-page active">
-
-        <!-- Página 1 (5x3 = 15) -->
-        <img src="/images/clientes/unir.svg" alt="unir" />
-        <img src="/images/clientes/pepejean.svg" alt="pepejean" />
-        <img src="/images/clientes/pascual.svg" alt="pascual" />
-        <img src="/images/clientes/euskaltel.svg" alt="euskaltel" />
-        <img src="/images/clientes/amena.svg" alt="amena" />
-        <img src="/images/clientes/sanfernando.svg" alt="sanfernando" />
-        <img src="/images/clientes/redbus.svg" alt="redbus" />
-        <img src="/images/clientes/supercable.svg" alt="supercable" />
-        <img src="/images/clientes/hierrosanon.svg" alt="hierrosanon" />
-        <img src="/images/clientes/cortefiel.svg" alt="cortefiel" />
-        <img src="/images/clientes/eresmas.svg" alt="eresmas" />
-        <img src="/images/clientes/elcomercio.svg" alt="elcomercio" />
-        <img src="/images/clientes/starwood.svg" alt="starwood" />
-        <img src="/images/clientes/aquapor.svg" alt="aquapor" />
-        <img src="/images/clientes/retevision.svg" alt="retevision" />
+        <div class="carousel">
+          <div class="clientes-logos-wrapper" data-carousel="privadas">
+            <!-- Página 1 -->
+            <div class="clientes-logos-page active">
+              <img src="/images/clientes/unir.svg" alt="unir" />
+              <img src="/images/clientes/pepejean.svg" alt="pepejean" />
+              <img src="/images/clientes/pascual.svg" alt="pascual" />
+              <img src="/images/clientes/euskaltel.svg" alt="euskaltel" />
+              <img src="/images/clientes/amena.svg" alt="amena" />
+              <img src="/images/clientes/sanfernando.svg" alt="sanfernando" />
+              <img src="/images/clientes/redbus.svg" alt="redbus" />
+              <img src="/images/clientes/supercable.svg" alt="supercable" />
+              <img src="/images/clientes/hierrosanon.svg" alt="hierrosanon" />
+              <img src="/images/clientes/cortefiel.svg" alt="cortefiel" />
+              <img src="/images/clientes/eresmas.svg" alt="eresmas" />
+              <img src="/images/clientes/elcomercio.svg" alt="elcomercio" />
+              <img src="/images/clientes/starwood.svg" alt="starwood" />
+              <img src="/images/clientes/aquapor.svg" alt="aquapor" />
+              <img src="/images/clientes/retevision.svg" alt="retevision" />
+            </div>
+            <!-- Página 2 -->
+            <div class="clientes-logos-page">
+              <img src="/images/clientes/laregion.svg" alt="laregion" />
+              <img src="/images/clientes/rabat.svg" alt="rabat" />
+              <img src="/images/clientes/grupoantolin.svg" alt="grupoantolin" />
+              <img src="/images/clientes/natura.svg" alt="natura" />
+              <img src="/images/clientes/eolia.svg" alt="eolia" />
+              <img src="/images/clientes/masa.svg" alt="masa" />
+              <img src="/images/clientes/madritel.svg" alt="madritel" />
+              <img src="/images/clientes/casaandina.svg" alt="casaandina" />
+              <img src="/images/clientes/fertiberia.svg" alt="fertiberia" />
+              <img src="/images/clientes/suardiazgroup.svg" alt="suardiazgroup" />
+              <img src="/images/clientes/elganso.svg" alt="elganso" />
+              <img src="/images/clientes/grupoeulen.svg" alt="grupoeulen" />
+              <img src="/images/clientes/r.svg" alt="r" />
+              <img src="/images/clientes/habitat.svg" alt="habitat" />
+              <img src="/images/clientes/marquesderiscal.svg" alt="marquesderiscal" />
+            </div>
+            <!-- Página 3 -->
+            <div class="clientes-logos-page">
+              <img src="/images/clientes/gandules.svg" alt="gandules" />
+              <img src="/images/clientes/intursa.svg" alt="intursa" />
+              <img src="/images/clientes/scalpers.svg" alt="scalpers" />
+              <img src="/images/clientes/maestro.svg" alt="maestro" />
+              <img src="/images/clientes/chamartin.svg" alt="chamartin" />
+              <img src="/images/clientes/oltursa.svg" alt="oltursa" />
+              <img src="/images/clientes/rutasdelima.svg" alt="rutasdelima" />
+              <img src="/images/clientes/aurgi.svg" alt="aurgi" />
+              <img src="/images/clientes/cobra.svg" alt="cobra" />
+              <span class="logo-spacer"></span><span class="logo-spacer"></span><span class="logo-spacer"></span>
+              <span class="logo-spacer"></span><span class="logo-spacer"></span><span class="logo-spacer"></span>
+            </div>
+          </div>
+          <div class="dots" role="tablist" aria-label="Páginas Empresas Privadas"></div>
         </div>
-
-        <!-- Página 2 (5x3 = 15) -->
-        <div class="clientes-logos-page">
-          <img src="/images/clientes/laregion.svg" alt="laregion" />
-        <img src="/images/clientes/rabat.svg" alt="rabat" />
-        <img src="/images/clientes/grupoantolin.svg" alt="grupoantolin" />
-        <img src="/images/clientes/natura.svg" alt="natura" />
-        <img src="/images/clientes/eolia.svg" alt="eolia" />
-        <img src="/images/clientes/masa.svg" alt="masa" />
-        <img src="/images/clientes/madritel.svg" alt="madritel" />
-        <img src="/images/clientes/casaandina.svg" alt="casaandina" />
-        <img src="/images/clientes/fertiberia.svg" alt="fertiberia" />
-        <img src="/images/clientes/suardiazgroup.svg" alt="suardiazgroup" />
-        <img src="/images/clientes/elganso.svg" alt="elganso" />
-        <img src="/images/clientes/grupoeulen.svg" alt="grupoeulen" />
-        <img src="/images/clientes/r.svg" alt="r" />
-        <img src="/images/clientes/habitat.svg" alt="habitat" />
-        <img src="/images/clientes/marquesderiscal.svg" alt="marquesderiscal" />
-        </div>
-
-        <!-- Página 3 (si tienes menos de 15, se rellenan con spacers) -->
-        <div class="clientes-logos-page">
-          <img src="/images/clientes/gandules.svg" alt="gandules" />
-        <img src="/images/clientes/intursa.svg" alt="intursa" />
-        <img src="/images/clientes/scalpers.svg" alt="scalpers" />
-        <img src="/images/clientes/maestro.svg" alt="maestro" />
-        <img src="/images/clientes/chamartin.svg" alt="chamartin" />
-        <img src="/images/clientes/oltursa.svg" alt="oltursa" />
-        <img src="/images/clientes/rutasdelima.svg" alt="rutasdelima" />
-        <img src="/images/clientes/aurgi.svg" alt="aurgi" />
-        <img src="/images/clientes/cobra.svg" alt="cobra" />
-          <!-- Relleno invisible hasta completar 15 -->
-          <span class="logo-spacer"></span>
-          <span class="logo-spacer"></span>
-          <span class="logo-spacer"></span>
-
-          <span class="logo-spacer"></span>
-          <span class="logo-spacer"></span>
-          <span class="logo-spacer"></span>
-          <span class="logo-spacer"></span>
-          <span class="logo-spacer"></span>
-        </div>
-
-        <button class="carousel-arrow arrow-right" aria-label="Siguiente">
-          <img src="/images/icons/arrow-right.svg" alt="Siguiente" />
-        </button>
       </div>
     </div>
   </section>
 
-  <!-- Inversores y Financiadores -->
-<section class="clientes-section">
-  <div class="clientes-info">
-    <img src="/images/icons/icon-inversores.svg" alt="Inversores" />
-    <h2>Inversores y Financiadores</h2>
-  </div>
-  <div class="clientes-text">
-    <p>
-      Apoyamos a inversores financieros (i.e. search fund, private equity, family office) en la ejecución de sus estrategias de inversión y desinversión mediante la gestión de procesos de M&A y asesoramiento en due diligence. 
-    </p>
-    <p>
-      Igualmente asesoramos a financiadores (i.e. fondos de deuda, entidades financieras) en la evaluación de operaciones mediante revisiones independientes y procesos de due diligence.
-    </p>
-     <p></p>
-    En todos estos casos damos soporte con servicios de gestión tanto externa como de interim management.
-    <div class="clientes-logos-wrapper" data-carousel="inversores">
-      <button class="carousel-arrow arrow-left" aria-label="Anterior">
-        <img src="/images/icons/arrow-left.svg" alt="Anterior" />
-      </button>
-
-      <!-- Página 1 (15 logos) -->
-      <div class="clientes-logos-page active">
-        <img src="/images/clientes/tpg.svg" alt="TPG" />
-        <img src="/images/clientes/citi.svg" alt="Citi" />
-        <img src="/images/clientes/goldmansachs.svg" alt="Goldman Sachs" />
-        <img src="/images/clientes/santander.svg" alt="Santander" />
-        <img src="/images/clientes/bbva.svg" alt="BBVA" />
-        <img src="/images/clientes/permira.svg" alt="Permira" />
-        <img src="/images/clientes/trilantic.svg" alt="Trilantic" />
-        <img src="/images/clientes/theabraajgroup.svg" alt="The Abraaj Group" />
-        <img src="/images/clientes/brookfield.svg" alt="Brookfield" />
-        <img src="/images/clientes/paipartners.svg" alt="PAI Partners" />
-        <img src="/images/clientes/lcapital.svg" alt="L Capital" />
-        <img src="/images/clientes/torreal.svg" alt="Torreal" />
-        <img src="/images/clientes/altra.svg" alt="Altra Investments" />
-        <img src="/images/clientes/banbif.svg" alt="BanBif" />
-        <img src="/images/clientes/enfoca.svg" alt="Enfoca" />
+  <!-- =========================== INVERSORES Y FINANCIADORES =========================== -->
+  <section class="clientes-section">
+    <div class="container">
+      <div class="clientes-info">
+        <img src="/images/icons/icon-inversores.svg" alt="Inversores" />
+        <h2>Inversores y Financiadores</h2>
       </div>
 
-      <!-- Página 2 (14 logos restantes) -->
-      <div class="clientes-logos-page">
-        <img src="/images/clientes/gruposecurity.svg" alt="Grupo Security" />
-        <img src="/images/clientes/artacapital.svg" alt="Artá Capital" />
-        <img src="/images/clientes/pichincha.svg" alt="Banco Pichincha" />
-        <img src="/images/clientes/elevarequity.svg" alt="Elevar Equity" />
-        <img src="/images/clientes/bancolombia.svg" alt="Bancolombia" />
-        <img src="/images/clientes/interseguro.svg" alt="Interseguro" />
-        <img src="/images/clientes/investindustrial.svg" alt="Investindustrial" />
-        <img src="/images/clientes/bcp.svg" alt="BCP" />
-        <img src="/images/clientes/macrocapitales.svg" alt="Macrocapitales" />
-        <img src="/images/clientes/cajamar.svg" alt="Cajamar" />
-        <img src="/images/clientes/mibanco.svg" alt="Mibanco" />
-        <img src="/images/clientes/cajaarequipa.svg" alt="Caja Arequipa" />
-        <img src="/images/clientes/bvl.svg" alt="Bolsa de Valores de Lima" />
-        <img src="/images/clientes/bancoripley.svg" alt="Banco Ripley" />
-      </div>
+      <div class="clientes-text">
+        <p>
+          Apoyamos a inversores financieros (i.e. search fund, private equity, family office)
+          en la ejecución de sus estrategias de inversión y desinversión mediante la gestión
+          de procesos de M&amp;A y asesoramiento en due diligence. Igualmente asesoramos a
+          financiadores (i.e. fondos de deuda, entidades financieras) en la evaluación de
+          operaciones…
+        </p>
 
-      <button class="carousel-arrow arrow-right" aria-label="Siguiente">
-        <img src="/images/icons/arrow-right.svg" alt="Siguiente" />
-      </button>
-    </div>
-  </div>
-</section>
-
-  <!-- Empresas Cotizadas -->
-<section class="clientes-section">
-  <div class="clientes-info">
-    <img src="/images/icons/icon-cotizadas.svg" alt="Empresas Cotizadas" />
-    <h2>Empresas Cotizadas</h2>
-  </div>
-  <div class="clientes-text">
-    <p>
-      Actuamos como asesores en estrategia, valoración, procesos de inversión y apoyo a la gestión local, trabajando directamente con los equipos en cada país.
-    </p>
-
-    <div class="clientes-logos-wrapper" data-carousel="cotizadas">
-      <button class="carousel-arrow arrow-left" aria-label="Anterior">
-        <img src="/images/icons/arrow-left.svg" alt="Anterior" />
-      </button>
-
-      <!-- Página 1 (15 logos) -->
-      <div class="clientes-logos-page active">
-        <img src="/images/clientes/votorantim.svg" alt="Votorantim" />
-        <img src="/images/clientes/repsol.svg" alt="Repsol" />
-        <img src="/images/clientes/unionfenosa.svg" alt="Unión Fenosa" />
-        <img src="/images/clientes/telefonica.svg" alt="Telefónica" />
-        <img src="/images/clientes/inditex.svg" alt="Inditex" />
-        <img src="/images/clientes/acciona.svg" alt="Acciona" />
-        <img src="/images/clientes/engie.svg" alt="Engie" />
-        <img src="/images/clientes/montebalito.svg" alt="Montebalito" />
-        <img src="/images/clientes/gasnaturalfenosa.svg" alt="Gas Natural Fenosa" />
-        <img src="/images/clientes/gruporayet.svg" alt="Grupo Rayet" />
-        <img src="/images/clientes/alicorp.svg" alt="Alicorp" />
-        <img src="/images/clientes/roche.svg" alt="Roche" />
-        <img src="/images/clientes/sniace.svg" alt="Sniace" />
-        <img src="/images/clientes/camposol.svg" alt="Camposol" />
-        <img src="/images/clientes/clorox.svg" alt="Clorox" />
-      </div>
-
-      <!-- Página 2 (8 logos restantes) -->
-      <div class="clientes-logos-page">
-        <img src="/images/clientes/cepsa.svg" alt="Cepsa" />
-        <img src="/images/clientes/martinsafadesa.svg" alt="Martinsa Fadesa" />
-        <img src="/images/clientes/corsancorviam.svg" alt="Corsán Corviam" />
-        <img src="/images/clientes/ferreycorp.svg" alt="Ferreycorp" />
-        <img src="/images/clientes/electrodunas.svg" alt="ElectroDunas" />
-        <img src="/images/clientes/toyota.svg" alt="Toyota" />
-        <img src="/images/clientes/prosegur.svg" alt="Prosegur" />
-        <img src="/images/clientes/nhhotels.svg" alt="NH Hotels" />
-      </div>
-
-      <button class="carousel-arrow arrow-right" aria-label="Siguiente">
-        <img src="/images/icons/arrow-right.svg" alt="Siguiente" />
-      </button>
-    </div>
-  </div>
-</section>
-
-
-      <button class="carousel-arrow arrow-right" aria-label="Siguiente">
-        <img src="/images/icons/arrow-right.svg" alt="Siguiente" />
-      </button>
-    </div>
-  </div>
-</section>
-
-        <button class="carousel-arrow arrow-right" aria-label="Siguiente">
-          <img src="/images/icons/arrow-right.svg" alt="Siguiente" />
-        </button>
+        <div class="carousel">
+          <div class="clientes-logos-wrapper" data-carousel="inversores">
+            <div class="clientes-logos-page active">
+              <img src="/images/clientes/tpg.svg" alt="TPG" />
+              <img src="/images/clientes/citi.svg" alt="Citi" />
+              <img src="/images/clientes/goldmansachs.svg" alt="Goldman Sachs" />
+              <img src="/images/clientes/santander.svg" alt="Santander" />
+              <img src="/images/clientes/bbva.svg" alt="BBVA" />
+              <img src="/images/clientes/permira.svg" alt="Permira" />
+              <img src="/images/clientes/trilantic.svg" alt="Trilantic" />
+              <img src="/images/clientes/theabraajgroup.svg" alt="The Abraaj Group" />
+              <img src="/images/clientes/brookfield.svg" alt="Brookfield" />
+              <img src="/images/clientes/paipartners.svg" alt="PAI Partners" />
+              <img src="/images/clientes/lcapital.svg" alt="L Capital" />
+              <img src="/images/clientes/torreal.svg" alt="Torreal" />
+              <img src="/images/clientes/altra.svg" alt="Altra Investments" />
+              <img src="/images/clientes/banbif.svg" alt="BanBif" />
+              <img src="/images/clientes/enfoca.svg" alt="Enfoca" />
+            </div>
+            <div class="clientes-logos-page">
+              <img src="/images/clientes/gruposecurity.svg" alt="Grupo Security" />
+              <img src="/images/clientes/artacapital.svg" alt="Artá Capital" />
+              <img src="/images/clientes/pichincha.svg" alt="Banco Pichincha" />
+              <img src="/images/clientes/elevarequity.svg" alt="Elevar Equity" />
+              <img src="/images/clientes/bancolombia.svg" alt="Bancolombia" />
+              <img src="/images/clientes/interseguro.svg" alt="Interseguro" />
+              <img src="/images/clientes/investindustrial.svg" alt="Investindustrial" />
+              <img src="/images/clientes/bcp.svg" alt="BCP" />
+              <img src="/images/clientes/macrocapitales.svg" alt="Macrocapitales" />
+              <img src="/images/clientes/cajamar.svg" alt="Cajamar" />
+              <img src="/images/clientes/mibanco.svg" alt="Mibanco" />
+              <img src="/images/clientes/cajaarequipa.svg" alt="Caja Arequipa" />
+              <img src="/images/clientes/bvl.svg" alt="Bolsa de Valores de Lima" />
+              <img src="/images/clientes/bancoripley.svg" alt="Banco Ripley" />
+              <span class="logo-spacer"></span>
+            </div>
+          </div>
+          <div class="dots" role="tablist" aria-label="Páginas Inversores y Financiadores"></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Script Carrusel -->
-  <script>
-  // @ts-nocheck
-  document.addEventListener("DOMContentLoaded", () => {
-    const carousels = document.querySelectorAll("[data-carousel]");
+  <!-- =========================== EMPRESAS COTIZADAS =========================== -->
+  <section class="clientes-section">
+    <div class="container">
+      <div class="clientes-info">
+        <img src="/images/icons/icon-cotizadas.svg" alt="Empresas Cotizadas" />
+        <h2>Empresas Cotizadas</h2>
+      </div>
 
-    carousels.forEach((wrapper) => {
-      const pages = wrapper.querySelectorAll(".clientes-logos-page");
-      const btnRight = wrapper.querySelector(".arrow-right");
-      const btnLeft  = wrapper.querySelector(".arrow-left");
+      <div class="clientes-text">
+        <p>Actuamos como asesores en estrategia, valoración, procesos de inversión y apoyo a la gestión local…</p>
 
-      if (!btnRight || !btnLeft || pages.length === 0) return;
+        <div class="carousel">
+          <div class="clientes-logos-wrapper" data-carousel="cotizadas">
+            <div class="clientes-logos-page active">
+              <img src="/images/clientes/votorantim.svg" alt="Votorantim" />
+              <img src="/images/clientes/repsol.svg" alt="Repsol" />
+              <img src="/images/clientes/unionfenosa.svg" alt="Unión Fenosa" />
+              <img src="/images/clientes/telefonica.svg" alt="Telefónica" />
+              <img src="/images/clientes/inditex.svg" alt="Inditex" />
+              <img src="/images/clientes/acciona.svg" alt="Acciona" />
+              <img src="/images/clientes/engie.svg" alt="Engie" />
+              <img src="/images/clientes/montebalito.svg" alt="Montebalito" />
+              <img src="/images/clientes/gasnaturalfenosa.svg" alt="Gas Natural Fenosa" />
+              <img src="/images/clientes/gruporayet.svg" alt="Grupo Rayet" />
+              <img src="/images/clientes/alicorp.svg" alt="Alicorp" />
+              <img src="/images/clientes/roche.svg" alt="Roche" />
+              <img src="/images/clientes/sniace.svg" alt="Sniace" />
+              <img src="/images/clientes/camposol.svg" alt="Camposol" />
+              <img src="/images/clientes/clorox.svg" alt="Clorox" />
+            </div>
+            <div class="clientes-logos-page">
+              <img src="/images/clientes/cepsa.svg" alt="Cepsa" />
+              <img src="/images/clientes/martinsafadesa.svg" alt="Martinsa Fadesa" />
+              <img src="/images/clientes/corsancorviam.svg" alt="Corsán Corviam" />
+              <img src="/images/clientes/ferreycorp.svg" alt="Ferreycorp" />
+              <img src="/images/clientes/electrodunas.svg" alt="ElectroDunas" />
+              <img src="/images/clientes/toyota.svg" alt="Toyota" />
+              <img src="/images/clientes/prosegur.svg" alt="Prosegur" />
+              <img src="/images/clientes/nhhotels.svg" alt="NH Hotels" />
+              <span class="logo-spacer"></span><span class="logo-spacer"></span><span class="logo-spacer"></span>
+              <span class="logo-spacer"></span><span class="logo-spacer"></span><span class="logo-spacer"></span>
+              <span class="logo-spacer"></span>
+            </div>
+          </div>
+          <div class="dots" role="tablist" aria-label="Páginas Empresas Cotizadas"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      let current = 0;
-
-      const showPage = (i) => {
-        pages.forEach((p, idx) => p.classList.toggle("active", idx === i));
+  <!-- ===== Script Carrusel: altura fija real + puntos dentro de .carousel ===== -->
+  <script is:inline>
+    (function () {
+      const setFixedHeight = (wrapper, pages) => {
+        const prev = pages.map(p => p.classList.contains('active'));
+        pages.forEach(p => p.classList.add('active'));            // mostrar todas para medir
+        const maxH = Math.max(...pages.map(p => p.scrollHeight)); // altura real mayor
+        pages.forEach((p,i) => p.classList.toggle('active', prev[i]));
+        if (maxH) wrapper.style.height = Math.ceil(maxH) + 'px';
       };
 
-      showPage(current);
+      const initCarousel = (wrapper) => {
+        const carousel = wrapper.closest('.carousel');
+        const dotsContainer = carousel ? carousel.querySelector('.dots') : null;
+        const pages = Array.from(wrapper.querySelectorAll('.clientes-logos-page'));
+        if (!carousel || !dotsContainer || !pages.length) return;
 
-      btnRight.addEventListener("click", () => {
-        current = (current + 1) % pages.length;
-        showPage(current);
-      });
+        // Crear puntos
+        dotsContainer.innerHTML = '';
+        pages.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.setAttribute('aria-label', `Ir a página ${i+1}`);
+          dotsContainer.appendChild(dot);
+        });
+        const dots = Array.from(dotsContainer.querySelectorAll('button'));
 
-      btnLeft.addEventListener("click", () => {
-        current = (current - 1 + pages.length) % pages.length;
+        let current = pages.findIndex(p => p.classList.contains('active'));
+        if (current < 0) current = 0;
+
+        const showPage = (i) => {
+          pages.forEach((p,k) => p.classList.toggle('active', k === i));
+          dots.forEach((d,k) => d.setAttribute('aria-current', String(k === i)));
+          current = i;
+        };
+
+        // Click puntos
+        dots.forEach((d,i) => d.addEventListener('click', (e) => {
+          e.preventDefault(); e.stopPropagation();
+          showPage(i);
+        }));
+
+        // Swipe móvil
+        let startX=0, dx=0;
+        wrapper.addEventListener('touchstart', e => { startX=e.touches[0].clientX; dx=0; }, {passive:true});
+        wrapper.addEventListener('touchmove',  e => { dx=e.touches[0].clientX - startX; }, {passive:true});
+        wrapper.addEventListener('touchend',   () => {
+          if (Math.abs(dx) > 50) {
+            const next = dx < 0 ? (current + 1) % pages.length : (current - 1 + pages.length) % pages.length;
+            showPage(next);
+          }
+        });
+
+        // Init
         showPage(current);
-      });
-    });
-  });
+        setFixedHeight(wrapper, pages);
+
+        // Recalcular en resize / load
+        let rAF;
+        const onResize = () => {
+          cancelAnimationFrame(rAF);
+          rAF = requestAnimationFrame(() => setFixedHeight(wrapper, pages));
+        };
+        window.addEventListener('resize', onResize, { passive:true });
+        window.addEventListener('load', () => setFixedHeight(wrapper, pages));
+      };
+
+      document.querySelectorAll('.clientes-logos-wrapper').forEach(initCarousel);
+    })();
   </script>
-
 </BaseLayout>

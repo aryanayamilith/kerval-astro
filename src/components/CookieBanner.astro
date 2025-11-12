@@ -1,0 +1,240 @@
+---
+/**
+ * CookieBanner.astro
+ * Estructura accesible con categorías + gestor de consentimiento.
+ * Uso: importa el componente en BaseLayout.astro (al final del <body>).
+ */
+---
+<div id="cookie-banner" class="ck-banner" hidden aria-live="polite">
+  <div
+    class="ck-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ck-title"
+    aria-describedby="ck-desc"
+  >
+    <div class="ck-header">
+      <h2 id="ck-title">Tu privacidad nos importa</h2>
+      <button class="ck-close" type="button" aria-label="Cerrar aviso" data-action="close">×</button>
+    </div>
+
+    <p id="ck-desc" class="ck-text">
+      Utilizamos cookies propias y de terceros para fines analíticos y de marketing.
+      Las <strong>necesarias</strong> hacen que el sitio funcione y se activan siempre.
+      Puedes aceptar todas, rechazarlas o personalizar tu elección.
+      Más información en nuestra <a class="ck-link" href="/cookies">Política de Cookies</a>.
+    </p>
+
+    <div class="ck-categories">
+      <label class="ck-row">
+        <span>Necesarias</span>
+        <input type="checkbox" checked disabled />
+      </label>
+
+      <label class="ck-row">
+        <span>Analíticas</span>
+        <input id="ck-analytics" type="checkbox" data-cat="analytics" />
+      </label>
+
+      <label class="ck-row">
+        <span>Marketing</span>
+        <input id="ck-marketing" type="checkbox" data-cat="marketing" />
+      </label>
+    </div>
+
+    <div class="ck-actions">
+      <button class="ck-btn ck-secondary" type="button" data-action="reject">Rechazar</button>
+      <button class="ck-btn ck-outline"   type="button" data-action="save">Guardar</button>
+      <button class="ck-btn ck-primary"   type="button" data-action="accept">Aceptar todo</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ck-banner{
+    position: fixed; inset-inline: 0; bottom: 0; z-index: 9999;
+    display: grid; place-items: center; padding: 12px;
+    background: rgba(0,0,0,.4); backdrop-filter: blur(2px);
+    font-family: Calibri, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+  .ck-card{
+    width: min(920px, 95vw);
+    background: #fff; color:#0b1a3a; border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.2);
+    padding: 20px 20px 16px; border: 1px solid #e7ebf3;
+  }
+  .ck-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .ck-header h2{ margin:0; font-size:20px; color:#002060; }
+  .ck-close{
+    all: unset; cursor: pointer; font-size:22px; line-height:1;
+    color:#667085; padding: 6px 8px; border-radius: 8px;
+  }
+  .ck-close:hover{ background:#f2f4f7; color:#1f2937; }
+  .ck-text{ margin: 10px 0 14px; line-height:1.5; }
+  .ck-link{ color:#002060; text-decoration: underline; }
+
+  .ck-categories{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;
+    padding: 10px; background:#f8fafc; border:1px solid #e7ebf3; border-radius:12px;
+  }
+  .ck-row{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:10px 12px; background:#fff; border-radius:10px; border:1px solid #e7ebf3;
+  }
+  .ck-row input[type="checkbox"]{ transform: scale(1.15); accent-color:#002060; }
+
+  .ck-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:14px; }
+  .ck-btn{
+    appearance:none; border:0; border-radius:10px; font-weight:700; cursor:pointer;
+    padding:10px 14px; font-size:14px;
+  }
+  .ck-primary{ background:#002060; color:#fff; }
+  .ck-primary:hover{ background:#001544; }
+  .ck-outline{ border:2px solid #002060; color:#002060; background:#fff; }
+  .ck-outline:hover{ background:#eef3ff; }
+  .ck-secondary{ background:#f3f4f6; color:#111827; }
+  .ck-secondary:hover{ background:#e5e7eb; }
+
+  @media (max-width: 768px){
+    .ck-categories{ grid-template-columns:1fr; }
+    .ck-actions{ flex-direction: column-reverse; align-items: stretch; }
+    .ck-btn{ width:100%; }
+  }
+</style>
+
+<script is:inline>
+  (function(){
+    const BANNER_ID = 'cookie-banner';
+    const KEY = 'kervalConsent'; // ← clave usada en todo el sitio
+    const banner = document.getElementById(BANNER_ID);
+    const qs = s => banner.querySelector(s);
+    let openerBtn = null; // para devolver foco si lo abrió un botón/enlace
+
+    /** Lee/guarda consentimiento */
+    const getConsent = () => {
+      try{ return JSON.parse(localStorage.getItem(KEY)) || null; } catch { return null; }
+    };
+    const saveConsent = (consent) => {
+      localStorage.setItem(KEY, JSON.stringify(consent));
+      window.dispatchEvent(new CustomEvent('kerval:consent', { detail: consent }));
+      enableDeferredScripts(consent);
+    };
+
+    /** Activa scripts diferidos por categoría */
+    function enableDeferredScripts(consent){
+      const enableFor = (cat) => {
+        if (!consent[cat]) return;
+        document.querySelectorAll(`script[type="text/plain"][data-consent="${cat}"]`).forEach((node)=>{
+          const s = document.createElement('script');
+          [...node.attributes].forEach(a=>{
+            if(a.name !== 'type' && a.name !== 'data-consent'){ s.setAttribute(a.name, a.value); }
+          });
+          if (node.textContent) s.textContent = node.textContent;
+          node.replaceWith(s);
+        });
+      };
+      enableFor('analytics');
+      enableFor('marketing');
+    }
+
+    /** Do Not Track: si está activo y no hay consentimiento previo, solo necesarias */
+    const dntOn = () => (
+      navigator.doNotTrack == "1" ||
+      window.doNotTrack == "1"   ||
+      navigator.msDoNotTrack == "1"
+    );
+
+    /** UI helpers */
+    const setCheckedFromConsent = (c)=>{
+      const a = qs('#ck-analytics'); if (a) a.checked = !!c.analytics;
+      const m = qs('#ck-marketing'); if (m) m.checked = !!c.marketing;
+    };
+    const readFromUI = () => ({
+      necessary: true,
+      analytics: !!qs('#ck-analytics')?.checked,
+      marketing: !!qs('#ck-marketing')?.checked,
+      ts: Date.now()
+    });
+    const show = (returnFocusTo) => {
+      openerBtn = returnFocusTo || null;
+      banner.hidden = false; banner.style.display = 'grid';
+      // foco al botón primario para accesibilidad
+      const primary = banner.querySelector('.ck-primary');
+      primary?.focus?.();
+      // cerrar con ESC
+      document.addEventListener('keydown', onKeyDown);
+    };
+    const hide = () => {
+      banner.hidden = true; banner.style.display = 'none';
+      document.removeEventListener('keydown', onKeyDown);
+      openerBtn?.focus?.();
+      openerBtn = null;
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        const c = readFromUI(); // guardar lo marcado al cerrar con ESC
+        saveConsent(c); hide();
+      }
+    };
+
+    /** Inicialización */
+    const existing = getConsent();
+
+    if (dntOn() && !existing){
+      const onlyNecessary = { necessary:true, analytics:false, marketing:false, ts:Date.now(), dnt:true };
+      saveConsent(onlyNecessary);
+      hide();
+    } else if (existing){
+      setCheckedFromConsent(existing);
+      saveConsent(existing); // por si hay nuevos scripts que habilitar
+      hide();
+    } else {
+      show();
+    }
+
+    /** Acciones del banner */
+    banner.addEventListener('click', (e)=>{
+      const action = e.target?.dataset?.action;
+      if(!action) return;
+
+      if (action === 'accept'){
+        const c = { necessary:true, analytics:true, marketing:true, ts:Date.now() };
+        saveConsent(c); hide();
+      }
+      if (action === 'reject'){
+        const c = { necessary:true, analytics:false, marketing:false, ts:Date.now() };
+        setCheckedFromConsent(c);
+        saveConsent(c); hide();
+      }
+      if (action === 'save'){
+        const c = readFromUI();
+        saveConsent(c); hide();
+      }
+      if (action === 'close'){
+        // Cerrar actúa como "guardar" con lo marcado
+        const c = readFromUI();
+        saveConsent(c); hide();
+      }
+    });
+
+    // Reaplicar si algo externo cambia el localStorage (otra pestaña)
+    window.addEventListener('storage', (ev)=>{
+      if (ev.key === KEY){
+        try {
+          const c = JSON.parse(ev.newValue);
+          if (c){ setCheckedFromConsent(c); enableDeferredScripts(c); }
+        } catch {}
+      }
+    });
+
+    /** API pública para reabrir / resetear desde el sitio (footer, header, etc.) */
+    window.kervalCookies = {
+      open(el){ show(el || document.activeElement); },
+      reset(el){
+        localStorage.removeItem(KEY);
+        setCheckedFromConsent({ analytics:false, marketing:false });
+        show(el || document.activeElement);
+      }
+    };
+  })();
+</script>

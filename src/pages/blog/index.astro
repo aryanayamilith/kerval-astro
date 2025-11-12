@@ -2,19 +2,14 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
-// Obtener todos los artículos de la colección "blog"
 const posts: CollectionEntry<"blog">[] = await getCollection("blog");
 
 const CATS_ORDER = ["Todos", "Noticias", "Tendencias", "M&A", "Opinión"];
 const categorias = CATS_ORDER;
 
-// Ordenar los artículos por fecha descendente (YYYY-MM-DD)
 const sorted = posts
   .filter((p: CollectionEntry<"blog">) => p.data?.title)
-  .sort(
-    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-      (b.data.date || "").localeCompare(a.data.date || "")
-  );
+  .sort((a, b) => (b.data.date || "").localeCompare(a.data.date || ""));
 ---
 
 <BaseLayout
@@ -37,7 +32,7 @@ const sorted = posts
     </div>
   </section>
 
-  <!-- Filtros + Buscador -->
+  <!-- Filtros -->
   <section style="display:flex; justify-content:space-between; align-items:center; padding: 2rem; gap:1rem; flex-wrap:wrap;">
     <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
       {categorias.map((cat) => (
@@ -46,7 +41,6 @@ const sorted = posts
     </div>
     <div style="display:flex; align-items:center; border:1px solid #002060; border-radius:25px; padding:.5rem 1rem; background:white;">
       <input id="search" type="text" placeholder="Buscar..." style="border:none; outline:none; font-family:'Calibri', sans-serif; font-size:1rem; color:#002060; width:150px;" />
-      <!-- Icono de lupa SVG -->
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#002060" width="20" height="20" style="margin-left:.5rem;">
         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
       </svg>
@@ -54,62 +48,93 @@ const sorted = posts
   </section>
 
   <!-- Grid -->
-  <section 
-    id="posts" 
-    style="
-      display:grid; 
-      grid-template-columns: repeat(3, 1fr); 
-      gap: 2rem; 
-      padding: 2rem;
-    "
-  >
+  <section id="posts">
     {sorted.map(({ slug, data }) => (
-      <article 
-        class="post-card" 
-        data-cat={data.category}
-        style="
-          background: #f2f2f2; 
-          border-radius: 12px; 
-          overflow: hidden; 
-          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-          display: none;
-        "
-      >
+      <article class="post-card" data-cat={data.category}>
         {data.image && (
-          <img 
-            src={data.image} 
-            alt={data.title} 
-            style="width:100%; aspect-ratio:16/9; object-fit:cover;"
-          />
+          <img src={data.image} alt={data.title} class="post-img" />
         )}
-        <div style="padding:1.2rem;">
-          <p style="color:#c00000; font-weight:bold; margin-bottom:.3rem;">{data.category}</p>
-          <h3 style="color:#002060; font-weight:bold; margin-bottom:.6rem;">
-            <a href={`/blog/${slug}/`} style="color:#002060; text-decoration:none;">
-              {data.title}
-            </a>
+        <div class="post-body">
+          <p class="cat">{data.category}</p>
+          <h3>
+            <a href={`/blog/${slug}/`}>{data.title}</a>
           </h3>
-          {data.description && (
-            <p style="font-size:.95rem; color:#333; margin-bottom:.8rem;">{data.description}</p>
-          )}
-          {data.date && (
-            <p style="font-size:.8rem; color:#777; margin:0;">{data.date}</p>
-          )}
+          {data.description && <p class="desc">{data.description}</p>}
+          {data.date && <p class="date">{data.date}</p>}
         </div>
       </article>
     ))}
   </section>
 
-  <!-- Botón "Ver más artículos" -->
   <div style="text-align:center; padding:3rem 0;">
-    <button id="showMore" 
-      style="font-family:'Calibri',sans-serif; font-weight:bold; font-size:1.3rem; color:#002060; background:none; border:none; cursor:pointer;">
+    <button id="showMore" class="btn-more">
       Ver más artículos
       <span style="display:block; font-size:2rem; color:#c00000;">&#x25BC;</span>
     </button>
   </div>
 
   <style>
+    /* ====== BASE ====== */
+    #posts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      padding: 2rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .post-card {
+      background: #f2f2f2;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      display: none;
+      width: 100%;
+    }
+
+    .post-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .post-body {
+      padding: 1.2rem;
+    }
+
+    .cat {
+      color: #c00000;
+      font-weight: bold;
+      margin-bottom: .3rem;
+    }
+
+    .post-card h3 {
+      color: #002060;
+      font-weight: bold;
+      margin-bottom: .6rem;
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+
+    .post-card h3 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .desc {
+      font-size: .95rem;
+      color: #333;
+      margin-bottom: .8rem;
+    }
+
+    .date {
+      font-size: .8rem;
+      color: #777;
+    }
+
+    /* ====== CHIPS ====== */
     .chip {
       padding: 0.5rem 1rem;
       border: 1px solid #002060;
@@ -117,17 +142,29 @@ const sorted = posts
       background: white;
       color: #002060;
       font-family: 'Calibri', sans-serif;
-      font-weight: bold; /* ✅ TODAS EN NEGRITA */
+      font-weight: bold;
       cursor: pointer;
       transition: 0.2s;
     }
+
     .chip.active {
       background: #c00000;
       border-color: #c00000;
       color: #fff;
     }
 
-    /* 📱 Responsive grid */
+    /* ====== BOTÓN ====== */
+    .btn-more {
+      font-family: 'Calibri', sans-serif;
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: #002060;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ====== RESPONSIVE ====== */
     @media (max-width: 1024px) {
       #posts {
         grid-template-columns: repeat(2, 1fr);
@@ -137,35 +174,71 @@ const sorted = posts
     @media (max-width: 640px) {
       #posts {
         grid-template-columns: 1fr;
+        padding: 1rem;
+        gap: 1.5rem;
+      }
+
+      .post-card {
+        display: block;
+        width: 100%;
+        max-width: 95%;
+        margin: 0 auto;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .post-img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+      }
+
+      .post-body {
+        padding: 1rem;
+      }
+
+      .post-card h3 {
+        font-size: 1rem;
+        margin-bottom: .5rem;
+      }
+
+      .desc {
+        font-size: 0.9rem;
+      }
+
+      .date {
+        font-size: 0.8rem;
       }
     }
-  </style>
-<script>
+ <script>
   const chips = document.querySelectorAll('.chip');
-  const cards = document.querySelectorAll<HTMLElement>('.post-card');
-  const search = document.getElementById('search') as HTMLInputElement | null;
-  const showMoreBtn = document.getElementById('showMore') as HTMLButtonElement | null;
-  let activeCat = 'Todos';
-  let visible = 6; // artículos iniciales
+  const cards = document.querySelectorAll('.post-card');
+  const search = document.getElementById('search');
+  const showMoreBtn = document.getElementById('showMore');
 
-  // ✨ Aplica animación al mostrar los posts
-  function fadeIn(el: HTMLElement) {
+  let activeCat = 'Todos';
+  let visible = 6;
+
+  function fadeIn(el) {
     el.style.opacity = '0';
     el.style.display = 'block';
-    el.style.transition = 'opacity 0.5s ease';
+    el.style.width = '100%';
     requestAnimationFrame(() => {
+      el.style.transition = 'opacity 0.5s ease';
       el.style.opacity = '1';
     });
   }
 
   function applyFilters() {
-    const q = (search?.value ?? '').toLowerCase();
+    const q = (search && search.value ? search.value.toLowerCase() : '');
     let count = 0;
+
     cards.forEach((card) => {
-      const cat = card.getAttribute('data-cat') ?? '';
-      const text = card.textContent?.toLowerCase() ?? '';
+      const cat = card.getAttribute('data-cat') || '';
+      const text = (card.textContent || '').toLowerCase();
       const matchCat = activeCat === 'Todos' || cat === activeCat;
       const matchText = q === '' || text.includes(q);
+
       if (matchCat && matchText && count < visible) {
         fadeIn(card);
         count++;
@@ -173,19 +246,23 @@ const sorted = posts
         card.style.display = 'none';
       }
     });
+
     updateButton();
   }
 
   function updateButton() {
     const totalVisible = Array.from(cards).filter((c) => c.style.display === 'block').length;
     const totalFiltered = Array.from(cards).filter((c) => {
-      const cat = c.getAttribute('data-cat') ?? '';
-      const text = c.textContent?.toLowerCase() ?? '';
+      const cat = c.getAttribute('data-cat') || '';
+      const text = (c.textContent || '').toLowerCase();
       const matchCat = activeCat === 'Todos' || cat === activeCat;
-      const matchText = (search?.value ?? '') === '' || text.includes((search?.value ?? '').toLowerCase());
+      const matchText = !search || !search.value || text.includes(search.value.toLowerCase());
       return matchCat && matchText;
     }).length;
-    if (showMoreBtn) showMoreBtn.style.display = totalVisible < totalFiltered ? 'inline-block' : 'none';
+
+    if (showMoreBtn) {
+      showMoreBtn.style.display = totalVisible < totalFiltered ? 'inline-block' : 'none';
+    }
   }
 
   if (showMoreBtn) {
@@ -199,18 +276,23 @@ const sorted = posts
     chip.addEventListener('click', () => {
       chips.forEach((c) => c.classList.remove('active'));
       chip.classList.add('active');
-      activeCat = chip.getAttribute('data-cat') ?? 'Todos';
+      activeCat = chip.getAttribute('data-cat') || 'Todos';
       visible = 6;
       applyFilters();
     });
   });
 
-  search?.addEventListener('input', () => {
-    visible = 6;
-    applyFilters();
-  });
+  if (search) {
+    search.addEventListener('input', () => {
+      visible = 6;
+      applyFilters();
+    });
+  }
 
-  document.querySelector('.chip[data-cat="Todos"]')?.classList.add('active');
-  applyFilters(); // Inicializa visibilidad
+  const defaultChip = document.querySelector('.chip[data-cat="Todos"]');
+  if (defaultChip) defaultChip.classList.add('active');
+
+  applyFilters();
 </script>
+
 </BaseLayout>

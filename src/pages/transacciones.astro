@@ -3,9 +3,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { readFileSync } from "fs";
 import Papa from "papaparse";
 
+// 🟦 Definimos el tipo de datos esperado
+interface Transaccion {
+  Sector: string;
+  "Tipo de transacción": string;
+  País?: string;
+  "Compañía 1"?: string;
+  "Compañía 2"?: string;
+  Descripción?: string;
+}
+
 // 🟦 Cargar CSV
 const csvData = readFileSync("./src/data/transacciones.csv", "utf8");
-const { data: transacciones } = Papa.parse(csvData, { header: true });
+const { data } = Papa.parse(csvData, { header: true });
+
+// 🟦 Tipado correcto
+const transacciones = data as unknown as Transaccion[];
 
 // 🟦 Extraer opciones únicas
 const sectores = [...new Set(transacciones.map((t) => t.Sector))].filter(Boolean);
@@ -29,161 +42,137 @@ const tipos = [...new Set(transacciones.map((t) => t["Tipo de transacción"]))].
   </header>
 
   <!-- 🟦 Filtros -->
-  <section style="display:flex; justify-content:center; gap:1rem; padding:2rem 1rem; flex-wrap:wrap;">
-    <div>
-      <label for="sector" style="display:block; font-weight:bold; color:#002060; margin-bottom:.5rem; font-family:'Calibri', sans-serif;">Sector</label>
-      <select id="sector" style="padding:.55rem .7rem; border:1px solid #ccc; border-radius:4px; min-width:220px; font-family:'Calibri', sans-serif;">
+  <section class="filtros">
+    <div class="filtro">
+      <label for="sector">Sector</label>
+      <select id="sector">
         <option value="Todos">Todos</option>
-        {sectores.map((s) => <option value={s}>{s}</option>)}
+        {sectores.map((s) => <option value={String(s)}>{s}</option>)}
       </select>
     </div>
 
-    <div>
-      <label for="tipo" style="display:block; font-weight:bold; color:#002060; margin-bottom:.5rem; font-family:'Calibri', sans-serif;">Tipo de Transacción</label>
-      <select id="tipo" style="padding:.55rem .7rem; border:1px solid #ccc; border-radius:4px; min-width:220px; font-family:'Calibri', sans-serif;">
+    <div class="filtro">
+      <label for="tipo">Tipo de Transacción</label>
+      <select id="tipo">
         <option value="Todos">Todos</option>
-        {tipos.map((t) => <option value={t}>{t}</option>)}
+        {tipos.map((t) => <option value={String(t)}>{t}</option>)}
       </select>
     </div>
 
-    <button id="btnAplicar" style="align-self:flex-end; padding:.7rem 1.5rem; background:#c00000; color:#fff; border:none; border-radius:4px; font-weight:bold; font-family:'Calibri', sans-serif; cursor:pointer;">
-      Aplicar
-    </button>
+    <button id="btnAplicar" class="btn-aplicar">Aplicar</button>
   </section>
 
   <!-- 🟦 Grid -->
   <section id="grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; padding:0 1rem 2.5rem; max-width:1100px; margin:0 auto;">
     {transacciones.map((t) => (
       <article class="card" data-sector={t.Sector} data-tipo={t["Tipo de transacción"]}>
-        
-        <!-- Encabezado -->
         <div class="card-header">
           <div class="header-left">
             <h4 class="sector">{t.Sector}</h4>
             <h3 class="tipo">{t["Tipo de transacción"]}</h3>
           </div>
 
-          <!-- 6️⃣ País -->
-{t.País && (
-  (() => {
-    const countryCodes = {
-      "España": "es",
-      "Perú": "pe",
-      "Estados Unidos": "us",
-      "Canadá": "ca",
-      "Portugal": "pt",
-      "Alemania": "de",
-      "Venezuela": "ve",
-      "Níger": "ne"
-    };
-
-    const code = countryCodes[t.País] || "default";
-
-    return (
-      <img
-        src={`/images/flags/${code}.png`}
-        alt={t.País}
-        class="flag"
-      />
-    );
-  })()
-)}
+          {t.País && (
+            (() => {
+              const countryCodes = {
+                "España": "es",
+                "Perú": "pe",
+                "Estados Unidos": "us",
+                "Canadá": "ca",
+                "Portugal": "pt",
+                "Alemania": "de",
+                "Venezuela": "ve",
+                "Níger": "ne"
+              };
+              const code = countryCodes[t.País as keyof typeof countryCodes] || "default";
+              return <img src={`/images/flags/${code}.png`} alt={t.País} class="flag" />;
+            })()
+          )}
         </div>
 
         <hr class="divider" />
 
-       <!-- Cuerpo -->
-<div class="card-body">
-  <!-- 🟦 Compañía 1 -->
-  {t["Compañía 1"] && (
-    (() => {
-      const c1 = (t["Compañía 1"] || "").trim().toLowerCase();
-      const confidenciales = [
-        "confidencial",
-        "target confidencial",
-        "inversor confidencial",
-        "portfolio de farmacias",
-        "target",
-        "inversor"
-      ];
+        <div class="card-body">
+          {t["Compañía 1"] && (
+            (() => {
+              const c1 = (t["Compañía 1"] || "").trim().toLowerCase();
+              const confidenciales = [
+                "confidencial",
+                "target confidencial",
+                "inversor confidencial",
+                "portfolio de farmacias",
+                "target",
+                "inversor"
+              ];
+              if (confidenciales.some((p) => c1.includes(p))) {
+                return <p class="confidencial">{t["Compañía 1"]}</p>;
+              }
+              return (
+                <img
+                  src={`/images/transacciones/${t["Compañía 1"]
+                    .toLowerCase()
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                    .replace(/ñ/g, "n")
+                    .replace(/\s+/g, "_")
+                    .replace(/&/g, "y")
+                    .replace(/[^a-z0-9_]/g, "")
+                  }.svg`}
+                  alt={t["Compañía 1"]}
+                  loading="lazy"
+                  class="logo"
+                />
+              );
+            })()
+          )}
 
-      if (confidenciales.some((p) => c1.includes(p))) {
-        return <p class="confidencial">{t["Compañía 1"]}</p>;
-      }
+          {t.Descripción && <p class="descripcion">{t.Descripción}</p>}
 
-      return (
-        <img
-          src={`/images/transacciones/${t["Compañía 1"]
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/ñ/g, "n")
-            .replace(/\s+/g, "_")
-            .replace(/&/g, "y")
-            .replace(/[^a-z0-9_]/g, "")
-          }.svg`}
-          alt={t["Compañía 1"]}
-          loading="lazy"
-          class="logo"
-        />
-      );
-    })()
-  )}
-
-  <!-- 🟦 Descripción -->
-  {t.Descripción && (
-    <p class="descripcion">{t.Descripción}</p>
-  )}
-
-  <!-- 🟦 Compañía 2 -->
-  {t["Compañía 2"] && (
-    (() => {
-      const c2 = (t["Compañía 2"] || "").trim().toLowerCase();
-      const confidenciales = [
-        "confidencial",
-        "target confidencial",
-        "inversor confidencial",
-        "portfolio de farmacias",
-        "target",
-        "inversor"
-      ];
-
-      if (confidenciales.some((p) => c2.includes(p))) {
-        return <p class="confidencial">{t["Compañía 2"]}</p>;
-      }
-
-      return (
-        <img
-          src={`/images/transacciones/${t["Compañía 2"]
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/ñ/g, "n")
-            .replace(/\s+/g, "_")
-            .replace(/&/g, "y")
-            .replace(/[^a-z0-9_]/g, "")
-          }.svg`}
-          alt={t["Compañía 2"]}
-          loading="lazy"
-          class="logo"
-        />
-      );
-    })()
-  )}
-</div>
+          {t["Compañía 2"] && (
+            (() => {
+              const c2 = (t["Compañía 2"] || "").trim().toLowerCase();
+              const confidenciales = [
+                "confidencial",
+                "target confidencial",
+                "inversor confidencial",
+                "portfolio de farmacias",
+                "target",
+                "inversor"
+              ];
+              if (confidenciales.some((p) => c2.includes(p))) {
+                return <p class="confidencial">{t["Compañía 2"]}</p>;
+              }
+              return (
+                <img
+                  src={`/images/transacciones/${t["Compañía 2"]
+                    .toLowerCase()
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                    .replace(/ñ/g, "n")
+                    .replace(/\s+/g, "_")
+                    .replace(/&/g, "y")
+                    .replace(/[^a-z0-9_]/g, "")
+                  }.svg`}
+                  alt={t["Compañía 2"]}
+                  loading="lazy"
+                  class="logo"
+                />
+              );
+            })()
+          )}
+        </div>
       </article>
     ))}
   </section>
 
+  <!-- 🟦 Script de filtrado -->
   <script>
-    const sectorSelect = document.getElementById('sector');
-    const tipoSelect = document.getElementById('tipo');
-    const btnAplicar = document.getElementById('btnAplicar');
-    const cards = document.querySelectorAll('.card');
+    const sectorSelect = document.getElementById('sector') as HTMLSelectElement | null;
+    const tipoSelect = document.getElementById('tipo') as HTMLSelectElement | null;
+    const btnAplicar = document.getElementById('btnAplicar') as HTMLButtonElement | null;
+    const cards = document.querySelectorAll('.card') as NodeListOf<HTMLElement>;
 
     btnAplicar?.addEventListener('click', () => {
-      const s = sectorSelect.value;
-      const t = tipoSelect.value;
+      const s = sectorSelect?.value || 'Todos';
+      const t = tipoSelect?.value || 'Todos';
 
       cards.forEach((c) => {
         const matchS = s === 'Todos' || c.dataset.sector === s;
@@ -194,6 +183,71 @@ const tipos = [...new Set(transacciones.map((t) => t["Tipo de transacción"]))].
   </script>
 
   <style>
+    /* ===== FILTROS ===== */
+    .filtros {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem 1rem;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .filtro label {
+      display: block;
+      font-weight: bold;
+      color: #002060;
+      margin-bottom: 0.5rem;
+      font-family: 'Calibri', sans-serif;
+    }
+
+    .filtro select {
+      padding: 0.55rem 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-width: 220px;
+      font-family: 'Calibri', sans-serif;
+      background: #fff;
+    }
+
+    .btn-aplicar {
+      align-self: flex-end;
+      padding: 0.7rem 1.5rem;
+      background: #c00000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      font-family: 'Calibri', sans-serif;
+      cursor: pointer;
+      width: auto;
+    }
+
+    /* 🟩 Mobile */
+    @media (max-width: 768px) {
+      .filtros {
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        flex-direction: column !important;
+        padding: 1.25rem 1rem !important;
+      }
+
+      .filtro {
+        width: 100%;
+        max-width: 460px;
+      }
+
+      .btn-aplicar {
+        align-self: flex-start !important;
+        margin-top: 0.5rem;
+        width: fit-content !important;
+        max-width: none !important;
+      }
+    }
+
+    /* ===== CARDS ===== */
     .card {
       background: #f2f2f2;
       padding: 1.5rem;
@@ -204,40 +258,18 @@ const tipos = [...new Set(transacciones.map((t) => t["Tipo de transacción"]))].
       transition: transform 0.2s ease;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
+    .card:hover { transform: translateY(-5px); }
 
-    /* Encabezado */
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
     }
 
-    .header-left {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .sector {
-      font-size: 0.95rem;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    .tipo {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .flag {
-      width: 32px;
-      height: auto;
-      align-self: flex-start;
-    }
+    .header-left { display: flex; flex-direction: column; gap: 0.2rem; }
+    .sector { font-size: 0.95rem; font-weight: bold; margin: 0; }
+    .tipo { font-size: 1.1rem; font-weight: 700; margin: 0; }
+    .flag { width: 32px; height: auto; align-self: flex-start; }
 
     .divider {
       border: none;
@@ -245,27 +277,13 @@ const tipos = [...new Set(transacciones.map((t) => t["Tipo de transacción"]))].
       margin: 0.8rem 0 1rem;
     }
 
-    .card-body {
-      text-align: center;
-    }
-
+    .card-body { text-align: center; }
     .logo {
-      max-width: 200px;
-      height: auto;
-      object-fit: contain;
-      margin: 0.5rem auto 1rem;
-      display: block;
+      max-width: 200px; height: auto; object-fit: contain;
+      margin: 0.5rem auto 1rem; display: block;
     }
-
-    .descripcion {
-      font-size: 0.95rem;
-      margin: 0.5rem 0 1rem;
-    }
-
-    .confidencial {
-      color: #666;
-      font-style: italic;
-    }
+    .descripcion { font-size: 0.95rem; margin: 0.5rem 0 1rem; }
+    .confidencial { color: #666; font-style: italic; }
   </style>
 
 </BaseLayout>

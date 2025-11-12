@@ -1,163 +1,335 @@
-<header class="header">
-  <div class="container">
-    <!-- Logo -->
-    <a href="/" class="logo">
+<header class="kap-header">
+  <div class="kap-header__inner">
+    <a href="/" class="kap-logo" aria-label="Kerval Advisory Partners">
       <img src="/images/logo.svg" alt="Kerval Advisory Partners" />
     </a>
 
-    <!-- Botón hamburguesa -->
-    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <button class="kap-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="kap-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-    <!-- Navegación -->
-    <nav class="nav">
-      <ul>
-        <li class="dropdown">
-          <a href="#">Quiénes Somos</a>
-          <ul class="dropdown-menu">
-            <li><a href="/">Quiénes Somos</a></li>
-            <li><a href="/quienes-somos/equipo">Nuestro Equipo</a></li>
-            <li><a href="/quienes-somos/equipo/trabaja">Trabaja con Nosotros</a></li>
+    <div class="kap-overlay"></div>
+
+    <nav id="kap-nav" class="kap-nav" aria-hidden="true">
+      <ul class="kap-nav__list">
+        <li class="kap-nav__item kap-has-dropdown">
+          <button class="kap-nav__toggle">Quiénes&nbsp;Somos <span class="kap-arrow"></span></button>
+          <ul class="kap-dropdown">
+            <li><a href="/" class="kap-dropdown__link">Quiénes Somos</a></li>
+            <li><a href="/quienes-somos/equipo" class="kap-dropdown__link">Nuestro Equipo</a></li>
+            <li><a href="/quienes-somos/equipo/trabaja" class="kap-dropdown__link">Trabaja con Nosotros</a></li>
           </ul>
         </li>
-        <li class="dropdown">
-          <a href="#">Servicios</a>
-          <ul class="dropdown-menu">
-            <li><a href="/servicios">Nuestros Servicios</a></li>
-            <li><a href="/servicios/clientes">Nuestros Clientes</a></li>
+
+        <li class="kap-nav__item kap-has-dropdown">
+          <button class="kap-nav__toggle">Servicios <span class="kap-arrow"></span></button>
+          <ul class="kap-dropdown">
+            <li><a href="/servicios" class="kap-dropdown__link">Nuestros Servicios</a></li>
+            <li><a href="/servicios/clientes" class="kap-dropdown__link">Nuestros Clientes</a></li>
           </ul>
         </li>
-        <li><a href="/transacciones">Transacciones</a></li>
-        <li><a href="/internacional">Internacional</a></li>
-        <li><a href="/blog">Blog y Noticias</a></li>
-        <li><a href="/contacto">Contacto</a></li>
+
+        <li class="kap-nav__item"><a href="/transacciones" class="kap-nav__link">Transacciones</a></li>
+        <li class="kap-nav__item"><a href="/internacional" class="kap-nav__link">Internacional</a></li>
+        <li class="kap-nav__item"><a href="/blog" class="kap-nav__link">Blog&nbsp;y&nbsp;Noticias</a></li>
+        <li class="kap-nav__item"><a href="/contacto" class="kap-nav__link">Contacto</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
 <style>
-/* ===== HEADER BASE ===== */
-.header {
-  background: #fff;
-  padding: 0.8rem 2rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+.kap-header {
   position: sticky;
   top: 0;
   z-index: 1000;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
 }
 
-.container {
-  max-width: 1200px;
+/* === CONTENEDOR PRINCIPAL === */
+.kap-header__inner {
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* ✅ Logo a la izq, menú a la derecha */
+  padding: 18px 60px;
+  position: relative;
+  height: 100px;
 }
 
-.logo img {
-  height: 120px; /* tamaño equilibrado del logo */
+/* === LOGO === */
+.kap-logo img {
+  height: 78px;
+  width: auto;
+  display: block;
 }
 
-/* ===== NAV BASE ===== */
-.nav ul {
+/* === BOTÓN HAMBURGUESA === */
+.kap-burger {
+  background: none;
+  border: none;
+  cursor: pointer;
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1100;
+}
+.kap-burger span {
+  position: absolute;
+  height: 3px;
+  width: 24px;
+  background-color: #002060;
+  border-radius: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.35s ease;
+}
+.kap-burger span:nth-child(1) { top: 12px; }
+.kap-burger span:nth-child(2) { top: 18px; }
+.kap-burger span:nth-child(3) { top: 24px; }
+.kap-burger.is-open span:nth-child(1) {
+  top: 18px;
+  transform: translateX(-50%) rotate(45deg);
+  background-color: #C00000;
+}
+.kap-burger.is-open span:nth-child(2) { opacity: 0; }
+.kap-burger.is-open span:nth-child(3) {
+  top: 18px;
+  transform: translateX(-50%) rotate(-45deg);
+  background-color: #C00000;
+}
+
+/* === OVERLAY === */
+.kap-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 900;
+}
+.kap-overlay.is-visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* === MENÚ MOBILE === */
+.kap-nav {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: 80vw;
+  max-width: 360px;
+  height: 100vh;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+  padding: 24px 16px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+.kap-nav.is-open { transform: translateX(0); }
+
+.kap-nav__list {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.nav a {
+.kap-nav__link, .kap-nav__toggle {
+  font-family: 'Calibri', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #002060;
   text-decoration: none;
-  color: #c00000;
-  font-family: 'Calibri', sans-serif;
-  font-size: 17px;   
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.nav a:hover {
-  color: #002060;
-}
-
-/* ===== DROPDOWN ===== */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff; /* mismo fondo que header */
-  padding: 0.5rem 0;
-  list-style: none;
-  min-width: 220px;
-  z-index: 999;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.2s ease-in-out;
-}
-
-.dropdown-menu li { margin: 0; }
-
-.dropdown-menu a {
   display: block;
-  padding: 0.6rem 1rem;
-  color: #c00000;
-  font-family: 'Calibri', sans-serif;
-  font-size: 16px;
-  white-space: nowrap;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  transition: all 0.25s ease;
+}
+.kap-nav__link:hover, .kap-nav__toggle:hover {
+  color: #C00000;
+  background: rgba(0,32,96,0.08);
 }
 
-.dropdown-menu a:hover {
-  background: #f5f5f5;
+/* === FLECHA === */
+.kap-arrow {
+  display: inline-block;
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid #002060;
+  border-bottom: 2px solid #002060;
+  transform: rotate(45deg) translateY(-1px);
+  vertical-align: middle;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.kap-has-dropdown.open .kap-arrow {
+  transform: rotate(-135deg) translateY(1px);
+  border-color: #C00000;
+}
+
+/* === SUBMENÚ MOBILE === */
+.kap-dropdown {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 16px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all 0.4s ease;
+}
+.kap-has-dropdown.open > .kap-dropdown {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 6px;
+  transform: translateY(0);
+}
+.kap-dropdown__link {
+  font-family: 'Calibri', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #C00000;
+  padding: 8px 12px;
+  display: block;
+  border-radius: 6px;
+}
+.kap-dropdown__link:hover {
+  background: rgba(0,32,96,0.07);
   color: #002060;
 }
 
-/* Hover en desktop */
-@media (min-width: 769px) {
-  .dropdown:hover .dropdown-menu {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
+/* === DESKTOP === */
+@media (min-width: 1024px) {
+  .kap-burger, .kap-overlay { display: none !important; }
+
+  .kap-nav {
+    position: static;
+    transform: none;
+    background: transparent;
+    padding: 0;
+    height: auto;
+    width: auto;
+    overflow: visible !important;
   }
-}
 
-/* ===== MOBILE ===== */
-.menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  cursor: pointer;
-}
+  .kap-nav__list {
+    flex-direction: row;
+    justify-content: flex-end; /* ✅ menú alineado a la derecha */
+    align-items: center;
+    gap: 48px;
+    flex-wrap: nowrap;
+  }
 
-@media (max-width: 768px) {
-  .menu-toggle { display: block; }
-  .nav {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background: #fff;
+  .kap-nav__link, .kap-nav__toggle {
+    color: #C00000;
+    background: none;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .kap-nav__link:hover, .kap-nav__toggle:hover {
+    color: #002060;
+    background: none;
+  }
+
+  .kap-has-dropdown { position: relative; }
+
+  .kap-dropdown {
     position: absolute;
     top: 100%;
     left: 0;
-    padding: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    padding: 6px 0;
+    display: none;
+    min-width: 220px;
+    z-index: 2000;
   }
-  .nav.active { display: flex; }
-  .nav ul { flex-direction: column; gap: 1rem; }
-  .dropdown-menu {
-    position: static;
-    border: none;
-    background: #f9f9f9;
-    opacity: 1;
-    transform: translateY(0);
+
+  .kap-has-dropdown:hover > .kap-dropdown { display: block; }
+
+  .kap-arrow { display: none; }
+}
+
+/* === AJUSTE LOGO MOBILE === */
+@media (max-width: 768px) {
+  .kap-header__inner {
+    height: 90px;
+    padding: 16px 20px;
+  }
+
+  .kap-logo img {
+    height: 64px;
+  }
+
+  .kap-burger {
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 </style>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const burger = document.querySelector(".kap-burger");
+  const nav = document.querySelector("#kap-nav");
+  const overlay = document.querySelector(".kap-overlay");
+  const dropdowns = document.querySelectorAll(".kap-has-dropdown");
+
+  if (!burger || !nav || !overlay) return;
+
+  const closeMenu = () => {
+    nav.classList.remove("is-open");
+    burger.classList.remove("is-open");
+    overlay.classList.remove("is-visible");
+  };
+
+  burger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    burger.classList.toggle("is-open");
+    nav.classList.toggle("is-open");
+    overlay.classList.toggle("is-visible");
+  });
+
+  overlay.addEventListener("click", closeMenu);
+
+  dropdowns.forEach((item) => {
+    const toggle = item.querySelector(".kap-nav__toggle");
+    if (!toggle) return;
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = item.classList.contains("open");
+      dropdowns.forEach((i) => i.classList.remove("open"));
+      if (!isOpen) item.classList.add("open");
+    });
+  });
+});
+</script>

@@ -7,26 +7,24 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
   description="Nuestro equipo combina experiencia internacional y conocimiento local para ofrecer asesoramiento financiero en España de alto impacto y confianza."
 >
 
-
   <!-- Banner -->
   <section class="banner">
     <h1>Nuestro Equipo</h1>
     <p>
-      Nuestro equipo cuenta con amplia experiencia en asesoramiento financiero
-      tanto a nivel nacional como internacional.
+      Nuestro equipo cuenta con amplia experiencia en asesoramiento financiero tanto a nivel nacional como internacional.
     </p>
   </section>
 
   <!-- Texto Introductorio -->
   <section class="intro">
     <p>
-      Desde el área de Asesoramiento Financiero contamos con el apoyo de nuestros
-      compañeros de las áreas de Auditoría, Consultoría, Legal, Fiscal y Contabilidad.
+      Desde el área de Asesoramiento Financiero contamos con el apoyo de nuestros compañeros de las áreas de Auditoría, Consultoría, Legal, Fiscal y Contabilidad.
     </p>
   </section>
 
   <!-- Grid Equipo -->
   <section class="equipo">
+
     <div class="card">
       <a href="https://www.linkedin.com/in/juan-santodomingo-b536258/" target="_blank" rel="noopener">
         <img src="/images/equipo/juan-santodomingo.jpg" alt="Juan Santodomingo" />
@@ -134,8 +132,10 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       <p class="cargo">Partner</p>
       <p class="area">Asesoramiento Legal</p>
     </div>
+
   </section>
-   <!-- Sección Valores -->
+
+  <!-- Sección Valores -->
   <section class="valores">
     <div class="valores-container">
       <div class="valor-card">
@@ -162,19 +162,39 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       padding: 6rem 2rem;
       position: relative;
     }
+
     .banner::after {
       content: "";
       position: absolute;
       inset: 0;
       background: rgba(0, 32, 96, 0.6);
     }
-    .banner h1, .banner p {
+
+    .banner h1,
+    .banner p {
       position: relative;
       z-index: 1;
     }
-    .banner h1 { font-size: 3rem; margin: 0; }
-    .banner p { margin-top: 1rem; font-size: 1.7rem; max-width: 800px; margin-inline: auto; }
-    .intro { text-align: center; font-size: 1.2rem; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+
+    .banner h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+
+    .banner p {
+      margin-top: 1rem;
+      font-size: 1.7rem;
+      max-width: 800px;
+      margin-inline: auto;
+    }
+
+    .intro {
+      text-align: center;
+      font-size: 1.2rem;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
 
     .equipo {
       display: grid;
@@ -184,15 +204,21 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       margin: 3rem auto;
       padding: 0 1rem;
     }
+
     .card {
       text-align: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
     }
-    .card a { text-decoration: none; }
+
+    .card a {
+      text-decoration: none;
+    }
+
     .card img {
       width: 180px;
       height: 180px;
@@ -201,22 +227,37 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       margin-bottom: 0rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .card img:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
     }
+
     .nombre {
       font-weight: bold;
       color: #c00000;
       margin-bottom: 0.3rem;
       transition: color 0.3s ease;
-      font-size: 1.2rem
+      font-size: 1.2rem;
     }
-    .card a:hover .nombre { color: #002060; }
-    .cargo { font-weight: bold; color: #002060; margin-bottom: 0.2rem; }
-    .area { color: #002060; margin: 0; }
-.valores {
-      background-color: #f2f2f2; /* gris suave */
+
+    .card a:hover .nombre {
+      color: #002060;
+    }
+
+    .cargo {
+      font-weight: bold;
+      color: #002060;
+      margin-bottom: 0.2rem;
+    }
+
+    .area {
+      color: #002060;
+      margin: 0;
+    }
+
+    .valores {
+      background-color: #f2f2f2;
       padding: 4rem 4rem;
       text-align: center;
     }
@@ -239,7 +280,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     }
 
     .valor-card:hover {
-      transform: scale(1.1); /* efecto hover */
+      transform: scale(1.1);
     }
 
     .valor-card img {
@@ -251,11 +292,32 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     .valor-card p {
       font-family: 'Roboto', sans-serif;
       font-weight: bold;
-      color: #002060; /* azul corporativo */
+      color: #002060;
       font-size: 1.2rem;
       margin: 0;
     }
 
-</style>
+    /* === MOBILE (solo cambios aquí) === */
+    @media (max-width: 768px) {
+      .valores {
+        padding: 3rem 1.5rem;
+      }
+
+      .valores-container {
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+
+      .valor-card img {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 0.5rem;
+      }
+
+      .valor-card p {
+        font-size: 1rem;
+      }
+    }
+  </style>
 
 </BaseLayout>

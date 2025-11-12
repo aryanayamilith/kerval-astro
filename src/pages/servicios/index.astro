@@ -2,9 +2,13 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Nuestros Servicios | Kerval Advisory Partners">
+<BaseLayout 
+  title="Servicios de Asesoramiento Financiero | Kerval Advisory Partners"
+  description="Asesoramiento financiero integral en España: M&A, valoración, financiación e internacionalización. Soluciones adaptadas a cada etapa del negocio."
+>
 
   <style>
+    /* 🎯 Banner principal */
     .banner {
       background-color: #f2f2f2;
       text-align: center;
@@ -19,7 +23,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       margin: 0;
     }
 
-    /* Secciones principales */
+    /* 🧭 Secciones principales */
     .section {
       display: flex;
       gap: 2rem;
@@ -28,9 +32,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       max-width: 1200px;
       margin: 0 auto;
     }
+
     .section > div:first-child {
       flex: 0 0 35%;
     }
+
     .section-text {
       flex: 0 0 65%;
     }
@@ -42,6 +48,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       color: #c00000;
       margin-bottom: 0rem;
     }
+
     .section-subtitle {
       font-family: 'Calibri';
       font-weight: bold;
@@ -49,6 +56,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       margin-top: 0rem;
       color: #002060;
     }
+
     .section-text {
       font-family: 'Calibri';
       color: #002060;
@@ -56,7 +64,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       line-height: 1.6;
     }
 
-    /* Bloques con overlay */
+    /* 📘 Bloques con overlay */
     .bullets-block {
       color: #fff;
       padding: 3rem 2rem;
@@ -66,23 +74,28 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       gap: 2rem;
       text-align: center;
     }
+
     .bg-a {
       background: linear-gradient(rgba(0,32,96,0.9), rgba(0,32,96,0.9)),
                   url("/images/service-1.jpg") center/cover no-repeat;
     }
+
     .bg-b {
       background: linear-gradient(rgba(0,32,96,0.9), rgba(0,32,96,0.9)),
                   url("/images/service-2.jpg") center/cover no-repeat;
     }
+
     .bg-c {
       background: linear-gradient(rgba(0,32,96,0.9), rgba(0,32,96,0.9)),
                   url("/images/service-3.jpg") center/cover no-repeat;
     }
+
     .bg-d {
       background: linear-gradient(rgba(0,32,96,0.9), rgba(0,32,96,0.9)),
                   url("/images/service-4.jpg") center/cover no-repeat;
     }
 
+    /* 🧩 Tarjetas de servicio */
     .card {
       background-color: #eaebef;
       border-radius: 8px;
@@ -91,6 +104,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       max-width: 280px;
       width: 100%;
     }
+
     .card h3 {
       font-family: 'Calibri';
       font-weight: bold;
@@ -98,18 +112,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       margin: 0.5rem 0 1rem;
       text-align: center;
     }
+
     .card ul {
       font-family: 'Calibri';
       font-size: 1rem;
       color: #002060;
       padding-left: 1.2rem;
       text-align: left;
-  
     }
+
     .card ul li {
-  margin-bottom: 0.8rem;
-  line-height: 1.6;
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
     }
+
     .card img.icon {
       width: 40px;
       height: 40px;
@@ -117,12 +133,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       margin: 0 auto 0.5rem;
     }
 
-    /* Otros servicios */
+    /* 🧱 Otros servicios */
     .otros {
       text-align: center;
       padding: 4rem 2rem;
       background: #f9f9f9;
     }
+
     .otros h2 {
       font-family: 'Calibri';
       font-weight: bold;
@@ -130,6 +147,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       color: #c00000;
       margin-bottom: 1.5rem;
     }
+
     .otros p {
       font-family: 'Calibri';
       font-size: 1.2rem;
@@ -137,6 +155,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       max-width: 800px;
       margin: 0 auto 0rem;
     }
+
     .otros-services {
       display: flex;
       justify-content: center;
@@ -144,15 +163,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       gap: 2.5rem;
       margin-top: 0.2rem;
     }
+
     .otros-card {
       text-align: center;
       max-width: 220px;
     }
+
     .otros-card img {
       width: 50px;
       height: 50px;
       margin-bottom: 1rem;
     }
+
     .otros-card h3 {
       font-family: 'Calibri';
       font-weight: bold;
@@ -160,11 +182,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       font-size: 1.2rem;
       margin: 1rem 0;
     }
+
     .otros-card p {
       font-family: 'Calibri';
       font-size: 1rem;
       color: #002060;
     }
+
     .ecovis-logo {
       display: block;
       margin: 2rem auto;
@@ -172,15 +196,51 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       width: 100%;
       height: auto;
     }
+
+    /* ✅ AJUSTES RESPONSIVOS PARA MOBILE */
+    @media (max-width: 768px) {
+      .section {
+        display: block !important;
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+
+      .section > div:first-child,
+      .section-text {
+        width: 100% !important;
+        flex: none !important;
+        margin: 0 auto 1.5rem auto;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        color: #c00000;
+      }
+
+      .section-subtitle {
+        font-size: 1.4rem;
+        color: #002060;
+        margin-bottom: 1rem;
+      }
+
+      .section-text {
+        text-align: justify;
+      }
+
+      .banner h1 {
+        font-size: 2.4rem;
+      }
+    }
   </style>
 
-  <!-- Banner -->
+  <!-- 🟥 Banner -->
   <section class="banner">
     <h1>Nuestros Servicios</h1>
   </section>
 
-  <!-- Bloque A -->
-   <section id="estrategia-valor" class="section">
+  <!-- 🟦 Bloque A -->
+  <section id="estrategia-valor" class="section">
     <div>
       <h2 class="section-title">Estrategia y Valoración</h2>
       <h3 class="section-subtitle">Strategy & Valuation (S&V)</h3>
@@ -191,6 +251,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <p>Además, ofrecemos asesoramiento en la valoración de activos, negocios y empresas, adaptado a cada necesidad: transacciones, financiación, reporting contable, motivos fiscales, entre otros.</p>
     </div>
   </section>
+
   <div class="bullets-block bg-a">
     <div class="card">
       <img src="/images/icons/strategy.svg" alt="Strategy" class="icon" />
@@ -213,7 +274,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     </div>
   </div>
 
-  <!-- Bloque B -->
+  <!-- 🟩 Bloque B -->
   <section id="transacciones" class="section">
     <div>
       <h2 class="section-title">Transacciones</h2>
@@ -225,6 +286,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <p>También brindamos asesoramiento post-transacción, revisando términos y analizando la generación de sinergias.</p>
     </div>
   </section>
+
   <div class="bullets-block bg-b">
     <div class="card">
       <img src="/images/icons/fusiones.svg" alt="Fusiones y Adquisiciones" class="icon" />
@@ -253,8 +315,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     </div>
   </div>
 
-  <!-- Bloque C -->
-   <section id="financiacion" class="section">
+  <!-- 🟨 Bloque C -->
+  <section id="financiacion" class="section">
     <div>
       <h2 class="section-title">Financiación</h2>
       <h3 class="section-subtitle">Capital Advisory (CA)</h3>
@@ -265,6 +327,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <p>También trabajamos con fondos y entidades financieras, aportando revisión independiente de propuestas y verificación del cumplimiento de términos post financiación.</p>
     </div>
   </section>
+
   <div class="bullets-block bg-c">
     <div class="card">
       <img src="/images/icons/capital-advisory.svg" alt="Capital Advisory" class="icon" />
@@ -293,8 +356,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     </div>
   </div>
 
-  <!-- Bloque D -->
-   <section id="management" class="section">
+  <!-- 🟪 Bloque D -->
+  <section id="management" class="section">
     <div>
       <h2 class="section-title">Apoyo a la Gestión</h2>
       <h3 class="section-subtitle">Management Support (MS)</h3>
@@ -305,6 +368,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <p>Además, integramos este servicio con el resto de nuestras áreas (Estrategia, Transacciones y Financiación) para ofrecer un soporte integral y coherente.</p>
     </div>
   </section>
+
   <div class="bullets-block bg-d">
     <div class="card">
       <img src="/images/icons/management-office.svg" alt="Management Office" class="icon" />
@@ -325,7 +389,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     </div>
   </div>
 
-  <!-- Bloque E -->
+  <!-- 🟫 Bloque E -->
   <section class="otros">
     <h2>Otros Servicios</h2>
     <p>Desde ECOVIS España brindamos servicios complementarios para una cobertura integral de cara a mejorar la gestión y la creación de valor en nuestros clientes.</p>

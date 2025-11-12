@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import CookieBanner from "../components/CookieBanner.astro"; // Componente de cookies
 import "../styles/global.css";
 
 const {
@@ -10,53 +11,54 @@ const {
 } = Astro.props;
 ---
 
+<!doctype html>
 <html lang="es">
   <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- SEO Básico -->
-  <title>{title}</title>
-  <meta name="description" content={description} />
-  <meta
-    name="keywords"
-    content="asesoramiento financiero en España, M&A, corporate finance, valoración de empresas, boutique financiera, fusiones y adquisiciones, estrategia corporativa"
-  />
-  <meta name="author" content="Kerval Advisory Partners" />
-  <link rel="canonical" href={Astro.url.href} />
+    <!-- SEO Básico -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="asesoramiento financiero en España, M&A, corporate finance, valoración de empresas, boutique financiera, fusiones y adquisiciones, estrategia corporativa"
+    />
+    <meta name="author" content="Kerval Advisory Partners" />
+    <link rel="canonical" href={Astro.url.href} />
 
-  <!-- Open Graph (LinkedIn, Facebook, WhatsApp) -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="og:url" content={Astro.url.href} />
-  <meta property="og:site_name" content="Kerval Advisory Partners" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:site_name" content="Kerval Advisory Partners" />
 
-  <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={title} />
-  <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={ogImage} />
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
-  <!-- Favicon y manifest -->
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
+    <!-- Favicon y manifest -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-  <!-- Estilos globales -->
-  <link rel="stylesheet" href="/src/styles/global.css">
+    <!-- Estilos globales (opcional si ya importas arriba) -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
 
-  <!-- Tipografía principal (Calibri + Carlito como respaldo) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-</head>
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
   <body>
     <!-- Header global -->
@@ -69,5 +71,21 @@ const {
 
     <!-- Footer global -->
     <Footer />
+
+    <!-- Cookie Banner global -->
+    <CookieBanner />
+
+    <!--
+      SLOT reservado para scripts que dependan del consentimiento.
+      Ejemplo futuro (cuando integres GA4 u otros):
+      <script type="text/plain" data-consent="analytics" src="https://www.googletagmanager.com/gtag/js?id=G-XXXX" async></script>
+      <script type="text/plain" data-consent="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXX');
+      </script>
+    -->
+    <slot name="consent-scripts" />
   </body>
 </html>

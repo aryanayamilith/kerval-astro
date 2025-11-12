@@ -1,0 +1,3 @@
+Contact: mailto:security@kervaladvisory.com
+Policy: https://kap-beige.vercel.app/aviso-legal
+Preferred-Languages: es, en
