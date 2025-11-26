@@ -33,40 +33,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   <!-- ====== ESTILOS DE LA PÁGINA ====== -->
   <style>
-    /* ===== Banner (mismas medidas que EQUIPO) ===== */
-    .banner {
-      background: url('/images/banner-clientes.jpg') center/cover no-repeat;
-      color: #fff;
-      text-align: center;
-      padding: 6rem 2rem;
-      position: relative;
-    }
-
-    .banner::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 32, 96, 0.6);
-    }
-
-    .banner h1,
-    .banner p {
-      position: relative;
-      z-index: 1;
-    }
-
-    .banner h1 {
-      font-size: 3rem;
-      margin: 0;
-      font-family: 'Calibri', sans-serif;
-    }
-
-    .banner p {
-      margin-top: 1rem;
-      font-size: 1.7rem;
-      max-width: 800px;
-      margin-inline: auto;
-      font-family: 'Calibri', sans-serif;
+    /* ===== Banner (solo personalizamos la IMAGEN) ===== */
+    .banner--clientes {
+      background-image: url('/images/banner-clientes.jpg');
     }
 
     /* ===== Secciones ===== */
@@ -119,11 +88,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   </style>
 
   <!-- Banner -->
-  <section class="banner">
-    <div>
+  <section class="banner banner--clientes">
       <h1>Nuestros Clientes</h1>
       <p>Confianza que construimos con resultados</p>
-    </div>
   </section>
 
   <!-- =========================== EMPRESAS PRIVADAS =========================== -->
