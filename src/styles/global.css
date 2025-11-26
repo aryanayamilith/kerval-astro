@@ -1,34 +1,63 @@
-/* --- Estilos Globales Base Kerval --- */
+/* ============================
+   FUENTES CALIBRI (Kerval)
+   ============================ */
 
-/* Fuente global: Calibri (marca), Carlito y Arial como respaldo */
+/* Regular */
+@font-face {
+  font-family: "Calibri";
+  src: url("/fonts/calibri-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold */
+@font-face {
+  font-family: "Calibri";
+  src: url("/fonts/calibri-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic */
+@font-face {
+  font-family: "Calibri";
+  src: url("/fonts/calibri-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* ============================
+   ESTILOS GLOBALES BASE KERVAL
+   ============================ */
+
 * {
   box-sizing: border-box;
   font-family: 'Calibri', 'Carlito', 'Arial', sans-serif;
   scroll-behavior: smooth;
 }
 
-/* Estructura básica */
 body {
   margin: 0;
   background-color: #fff;
-  color: #002060; /* Azul corporativo base */
+  color: #002060;
   font-size: 16px;
   line-height: 1.6;
 }
 
-/* Mantén títulos y subtítulos flexibles según cada página */
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
-/* Enlaces */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Botones */
 button {
   font-family: inherit;
   cursor: pointer;
