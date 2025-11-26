@@ -1,4 +1,15 @@
 /* ============================
+   PRELOAD (solo referencia)
+   ============================ */
+/* ⚠️ IMPORTANTE: esto NO va en CSS.
+   Debe añadirse en tu BaseLayout.astro dentro del <head>:
+
+   <link rel="preload" href="/fonts/calibri-regular.woff2" as="font" type="font/woff2" crossorigin />
+   <link rel="preload" href="/fonts/calibri-bold.woff2" as="font" type="font/woff2" crossorigin />
+*/
+
+
+/* ============================
    FUENTES CALIBRI (Kerval)
    ============================ */
 
@@ -36,7 +47,7 @@
 
 * {
   box-sizing: border-box;
-  font-family: 'Calibri', 'Carlito', 'Arial', sans-serif;
+  font-family: "Calibri", "Carlito", "Arial", sans-serif;
   scroll-behavior: smooth;
 }
 
