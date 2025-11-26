@@ -33,15 +33,41 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   <!-- ====== ESTILOS DE LA PÁGINA ====== -->
   <style>
-    /* ===== Banner ===== */
-    .banner{
-      background:url('/images/banner-clientes.jpg') center/cover no-repeat;
-      position:relative;padding:6rem 2rem;text-align:center;color:#fff;
+    /* ===== Banner (mismas medidas que EQUIPO) ===== */
+    .banner {
+      background: url('/images/banner-clientes.jpg') center/cover no-repeat;
+      color: #fff;
+      text-align: center;
+      padding: 6rem 2rem;
+      position: relative;
     }
-    .banner::before{content:"";position:absolute;inset:0;background:rgba(0,32,96,.7)}
-    .banner>div{position:relative;z-index:2}
-    .banner h1{font-family:'Calibri';font-size:3rem;margin-bottom:1rem}
-    .banner p{font-family:'Calibri';font-size:1.5rem}
+
+    .banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 32, 96, 0.6);
+    }
+
+    .banner h1,
+    .banner p {
+      position: relative;
+      z-index: 1;
+    }
+
+    .banner h1 {
+      font-size: 3rem;
+      margin: 0;
+      font-family: 'Calibri', sans-serif;
+    }
+
+    .banner p {
+      margin-top: 1rem;
+      font-size: 1.7rem;
+      max-width: 800px;
+      margin-inline: auto;
+      font-family: 'Calibri', sans-serif;
+    }
 
     /* ===== Secciones ===== */
     .clientes-section{display:block;padding:4rem 1.25rem;background:#fff}
