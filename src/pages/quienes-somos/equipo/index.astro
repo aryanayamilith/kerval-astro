@@ -8,7 +8,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 >
 
   <!-- Banner -->
-  <section class="banner">
+  <section class="banner banner--equipo">
     <h1>Nuestro Equipo</h1>
     <p>
       Nuestro equipo cuenta con amplia experiencia en asesoramiento financiero tanto a nivel nacional como internacional.
@@ -155,8 +155,8 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 
   <!-- Estilos propios -->
   <style>
+    /* Banner genérico */
     .banner {
-      background: url('/images/equipo/banner-equipo.jpg') center/cover no-repeat;
       color: #fff;
       text-align: center;
       padding: 6rem 2rem;
@@ -186,6 +186,11 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       font-size: 1.7rem;
       max-width: 800px;
       margin-inline: auto;
+    }
+
+    /* Banner específico de la página Equipo */
+    .banner--equipo {
+      background: url('/images/equipo/banner-equipo.jpg') center/cover no-repeat;
     }
 
     .intro {
@@ -297,7 +302,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       margin: 0;
     }
 
-    /* === MOBILE (solo cambios aquí) === */
+    /* === MOBILE (solo cambios aquí para valores; el banner mantiene misma altura) === */
     @media (max-width: 768px) {
       .valores {
         padding: 3rem 1.5rem;
