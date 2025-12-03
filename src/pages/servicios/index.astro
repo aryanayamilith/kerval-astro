@@ -12,11 +12,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
        Solo definimos el fondo; el resto (altura, padding, color del texto, etc.)
        viene de los estilos globales de .banner en global.css */
     .banner--servicios {
-      /* Si tienes una imagen específica de servicios, úsala aquí: */
-      /* background-image: url("/images/banner-servicios.jpg"); */
-
-      /* De momento dejamos un color de fondo liso, que se oscurece con el overlay global */
-      background-color: #5f6f93;
+      /* Usamos la imagen específica del banner de servicios */
+      background-image: url("/images/banner-servicios.jpg");
+      /* El overlay azul oscuro lo pone .banner::before desde global.css */
     }
 
     /* 🧭 Secciones principales */
@@ -40,8 +38,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     .section-title {
       font-family: "Calibri";
       font-weight: bold;
-      font-size: 2rem;
-      color: #fff;
+      font-size: 1.9rem;
+      color: #c00000;
       margin-bottom: 0rem;
     }
 
@@ -295,36 +293,33 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   <div class="bullets-block bg-b">
     <div class="card">
       <img src="/images/icons/fusiones.svg" alt="Fusiones y Adquisiciones" class="icon" />
-      <h3>Fusiones y Adquisiciones</h3>
+      <h3>Fusiones y Adquisiciones (M&A)</h3>
       <ul>
-        <li>Adquisiciones y Desinversiones.</li>
-        <li>Fusiones y Escisiones.</li>
+        <li>Adquisiciones</li>
+        <li>Desinversiones</li>
+        <li>Fusiones y otros procesos de integración.</li>
+        <li>Escisiones</li>
         <li>Alianzas Estratégicas.</li>
       </ul>
     </div>
     <div class="card">
       <img src="/images/icons/asesoramiento.svg" alt="Tipo de Asesoramiento" class="icon" />
-      <h3>Tipo de Asesoramiento</h3>
+      <h3>Soporte a Transacciones <br>(TS)</h3>
       <ul>
-        <li>Gestión de todo el proceso de M&A.</li>
-        <li>Asesoramiento en proceso de Due Diligence.</li>
+        <li>Due Diligence de compra (buy side due diligence).</li>
+        <li>Due Diligence de venta (vendor due diligence).</li>
+        <li>Revisión del cumplimiento de términos post-transacción.</li>
+        <li>Revisión de procesos de integración y de generación de sinergias.</li>
       </ul>
-    </div>
-    <div class="card">
-      <img src="/images/icons/post-transaction.svg" alt="Post Transaction Services" class="icon" />
-      <h3>Post Transaction Services</h3>
-      <ul>
-        <li>Revisión de términos de transacción.</li>
-        <li>Revisión de procesos de integración y generación de sinergias.</li>
-      </ul>
+    
     </div>
   </div>
 
   <!-- 🟨 Bloque C -->
   <section id="financiacion" class="section">
     <div>
-      <h2 class="section-title">Financiación</h2>
-      <h3 class="section-subtitle">Capital Advisory (CA)</h3>
+      <h2 class="section-title">Financiación y Restructuración</h2>
+      <h3 class="section-subtitle">Capital Advisory y Restructuring (CA&R)</h3>
     </div>
     <div class="section-text">
       <p>
@@ -347,22 +342,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         <li>Estrategias de financiación.</li>
         <li>Estructuración de financiación.</li>
         <li>Levantamiento de financiación.</li>
-        <li>Reestructuración financiera.</li>
       </ul>
     </div>
     <div class="card">
       <img src="/images/icons/asesoramiento2.svg" alt="Tipo de Asesoramiento" class="icon" />
-      <h3>Tipo de Asesoramiento</h3>
+      <h3>Restructuración (R)</h3>
       <ul>
-        <li>Gestión de todo el proceso de Financiación.</li>
-        <li>Asesoramiento en proceso de Due Diligence para financiadores.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <img src="/images/icons/post-financing.svg" alt="Post Financing Services" class="icon" />
-      <h3>Post Financing Services</h3>
-      <ul>
-        <li>Revisión de términos de financiación (i.e. covenants).</li>
+        <li>Informes de revisión independiente de negocio (IBR).</li>
+        <li>Planes de viabilidad y turnaround.</li>
+        <li>Asesoramiento en procesos de restructuración financiera.</li>
+        <li>Asesoramiento financiero en procesos concursales.</li>
       </ul>
     </div>
   </div>
@@ -392,10 +381,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <h3>Management Office (MO)</h3>
       <ul>
         <li>
-          CFO Office: Control de Gestión, Reporting, Financial & Planning Analysis (FP&A), Gestión de Tesorería.
+           <strong>CFO Office:</strong> Control de Gestión, Reporting, Financial & Planning Analysis (FP&A), Gestión de Tesorería.
         </li>
         <li>
-          CEO, BoD Office: Apoyo en la evaluación y toma de decisiones tácticas y estratégicas.
+          <strong>CEO, BoD Office:</strong> Apoyo en la evaluación y toma de decisiones tácticas y estratégicas.
         </li>
       </ul>
     </div>
@@ -403,9 +392,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <img src="/images/icons/interim-management.svg" alt="Interim Management" class="icon" />
       <h3>Interim Management (IM)</h3>
       <ul>
-        <li>Crisis Management: Procesos de reestructuración y turnaround.</li>
-        <li>Mejora de Eficiencia: Proyectos de mejora de eficiencia operativa y financiera.</li>
-        <li>Nuevos Negocios: Proyectos de lanzamiento de nuevas líneas de negocio.</li>
+        <li><strong>Crisis Management:</strong> Procesos de reestructuración y turnaround.</li>
+        <li><strong>Mejora de Eficiencia:</strong> Proyectos de mejora de eficiencia operativa y financiera.</li>
+        <li><strong>Nuevos Negocios:</strong> Proyectos de lanzamiento de nuevas líneas de negocio.</li>
       </ul>
     </div>
   </div>
