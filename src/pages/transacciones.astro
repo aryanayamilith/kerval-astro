@@ -30,16 +30,13 @@ const tipos = [...new Set(transacciones.map((t) => t["Tipo de transacción"]))].
   description="Experiencia comprobada en operaciones financieras y estratégicas en España. Conoce nuestras transacciones de M&A, financiación e inversión."
 >
 
-  <!-- 🟦 Banner -->
-  <header style="position: relative; height: 350px; background: url('/images/banner-transacciones.jpg') center/cover no-repeat;">
-    <div style="position: absolute; inset: 0; background: rgba(0,32,96,0.65);"></div>
-    <div style="position: relative; z-index: 1; height: 100%; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; text-align:center;">
-      <h1 style="font-family:'Calibri', sans-serif; font-size: 3rem; margin:0;">Transacciones</h1>
-      <p style="font-family:'Calibri', sans-serif; font-size:1.5rem; margin-top:1rem; max-width:800px;">
-        Acompañamos a empresas en procesos de financiación, estrategia y crecimiento con resultados comprobados.
-      </p>
-    </div>
-  </header>
+  <!-- 🟦 Banner: hereda estilos globales -->
+  <section class="banner banner--transacciones">
+    <h1>Transacciones</h1>
+    <p>
+      Acompañamos a empresas en procesos de financiación, estrategia y crecimiento con resultados comprobados.
+    </p>
+  </section>
 
   <!-- 🟦 Filtros -->
   <section class="filtros">
@@ -63,7 +60,17 @@ const tipos = [...new Set(transacciones.map((t) => t["Tipo de transacción"]))].
   </section>
 
   <!-- 🟦 Grid -->
-  <section id="grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; padding:0 1rem 2.5rem; max-width:1100px; margin:0 auto;">
+  <section
+    id="grid"
+    style="
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:2rem;
+      padding:0 1rem 2.5rem;
+      max-width:1100px;
+      margin:0 auto;
+    "
+  >
     {transacciones.map((t) => (
       <article class="card" data-sector={t.Sector} data-tipo={t["Tipo de transacción"]}>
         <div class="card-header">
@@ -249,6 +256,7 @@ const tipos = [...new Set(transacciones.map((t) => t["Tipo de transacción"]))].
 
     /* ===== CARDS ===== */
     .card {
+      display: none; /* 👈 Ocultas por defecto, solo se muestran al aplicar filtro */
       background: #f2f2f2;
       padding: 1.5rem;
       border-radius: 8px;

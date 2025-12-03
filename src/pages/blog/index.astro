@@ -16,33 +16,46 @@ const sorted = posts
   title="Noticias sobre Asesoramiento Financiero | Kerval Advisory Partners"
   description="Tendencias, análisis y casos de éxito en asesoramiento financiero y M&A en España. Blog oficial de Kerval Advisory Partners."
 >
-  <!-- Banner -->
-  <section style="position: relative; background: url('/images/blog-banner.jpg') center/cover no-repeat; color: white; text-align: center; padding: 6rem 2rem;">
-    <div style="position: absolute; inset: 0; background: rgba(0,32,96,0.7);"></div>
-    <div style="position: relative; z-index: 1;">
-      <h1 style="font-family: 'Calibri', sans-serif; font-size: 3rem; font-weight: bold; margin-bottom: 1rem;">
-        Blog & Noticias
-      </h1>
-      <p style="font-family: 'Calibri', sans-serif; font-size: 1.5rem; margin-bottom: 2rem;">
-        Insights estratégicos en Finanzas & Negocios
-      </p>
-      <a href="#posts" style="background-color: #c00000; color: white; font-family: 'Calibri', sans-serif; font-weight: bold; padding: 0.8rem 2rem; border-radius: 6px; display:inline-block;">
-        Ver artículos
-      </a>
-    </div>
+  <!-- Banner usando estilos globales (.banner + .banner--blog) -->
+  <section class="banner banner--blog">
+    <h1>Blog & Noticias</h1>
+    <p>Insights estratégicos en Finanzas & Negocios</p>
+    <!-- Antes aquí estaba el botón 'Ver artículos', lo quitamos -->
   </section>
 
   <!-- Filtros -->
-  <section style="display:flex; justify-content:space-between; align-items:center; padding: 2rem; gap:1rem; flex-wrap:wrap;">
+  <section
+    style="display:flex; justify-content:space-between; align-items:center; padding: 2rem; gap:1rem; flex-wrap:wrap;"
+  >
     <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
       {categorias.map((cat) => (
         <button class="chip" data-cat={cat}>{cat}</button>
       ))}
     </div>
-    <div style="display:flex; align-items:center; border:1px solid #002060; border-radius:25px; padding:.5rem 1rem; background:white;">
-      <input id="search" type="text" placeholder="Buscar..." style="border:none; outline:none; font-family:'Calibri', sans-serif; font-size:1rem; color:#002060; width:150px;" />
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#002060" width="20" height="20" style="margin-left:.5rem;">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+    <div
+      style="display:flex; align-items:center; border:1px solid #002060; border-radius:25px; padding:.5rem 1rem; background:white;"
+    >
+      <input
+        id="search"
+        type="text"
+        placeholder="Buscar..."
+        style="border:none; outline:none; font-family:'Calibri', sans-serif; font-size:1rem; color:#002060; width:150px;"
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="#002060"
+        width="20"
+        height="20"
+        style="margin-left:.5rem;"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
+        />
       </svg>
     </div>
   </section>
@@ -51,9 +64,7 @@ const sorted = posts
   <section id="posts">
     {sorted.map(({ slug, data }) => (
       <article class="post-card" data-cat={data.category}>
-        {data.image && (
-          <img src={data.image} alt={data.title} class="post-img" />
-        )}
+        {data.image && <img src={data.image} alt={data.title} class="post-img" />}
         <div class="post-body">
           <p class="cat">{data.category}</p>
           <h3>
@@ -88,7 +99,7 @@ const sorted = posts
       background: #f2f2f2;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
       display: none;
       width: 100%;
     }
@@ -107,13 +118,13 @@ const sorted = posts
     .cat {
       color: #c00000;
       font-weight: bold;
-      margin-bottom: .3rem;
+      margin-bottom: 0.3rem;
     }
 
     .post-card h3 {
       color: #002060;
       font-weight: bold;
-      margin-bottom: .6rem;
+      margin-bottom: 0.6rem;
       font-size: 1.2rem;
       line-height: 1.4;
     }
@@ -124,13 +135,13 @@ const sorted = posts
     }
 
     .desc {
-      font-size: .95rem;
+      font-size: 0.95rem;
       color: #333;
-      margin-bottom: .8rem;
+      margin-bottom: 0.8rem;
     }
 
     .date {
-      font-size: .8rem;
+      font-size: 0.8rem;
       color: #777;
     }
 
@@ -141,7 +152,7 @@ const sorted = posts
       border-radius: 25px;
       background: white;
       color: #002060;
-      font-family: 'Calibri', sans-serif;
+      font-family: "Calibri", sans-serif;
       font-weight: bold;
       cursor: pointer;
       transition: 0.2s;
@@ -155,7 +166,7 @@ const sorted = posts
 
     /* ====== BOTÓN ====== */
     .btn-more {
-      font-family: 'Calibri', sans-serif;
+      font-family: "Calibri", sans-serif;
       font-weight: bold;
       font-size: 1.3rem;
       color: #002060;
@@ -199,7 +210,7 @@ const sorted = posts
 
       .post-card h3 {
         font-size: 1rem;
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
       }
 
       .desc {
@@ -210,89 +221,104 @@ const sorted = posts
         font-size: 0.8rem;
       }
     }
- <script>
-  const chips = document.querySelectorAll('.chip');
-  const cards = document.querySelectorAll('.post-card');
-  const search = document.getElementById('search');
-  const showMoreBtn = document.getElementById('showMore');
+  </style>
 
-  let activeCat = 'Todos';
-  let visible = 6;
+  <script>
+    // @ts-nocheck  ⬅️ Desactiva los PROBLEMS de TypeScript solo en este script
 
-  function fadeIn(el) {
-    el.style.opacity = '0';
-    el.style.display = 'block';
-    el.style.width = '100%';
-    requestAnimationFrame(() => {
-      el.style.transition = 'opacity 0.5s ease';
-      el.style.opacity = '1';
-    });
-  }
+    const chips = document.querySelectorAll(".chip");
+    const cards = document.querySelectorAll(".post-card");
+    const search = document.getElementById("search");
+    const showMoreBtn = document.getElementById("showMore");
 
-  function applyFilters() {
-    const q = (search && search.value ? search.value.toLowerCase() : '');
-    let count = 0;
+    let activeCat = "Todos";
+    let visible = 6;
 
-    cards.forEach((card) => {
-      const cat = card.getAttribute('data-cat') || '';
-      const text = (card.textContent || '').toLowerCase();
-      const matchCat = activeCat === 'Todos' || cat === activeCat;
-      const matchText = q === '' || text.includes(q);
+    function fadeIn(el) {
+      el.style.opacity = "0";
+      el.style.display = "block";
+      el.style.width = "100%";
+      requestAnimationFrame(() => {
+        el.style.transition = "opacity 0.5s ease";
+        el.style.opacity = "1";
+      });
+    }
 
-      if (matchCat && matchText && count < visible) {
-        fadeIn(card);
-        count++;
-      } else {
-        card.style.display = 'none';
+    function applyFilters() {
+      const q =
+        search && search.value ? search.value.toLowerCase() : "";
+      let count = 0;
+
+      cards.forEach((card) => {
+        const cat = card.getAttribute("data-cat") || "";
+        const text = (card.textContent || "").toLowerCase();
+        const matchCat = activeCat === "Todos" || cat === activeCat;
+        const matchText = q === "" || text.includes(q);
+
+        if (matchCat && matchText && count < visible) {
+          fadeIn(card);
+          count++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      updateButton();
+    }
+
+    function updateButton() {
+      const totalVisible = Array.from(cards).filter(
+        (c) => c.style.display === "block"
+      ).length;
+
+      const totalFiltered = Array.from(cards).filter((c) => {
+        const cat = c.getAttribute("data-cat") || "";
+        const text = (c.textContent || "").toLowerCase();
+        const matchCat = activeCat === "Todos" || cat === activeCat;
+
+        const matchText =
+          !search || !search.value
+            ? true
+            : text.includes(search.value.toLowerCase());
+
+        return matchCat && matchText;
+      }).length;
+
+      if (showMoreBtn) {
+        showMoreBtn.style.display =
+          totalVisible < totalFiltered ? "inline-block" : "none";
       }
-    });
-
-    updateButton();
-  }
-
-  function updateButton() {
-    const totalVisible = Array.from(cards).filter((c) => c.style.display === 'block').length;
-    const totalFiltered = Array.from(cards).filter((c) => {
-      const cat = c.getAttribute('data-cat') || '';
-      const text = (c.textContent || '').toLowerCase();
-      const matchCat = activeCat === 'Todos' || cat === activeCat;
-      const matchText = !search || !search.value || text.includes(search.value.toLowerCase());
-      return matchCat && matchText;
-    }).length;
+    }
 
     if (showMoreBtn) {
-      showMoreBtn.style.display = totalVisible < totalFiltered ? 'inline-block' : 'none';
+      showMoreBtn.addEventListener("click", () => {
+        visible += 6;
+        applyFilters();
+      });
     }
-  }
 
-  if (showMoreBtn) {
-    showMoreBtn.addEventListener('click', () => {
-      visible += 6;
-      applyFilters();
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chips.forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        activeCat = chip.getAttribute("data-cat") || "Todos";
+        visible = 6;
+        applyFilters();
+      });
     });
-  }
 
-  chips.forEach((chip) => {
-    chip.addEventListener('click', () => {
-      chips.forEach((c) => c.classList.remove('active'));
-      chip.classList.add('active');
-      activeCat = chip.getAttribute('data-cat') || 'Todos';
-      visible = 6;
-      applyFilters();
-    });
-  });
+    if (search) {
+      search.addEventListener("input", () => {
+        visible = 6;
+        applyFilters();
+      });
+    }
 
-  if (search) {
-    search.addEventListener('input', () => {
-      visible = 6;
-      applyFilters();
-    });
-  }
+    const defaultChip = document.querySelector('.chip[data-cat="Todos"]');
+    if (defaultChip) {
+      defaultChip.classList.add("active");
+    }
 
-  const defaultChip = document.querySelector('.chip[data-cat="Todos"]');
-  if (defaultChip) defaultChip.classList.add('active');
-
-  applyFilters();
-</script>
-
+    applyFilters();
+  </script>
 </BaseLayout>

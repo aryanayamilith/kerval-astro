@@ -7,7 +7,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
   description="Nuestro equipo combina experiencia internacional y conocimiento local para ofrecer asesoramiento financiero en España de alto impacto y confianza."
 >
 
-  <!-- Banner -->
+  <!-- Banner (usa los estilos globales .banner + .banner--equipo) -->
   <section class="banner banner--equipo">
     <h1>Nuestro Equipo</h1>
     <p>
@@ -153,46 +153,8 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     </div>
   </section>
 
-  <!-- Estilos propios -->
+  <!-- Estilos propios (sin tocar el banner global) -->
   <style>
-    /* Banner genérico */
-    .banner {
-      color: #fff;
-      text-align: center;
-      padding: 6rem 2rem;
-      position: relative;
-    }
-
-    .banner::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 32, 96, 0.6);
-    }
-
-    .banner h1,
-    .banner p {
-      position: relative;
-      z-index: 1;
-    }
-
-    .banner h1 {
-      font-size: 3rem;
-      margin: 0;
-    }
-
-    .banner p {
-      margin-top: 1rem;
-      font-size: 1.7rem;
-      max-width: 800px;
-      margin-inline: auto;
-    }
-
-    /* Banner específico de la página Equipo */
-    .banner--equipo {
-      background: url('/images/equipo/banner-equipo.jpg') center/cover no-repeat;
-    }
-
     .intro {
       text-align: center;
       font-size: 1.2rem;
@@ -229,7 +191,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       height: 180px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 0rem;
+      margin-bottom: 0;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -295,14 +257,13 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     }
 
     .valor-card p {
-      font-family: 'Roboto', sans-serif;
       font-weight: bold;
       color: #002060;
       font-size: 1.2rem;
       margin: 0;
     }
 
-    /* === MOBILE (solo cambios aquí para valores; el banner mantiene misma altura) === */
+    /* === MOBILE (solo cambios aquí para valores) === */
     @media (max-width: 768px) {
       .valores {
         padding: 3rem 1.5rem;

@@ -8,19 +8,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 >
 
   <style>
-    /* 🎯 Banner principal */
-    .banner {
-      background-color: #f2f2f2;
-      text-align: center;
-      padding: 3rem 2rem;
-    }
+    /* 🎯 Banner Servicios
+       Solo definimos el fondo; el resto (altura, padding, color del texto, etc.)
+       viene de los estilos globales de .banner en global.css */
+    .banner--servicios {
+      /* Si tienes una imagen específica de servicios, úsala aquí: */
+      /* background-image: url("/images/banner-servicios.jpg"); */
 
-    .banner h1 {
-      font-family: 'Calibri';
-      color: #c00000;
-      font-weight: bold;
-      font-size: 3rem;
-      margin: 0;
+      /* De momento dejamos un color de fondo liso, que se oscurece con el overlay global */
+      background-color: #5f6f93;
     }
 
     /* 🧭 Secciones principales */
@@ -42,15 +38,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
 
     .section-title {
-      font-family: 'Calibri';
+      font-family: "Calibri";
       font-weight: bold;
       font-size: 2rem;
-      color: #c00000;
+      color: #fff;
       margin-bottom: 0rem;
     }
 
     .section-subtitle {
-      font-family: 'Calibri';
+      font-family: "Calibri";
       font-weight: bold;
       font-size: 1.7rem;
       margin-top: 0rem;
@@ -58,7 +54,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
 
     .section-text {
-      font-family: 'Calibri';
+      font-family: "Calibri";
       color: #002060;
       font-size: 1rem;
       line-height: 1.6;
@@ -76,23 +72,23 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
 
     .bg-a {
-      background: linear-gradient(rgba(0,32,96,0.9), rgba(0,32,96,0.9)),
-                  url("/images/service-1.jpg") center/cover no-repeat;
+      background: linear-gradient(rgba(0, 32, 96, 0.9), rgba(0, 32, 96, 0.9)),
+        url("/images/service-1.jpg") center/cover no-repeat;
     }
 
     .bg-b {
-      background: linear-gradient(rgba(0,32,96,0.9), rgba(0,32,96,0.9)),
-                  url("/images/service-2.jpg") center/cover no-repeat;
+      background: linear-gradient(rgba(0, 32, 96, 0.9), rgba(0, 32, 96, 0.9)),
+        url("/images/service-2.jpg") center/cover no-repeat;
     }
 
     .bg-c {
-      background: linear-gradient(rgba(0,32,96,0.9), rgba(0,32,96,0.9)),
-                  url("/images/service-3.jpg") center/cover no-repeat;
+      background: linear-gradient(rgba(0, 32, 96, 0.9), rgba(0, 32, 96, 0.9)),
+        url("/images/service-3.jpg") center/cover no-repeat;
     }
 
     .bg-d {
-      background: linear-gradient(rgba(0,32,96,0.9), rgba(0,32,96,0.9)),
-                  url("/images/service-4.jpg") center/cover no-repeat;
+      background: linear-gradient(rgba(0, 32, 96, 0.9), rgba(0, 32, 96, 0.9)),
+        url("/images/service-4.jpg") center/cover no-repeat;
     }
 
     /* 🧩 Tarjetas de servicio */
@@ -106,7 +102,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
 
     .card h3 {
-      font-family: 'Calibri';
+      font-family: "Calibri";
       font-weight: bold;
       color: #002060;
       margin: 0.5rem 0 1rem;
@@ -114,7 +110,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
 
     .card ul {
-      font-family: 'Calibri';
+      font-family: "Calibri";
       font-size: 1rem;
       color: #002060;
       padding-left: 1.2rem;
@@ -141,7 +137,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
 
     .otros h2 {
-      font-family: 'Calibri';
+      font-family: "Calibri";
       font-weight: bold;
       font-size: 2.5rem;
       color: #c00000;
@@ -149,7 +145,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
 
     .otros p {
-      font-family: 'Calibri';
+      font-family: "Calibri";
       font-size: 1.2rem;
       color: #002060;
       max-width: 800px;
@@ -176,7 +172,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
 
     .otros-card h3 {
-      font-family: 'Calibri';
+      font-family: "Calibri";
       font-weight: bold;
       color: #c00000;
       font-size: 1.2rem;
@@ -184,7 +180,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
 
     .otros-card p {
-      font-family: 'Calibri';
+      font-family: "Calibri";
       font-size: 1rem;
       color: #002060;
     }
@@ -227,15 +223,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       .section-text {
         text-align: justify;
       }
-
-      .banner h1 {
-        font-size: 2.4rem;
-      }
+      /* No tocamos .banner aquí: hereda del global */
     }
   </style>
 
-  <!-- 🟥 Banner -->
-  <section class="banner">
+  <!-- 🟥 Banner: usa estilos globales (.banner) + fondo específico (.banner--servicios) -->
+  <section class="banner banner--servicios">
     <h1>Nuestros Servicios</h1>
   </section>
 
@@ -246,9 +239,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <h3 class="section-subtitle">Strategy & Valuation (S&V)</h3>
     </div>
     <div class="section-text">
-      <p>Apoyamos a las compañías en la definición de su estrategia corporativa, con foco en el crecimiento inorgánico y la estructura de capital.</p>
-      <p>Ante un entorno global cada vez más incierto, desarrollamos modelos multi-escenario a la hora de definir estrategias y planes de negocio. En este contexto, desarrollamos modelos financieros de planificación para que nuestros clientes dispongan de estas herramientas de forma autónoma en la gestión de sus negocios.</p>
-      <p>Además, ofrecemos asesoramiento en la valoración de activos, negocios y empresas, adaptado a cada necesidad: transacciones, financiación, reporting contable, motivos fiscales, entre otros.</p>
+      <p>
+        Apoyamos a las compañías en la definición de su estrategia corporativa, con foco en el crecimiento inorgánico y la estructura de capital.
+      </p>
+      <p>
+        Ante un entorno global cada vez más incierto, desarrollamos modelos multi-escenario a la hora de definir estrategias y planes de negocio. En este contexto, desarrollamos modelos financieros de planificación para que nuestros clientes dispongan de estas herramientas de forma autónoma en la gestión de sus negocios.
+      </p>
+      <p>
+        Además, ofrecemos asesoramiento en la valoración de activos, negocios y empresas, adaptado a cada necesidad: transacciones, financiación, reporting contable, motivos fiscales, entre otros.
+      </p>
     </div>
   </section>
 
@@ -281,9 +280,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <h3 class="section-subtitle">Mergers & Acquisitions (M&A)</h3>
     </div>
     <div class="section-text">
-      <p>Asesoramos a compañías e inversores en el diseño, coordinación y ejecución de operaciones corporativas, incluyendo adquisiciones, fusiones, escisiones y desinversiones.</p>
-      <p>Participamos en procesos de Due Diligence, evaluando encaje estratégico, riesgos, activos y pasivos, así como en la negociación de precios y contratos.</p>
-      <p>También brindamos asesoramiento post-transacción, revisando términos y analizando la generación de sinergias.</p>
+      <p>
+        Asesoramos a compañías e inversores en el diseño, coordinación y ejecución de operaciones corporativas, incluyendo adquisiciones, fusiones, escisiones y desinversiones.
+      </p>
+      <p>
+        Participamos en procesos de Due Diligence, evaluando encaje estratégico, riesgos, activos y pasivos, así como en la negociación de precios y contratos.
+      </p>
+      <p>
+        También brindamos asesoramiento post-transacción, revisando términos y analizando la generación de sinergias.
+      </p>
     </div>
   </section>
 
@@ -322,9 +327,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <h3 class="section-subtitle">Capital Advisory (CA)</h3>
     </div>
     <div class="section-text">
-      <p>Apoyamos a empresas en el diseño de estructuras de capital, el levantamiento de financiación de deuda y capital y la reestructuración de pasivos financieros en situaciones de crisis.</p>
-      <p>Asesoramos tanto a compañías en crecimiento —con soluciones de capital, deuda e instrumentos híbridos— como a aquellas que enfrentan problemas de continuidad, ofreciendo planes de viabilidad, refinanciación y reestructuración financiera en contextos pre-concursales y concursales.</p>
-      <p>También trabajamos con fondos y entidades financieras, aportando revisión independiente de propuestas y verificación del cumplimiento de términos post financiación.</p>
+      <p>
+        Apoyamos a empresas en el diseño de estructuras de capital, el levantamiento de financiación de deuda y capital y la reestructuración de pasivos financieros en situaciones de crisis.
+      </p>
+      <p>
+        Asesoramos tanto a compañías en crecimiento —con soluciones de capital, deuda e instrumentos híbridos— como a aquellas que enfrentan problemas de continuidad, ofreciendo planes de viabilidad, refinanciación y reestructuración financiera en contextos pre-concursales y concursales.
+      </p>
+      <p>
+        También trabajamos con fondos y entidades financieras, aportando revisión independiente de propuestas y verificación del cumplimiento de términos post financiación.
+      </p>
     </div>
   </section>
 
@@ -363,9 +374,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <h3 class="section-subtitle">Management Support (MS)</h3>
     </div>
     <div class="section-text">
-      <p>Acompañamos a las empresas en la profesionalización de su gestión financiera y estratégica, ofreciendo soluciones flexibles a través de la externalización de funciones clave (Management Office) y la incorporación temporal de ejecutivos expertos (Interim Management).</p>
-      <p>Nuestro objetivo es fortalecer la toma de decisiones, optimizar procesos financieros y apoyar en momentos de crecimiento, crisis o reestructuración, siempre alineados con los objetivos de cada organización.</p>
-      <p>Además, integramos este servicio con el resto de nuestras áreas (Estrategia, Transacciones y Financiación) para ofrecer un soporte integral y coherente.</p>
+      <p>
+        Acompañamos a las empresas en la profesionalización de su gestión financiera y estratégica, ofreciendo soluciones flexibles a través de la externalización de funciones clave (Management Office) y la incorporación temporal de ejecutivos expertos (Interim Management).
+      </p>
+      <p>
+        Nuestro objetivo es fortalecer la toma de decisiones, optimizar procesos financieros y apoyar en momentos de crecimiento, crisis o reestructuración, siempre alineados con los objetivos de cada organización.
+      </p>
+      <p>
+        Además, integramos este servicio con el resto de nuestras áreas (Estrategia, Transacciones y Financiación) para ofrecer un soporte integral y coherente.
+      </p>
     </div>
   </section>
 
@@ -374,8 +391,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <img src="/images/icons/management-office.svg" alt="Management Office" class="icon" />
       <h3>Management Office (MO)</h3>
       <ul>
-        <li>CFO Office: Control de Gestión, Reporting, Financial & Planning Analysis (FP&A), Gestión de Tesorería.</li>
-        <li>CEO, BoD Office: Apoyo en la evaluación y toma de decisiones tácticas y estratégicas.</li>
+        <li>
+          CFO Office: Control de Gestión, Reporting, Financial & Planning Analysis (FP&A), Gestión de Tesorería.
+        </li>
+        <li>
+          CEO, BoD Office: Apoyo en la evaluación y toma de decisiones tácticas y estratégicas.
+        </li>
       </ul>
     </div>
     <div class="card">
@@ -392,28 +413,38 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   <!-- 🟫 Bloque E -->
   <section class="otros">
     <h2>Otros Servicios</h2>
-    <p>Desde ECOVIS España brindamos servicios complementarios para una cobertura integral de cara a mejorar la gestión y la creación de valor en nuestros clientes.</p>
+    <p>
+      Desde ECOVIS España brindamos servicios complementarios para una cobertura integral de cara a mejorar la gestión y la creación de valor en nuestros clientes.
+    </p>
     <img src="/images/ecovis-logo.svg" alt="ECOVIS Logo" class="ecovis-logo" />
     <div class="otros-services">
       <div class="otros-card">
         <img src="/images/icons/auditoria.svg" alt="Auditoría" />
         <h3>Auditoría & Assurance</h3>
-        <p>Servicios de auditoría de empresas y subvenciones, apoyo a auditoría interna, revisiones de procedimientos y control interno.</p>
+        <p>
+          Servicios de auditoría de empresas y subvenciones, apoyo a auditoría interna, revisiones de procedimientos y control interno.
+        </p>
       </div>
       <div class="otros-card">
         <img src="/images/icons/consultoria.svg" alt="Consultoría" />
         <h3>Consultoría</h3>
-        <p>Apoyo a la gestión en temas de procesos, control, reporting, gestión de riesgos, apoyo en litigios y precios de transferencia.</p>
+        <p>
+          Apoyo a la gestión en temas de procesos, control, reporting, gestión de riesgos, apoyo en litigios y precios de transferencia.
+        </p>
       </div>
       <div class="otros-card">
         <img src="/images/icons/legal.svg" alt="Legal" />
         <h3>Legal</h3>
-        <p>Asesoramiento legal en los campos de derecho mercantil y corporativo, procesal, M&A, concursal y penal económico.</p>
+        <p>
+          Asesoramiento legal en los campos de derecho mercantil y corporativo, procesal, M&A, concursal y penal económico.
+        </p>
       </div>
       <div class="otros-card">
         <img src="/images/icons/contabilidad.svg" alt="Contabilidad" />
         <h3>Contabilidad y Fiscal</h3>
-        <p>Asesoramiento fiscal, así como en contabilidad de entidades y administración.</p>
+        <p>
+          Asesoramiento fiscal, así como en contabilidad de entidades y administración.
+        </p>
       </div>
     </div>
   </section>

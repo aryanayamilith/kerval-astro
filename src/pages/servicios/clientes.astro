@@ -33,64 +33,130 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   <!-- ====== ESTILOS DE LA PÁGINA ====== -->
   <style>
-    /* ===== Banner (solo personalizamos la IMAGEN) ===== */
+    /* Solo personalizamos la IMAGEN del banner.
+       El layout (padding, overlay, tamaños) viene de .banner en global.css */
     .banner--clientes {
-      background-image: url('/images/banner-clientes.jpg');
+      background-image: url("/images/banner-clientes.jpg");
     }
 
     /* ===== Secciones ===== */
-    .clientes-section{display:block;padding:4rem 1.25rem;background:#fff}
-    .clientes-section:nth-of-type(even){background:#f9f9f9}
-
-    .container{
-      max-width:1200px;margin-inline:auto;display:grid;
-      grid-template-columns:200px 1fr;gap:2rem;align-items:start;
+    .clientes-section {
+      display: block;
+      padding: 4rem 1.25rem;
+      background: #fff;
+    }
+    .clientes-section:nth-of-type(even) {
+      background: #f9f9f9;
     }
 
-    .clientes-info{text-align:center}
-    .clientes-info img{width:60px;margin-bottom:1rem}
-    .clientes-info h2{color:#c00000;font-family:'Calibri';font-weight:bold;font-size:1.8rem;margin:.25rem 0 .75rem}
+    .container {
+      max-width: 1200px;
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
 
-    .clientes-text{color:#002060;font-family:'Calibri';line-height:1.6}
+    .clientes-info {
+      text-align: center;
+    }
+    .clientes-info img {
+      width: 60px;
+      margin-bottom: 1rem;
+    }
+    .clientes-info h2 {
+      color: #c00000;
+      font-weight: bold;
+      font-size: 1.8rem;
+      margin: 0.25rem 0 0.75rem;
+    }
+
+    .clientes-text {
+      color: #002060;
+      line-height: 1.6;
+    }
 
     /* ===== Bloque carrusel (wrapper + dots) ===== */
-    .carousel{overflow-anchor:none;}
+    .carousel {
+      overflow-anchor: none;
+    }
 
     /* ===== Carrusel sin saltos (páginas apiladas) ===== */
-    .clientes-logos-wrapper{
-      position:relative;overflow:hidden;max-width:1200px;margin-inline:auto;width:100%;
-      margin-top:1.25rem;overflow-anchor:none;min-height:260px; /* reserva hasta medir */
+    .clientes-logos-wrapper {
+      position: relative;
+      overflow: hidden;
+      max-width: 1200px;
+      margin-inline: auto;
+      width: 100%;
+      margin-top: 1.25rem;
+      overflow-anchor: none;
+      min-height: 260px; /* reserva hasta medir */
     }
-    .clientes-logos-page{
-      position:absolute;inset:0;display:grid;
-      grid-template-columns:repeat(5,1fr);gap:30px 32px;
-      justify-items:center;align-items:center;box-sizing:border-box;padding:0;
-      opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:0;
+    .clientes-logos-page {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 30px 32px;
+      justify-items: center;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 0;
     }
-    .clientes-logos-page.active{opacity:1;pointer-events:auto;}
+    .clientes-logos-page.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-    .clientes-logos-page img{
-      max-height:70px;max-width:160px;width:100%;object-fit:contain;transition:transform .2s ease;
+    .clientes-logos-page img {
+      max-height: 70px;
+      max-width: 160px;
+      width: 100%;
+      object-fit: contain;
+      transition: transform 0.2s ease;
     }
-    .clientes-logos-page img:hover{transform:scale(1.05)}
-    .logo-spacer{width:160px;height:70px;opacity:0}
+    .clientes-logos-page img:hover {
+      transform: scale(1.05);
+    }
+    .logo-spacer {
+      width: 160px;
+      height: 70px;
+      opacity: 0;
+    }
 
     /* ===== Responsive ===== */
-    @media (max-width:992px){
-      .clientes-section{padding:3rem 1rem}
-      .container{grid-template-columns:1fr}
-      .clientes-info{order:-1}
+    @media (max-width: 992px) {
+      .clientes-section {
+        padding: 3rem 1rem;
+      }
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .clientes-info {
+        order: -1;
+      }
     }
-    @media (max-width:768px){
-      .clientes-logos-page{grid-template-columns:repeat(3,1fr);gap:16px 22px}
-      .clientes-logos-page img{max-height:55px;max-width:120px}
+    @media (max-width: 768px) {
+      .clientes-logos-page {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px 22px;
+      }
+      .clientes-logos-page img {
+        max-height: 55px;
+        max-width: 120px;
+      }
     }
   </style>
 
-  <!-- Banner -->
+  <!-- Banner: usamos la clase global + la específica de CLIENTES -->
   <section class="banner banner--clientes">
-      <h1>Nuestros Clientes</h1>
-      <p>Confianza que construimos con resultados</p>
+    <h1>Nuestros Clientes</h1>
+    <p>Confianza que construimos con resultados</p>
   </section>
 
   <!-- =========================== EMPRESAS PRIVADAS =========================== -->
@@ -181,7 +247,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           en la ejecución de sus estrategias de inversión y desinversión mediante la gestión
           de procesos de M&amp;A y asesoramiento en due diligence. Igualmente asesoramos a
           financiadores (i.e. fondos de deuda, entidades financieras) en la evaluación de
-          operaciones…
+          operaciones mediante revisiones independientes y procesos de due diligence.
+          En todos estos casos damos soporte con servicios de gestión tanto externa como de interim management.
+
         </p>
 
         <div class="carousel">
@@ -236,7 +304,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       </div>
 
       <div class="clientes-text">
-        <p>Actuamos como asesores en estrategia, valoración, procesos de inversión y apoyo a la gestión local…</p>
+        <p>Actuamos como asesores en estrategia, valoración, procesos de inversión y apoyo a la gestión local, trabajando directamente con los equipos en cada país.</p>
 
         <div class="carousel">
           <div class="clientes-logos-wrapper" data-carousel="cotizadas">

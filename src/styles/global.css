@@ -28,8 +28,10 @@
   font-style: italic;
   font-display: swap;
 }
+
 /* ============================
-   BANNERS SECUNDARIOS (todas las páginas salvo inicio)
+   BANNERS SECUNDARIOS
+   (todas las páginas salvo inicio y contacto)
    ============================ */
 
 .banner {
@@ -39,7 +41,19 @@
   background-repeat: no-repeat;
   color: #fff;
   text-align: center;
-  padding: 6rem 2rem;
+
+  /* Altura fija para DESKTOP, basada en Internacional (≈493.6px) */
+  height: 494px;
+
+  /* Sin padding vertical, solo lateral.
+     La altura la controla "height". */
+  padding: 0 2rem;
+
+  /* Centramos el contenido verticalmente */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .banner::after {
@@ -67,10 +81,12 @@
   margin-inline: auto;
 }
 
-/* Versión mobile coherente para todos */
+/* Versión MOBILE coherente para todos
+   (altura fija también en móvil) */
 @media (max-width: 768px) {
   .banner {
-    padding: 6rem 1.5rem;
+    height: 360px;       /* altura fija en móvil */
+    padding: 0 1.5rem;   /* solo lateral */
   }
 
   .banner h1 {
@@ -82,7 +98,7 @@
   }
 }
 
-/* Fondo específico por página (excepto Inicio) */
+/* Fondo específico por página (excepto Inicio y Contacto) */
 .banner--equipo {
   background-image: url("/images/equipo/banner-equipo.jpg");
 }
@@ -103,9 +119,9 @@
   background-image: url("/images/banner-transacciones.jpg");
 }
 
-/* Si más adelante tienes un banner específico para Blog, cambia la ruta */
+/* Banner específico para Blog */
 .banner--blog {
-  background-image: url("/images/banner-transacciones.jpg");
+  background-image: url("/images/blog-banner.jpg");
 }
 
 /* ============================
@@ -126,7 +142,12 @@ body {
   line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: bold;
   margin-bottom: 1rem;
 }

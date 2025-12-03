@@ -3,28 +3,24 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout 
-  title="Trabaja con Nosotros | Kerval Advisory Partners" 
-  description="Forma parte de un equipo dinámico, con visión internacional y orientado a resultados en Kerval Advisory Partners."
+  title="Carrera en Asesoramiento Financiero | Kerval Advisory Partners"
+  description="Forma parte de Kerval Advisory Partners, firma de asesoramiento financiero en España y Latinoamérica. Crece profesionalmente en un entorno global y exigente."
 >
-  <!-- Banner -->
-  <header style="background: url('/images/banner-trabaja.jpg') center/cover no-repeat, #002060; 
-                 color: #fff; text-align: center; padding: 6rem 2rem;">
-    <h1 style="font-family: 'Calibri', sans-serif; font-size: 3rem; margin: 0;">
-      Trabaja con Nosotros
-    </h1>
-    <p style="font-family: 'Calibri'; font-size: 1.5rem; margin-top: 1rem;">
+
+  <!-- Banner: hereda estilos globales (.banner + .banner--trabaja) -->
+  <section class="banner banner--trabaja">
+    <h1>Trabaja con Nosotros</h1>
+    <p>
       Forma parte de un equipo dinámico, con visión internacional y orientado a resultados
     </p>
-  </header>
+  </section>
 
-  <main style="max-width: 900px; margin: 4rem auto; padding: 0 1rem;">
+  <main class="trabaja-main">
     
     <!-- Sección: Por qué unirte -->
-    <section style="margin-bottom: 3rem;">
-      <h2 style="color: #c00000; font-family: 'Calibri';">
-        ¿Por qué unirte a Kerval?
-      </h2>
-      <p style="font-family: 'Calibri'; color: #002060; line-height: 1.6;">
+    <section class="trabaja-section">
+      <h2>¿Por qué unirte a Kerval?</h2>
+      <p>
         En Kerval creemos en el talento como motor de transformación. Apostamos por profesionales que quieran 
         crecer junto a nosotros, aportando ideas y soluciones en el mundo de las finanzas corporativas y 
         la consultoría estratégica.
@@ -32,11 +28,9 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     </section>
 
     <!-- Sección: Lo que ofrecemos -->
-    <section style="margin-bottom: 3rem;">
-      <h2 style="color: #c00000; font-family: 'Calibri';">
-        Lo que ofrecemos
-      </h2>
-      <ul style="font-family: 'Calibri'; color: #002060; line-height: 1.8; margin-left: 1.5rem;">
+    <section class="trabaja-section">
+      <h2>Lo que ofrecemos</h2>
+      <ul>
         <li>Entorno colaborativo con visión internacional.</li>
         <li>Formación continua y oportunidades de desarrollo.</li>
         <li>Cultura basada en la ética, la innovación y la independencia.</li>
@@ -44,15 +38,85 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     </section>
 
     <!-- Botón CTA -->
-    <div style="text-align: center;">
-      <a href="https://www.linkedin.com/company/kerval-advisory-partners/jobs/" 
-         target="_blank" 
-     rel="noopener noreferrer"
-     style="background: #c00000; color: #fff; padding: 0.8rem 2rem; 
-                font-family: 'Calibri'; font-weight: bold; 
-                text-decoration: none; border-radius: 4px;">
+    <div class="trabaja-cta">
+      <a
+        href="https://www.linkedin.com/company/kerval-advisory-partners/jobs/" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="trabaja-cta__btn"
+      >
         Ver Ofertas Laborales
       </a>
     </div>
   </main>
+
+  <style>
+    .trabaja-main {
+      max-width: 900px;
+      margin: 4rem auto;
+      padding: 0 1rem;
+    }
+
+    .trabaja-section {
+      margin-bottom: 3rem;
+    }
+
+    .trabaja-section h2 {
+      color: #c00000;
+      font-family: "Calibri";
+      font-weight: bold;
+      margin-bottom: 0.75rem;
+    }
+
+    .trabaja-section p,
+    .trabaja-section ul {
+      font-family: "Calibri";
+      color: #002060;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .trabaja-section ul {
+      line-height: 1.8;
+      margin-left: 1.5rem;
+      padding-left: 1rem;
+    }
+
+    .trabaja-cta {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .trabaja-cta__btn {
+      display: inline-block;
+      background: #c00000;
+      color: #fff;
+      padding: 0.8rem 2rem;
+      font-family: "Calibri";
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .trabaja-cta__btn:hover {
+      background: #a00000;
+    }
+
+    @media (max-width: 768px) {
+      .trabaja-main {
+        margin: 3rem auto 3.5rem;
+        padding: 0 1.25rem;
+      }
+
+      .trabaja-section h2 {
+        font-size: 1.4rem;
+      }
+
+      .trabaja-section p,
+      .trabaja-section ul {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+
 </BaseLayout>
