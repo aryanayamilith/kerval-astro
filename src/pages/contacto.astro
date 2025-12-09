@@ -45,9 +45,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <input type="text"   name="subject" placeholder="Asunto" />
           <textarea name="message" placeholder="Mensaje" rows="5" required></textarea>
 
-          <!-- Checkboxes -->
-          <label class="check"><input type="checkbox" required /> Acepto la política de privacidad</label>
-          <label class="check"><input type="checkbox" required /> Acepto términos de uso</label>
+          <!-- Checkboxes con enlaces legales -->
+          <label class="check">
+            <input type="checkbox" required />
+            Acepto la
+            <a href="/privacidad" target="_blank" rel="noopener noreferrer">
+              Política de Privacidad
+            </a>
+          </label>
+
+          <label class="check">
+            <input type="checkbox" required />
+            Acepto los
+            <a href="/terminos-uso" target="_blank" rel="noopener noreferrer">
+              Términos de Uso
+            </a>
+          </label>
 
           <!-- Botón enviar -->
           <button type="submit">Enviar</button>
@@ -134,6 +147,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       align-items: center;
       gap: 0.5rem;
       color: #fff;
+      flex-wrap: wrap;
+    }
+
+    .check a {
+      color: #fff;
+      text-decoration: underline;
     }
 
     .social-icon {
