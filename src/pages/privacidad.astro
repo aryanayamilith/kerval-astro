@@ -9,8 +9,64 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <section class="legal-page">
     <div class="container">
       <h1>Política de Privacidad</h1>
+
       <p>
-        [Aquí se incluirá la política de privacidad y tratamiento de datos personales conforme al RGPD.]
+        En cumplimiento del Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), informamos a los usuarios sobre el tratamiento de sus datos personales.
+      </p>
+
+      <h2>1. Responsable del tratamiento</h2>
+      <p>
+        <strong>Kerval Advisory Partners, S.L.</strong><br />
+        Email: <a href="mailto:privacy@kerval.es">privacy@kerval.es</a>
+      </p>
+
+      <h2>2. Finalidades del tratamiento</h2>
+      <p>Los datos recogidos a través de formularios, correos electrónicos o suscripciones se utilizarán para:</p>
+      <ul>
+        <li>Responder consultas o solicitudes de contacto.</li>
+        <li>Gestionar la relación comercial o profesional.</li>
+        <li>Enviar comunicaciones informativas o actualizaciones (previo consentimiento).</li>
+        <li>Procesos de selección de personal (en caso de enviar CV).</li>
+      </ul>
+
+      <h2>3. Legitimación</h2>
+      <p>Las bases jurídicas para el tratamiento son:</p>
+      <ul>
+        <li>Consentimiento del usuario (art. 6.1.a RGPD)</li>
+        <li>Ejecución de un contrato o medidas precontractuales (art. 6.1.b)</li>
+        <li>Interés legítimo (seguridad web, mejora de servicios)</li>
+      </ul>
+
+      <h2>4. Destinatarios</h2>
+      <p>
+        No se cederán datos a terceros, salvo obligación legal o proveedores necesarios para la operativa (hosting,
+        email, analítica), con contrato de encargado de tratamiento.
+      </p>
+
+      <h2>5. Transferencias internacionales</h2>
+      <p>
+        Si se utilizan proveedores fuera de la UE (p. ej., AWS, Google), estarán amparados en Cláusulas Contractuales
+        Tipo aprobadas por la Comisión Europea.
+      </p>
+
+      <h2>6. Conservación de datos</h2>
+      <p>
+        Los datos se conservarán durante el tiempo necesario para la finalidad recogida o mientras exista la relación comercial.
+      </p>
+
+      <h2>7. Derechos del usuario</h2>
+      <p>El usuario puede ejercer:</p>
+      <ul>
+        <li>Acceso</li>
+        <li>Rectificación</li>
+        <li>Supresión</li>
+        <li>Oposición</li>
+        <li>Limitación del tratamiento</li>
+        <li>Portabilidad</li>
+      </ul>
+      <p>
+        Escribiendo a: <a href="mailto:privacy@kerval.es">privacy@kerval.es</a><br />
+        También tiene derecho a presentar una reclamación ante la AEPD (<a href="https://www.aepd.es" target="_blank">www.aepd.es</a>).
       </p>
     </div>
   </section>
@@ -32,6 +88,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       font-size: 2rem;
       margin-bottom: 1.5rem;
       font-weight: bold;
+    }
+    h2 {
+      margin-top: 2rem;
+      font-size: 1.4rem;
+      color: #002060;
+      font-weight: bold;
+    }
+    ul {
+      margin-left: 1.2rem;
+      padding-left: 0.5rem;
     }
   </style>
 </BaseLayout>
