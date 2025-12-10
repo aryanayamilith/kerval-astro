@@ -1,4 +1,5 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://kap-beige.vercel.app/sitemap.xml
+Sitemap: https://kerval.es/sitemap-index.xml
+
