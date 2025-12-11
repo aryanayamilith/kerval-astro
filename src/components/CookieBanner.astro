@@ -1,10 +1,15 @@
 ---
 /**
  * CookieBanner.astro
- * Estructura accesible con categorías + gestor de consentimiento.
- * Uso: importa el componente en BaseLayout.astro (al final del <body>).
+ * Aviso de cookies con categorías + gestor de consentimiento.
+ * IMPORTANTE:
+ *  - Mantiene el ID "cookie-banner"
+ *  - Mantiene la clave localStorage "kervalConsent"
+ *  - Mantiene los IDs de inputs (#ck-analytics, #ck-marketing)
+ *  - Mantiene los data-action de los botones
  */
 ---
+
 <div id="cookie-banner" class="ck-banner" hidden aria-live="polite">
   <div
     class="ck-card"
@@ -15,90 +20,267 @@
   >
     <div class="ck-header">
       <h2 id="ck-title">Tu privacidad nos importa</h2>
-      <button class="ck-close" type="button" aria-label="Cerrar aviso" data-action="close">×</button>
+      <button
+        class="ck-close"
+        type="button"
+        aria-label="Cerrar aviso de cookies"
+        data-action="close"
+      >
+        ×
+      </button>
     </div>
 
     <p id="ck-desc" class="ck-text">
-      Utilizamos cookies propias y de terceros para fines analíticos y de marketing.
-      Las <strong>necesarias</strong> hacen que el sitio funcione y se activan siempre.
-      Puedes aceptar todas, rechazarlas o personalizar tu elección.
-      Más información en nuestra <a class="ck-link" href="/cookies">Política de Cookies</a>.
+      En <strong>Kerval Advisory Partners</strong> utilizamos cookies propias y de
+      terceros con fines funcionales y <strong>analíticos</strong>, para entender
+      cómo se utiliza la web y mejorar nuestros servicios.
+      Las cookies <strong>necesarias</strong> se usan siempre porque permiten que
+      el sitio funcione correctamente.
+      Puedes aceptar todas las cookies, rechazarlas o personalizar tu elección.
+      Más información en nuestra
+      <a class="ck-link" href="/cookies">Política de Cookies</a>.
     </p>
 
     <div class="ck-categories">
+      <div class="ck-cat-title">Gestiona tus preferencias</div>
+
       <label class="ck-row">
-        <span>Necesarias</span>
+        <div>
+          <span class="ck-cat-name">Necesarias</span>
+          <span class="ck-cat-help">
+            Imprescindibles para el funcionamiento básico de la web.
+            No se pueden desactivar.
+          </span>
+        </div>
         <input type="checkbox" checked disabled />
       </label>
 
       <label class="ck-row">
-        <span>Analíticas</span>
+        <div>
+          <span class="ck-cat-name">Analíticas</span>
+          <span class="ck-cat-help">
+            Nos ayudan a medir el uso del sitio (por ejemplo, con Google Analytics)
+            y a mejorar contenidos y navegación.
+          </span>
+        </div>
         <input id="ck-analytics" type="checkbox" data-cat="analytics" />
       </label>
 
       <label class="ck-row">
-        <span>Marketing</span>
+        <div>
+          <span class="ck-cat-name">Marketing</span>
+          <span class="ck-cat-help">
+            Se utilizan para mostrar contenido o comunicaciones personalizadas.
+            Actualmente su uso es limitado en kerval.es.
+          </span>
+        </div>
         <input id="ck-marketing" type="checkbox" data-cat="marketing" />
       </label>
     </div>
 
     <div class="ck-actions">
-      <button class="ck-btn ck-secondary" type="button" data-action="reject">Rechazar</button>
-      <button class="ck-btn ck-outline"   type="button" data-action="save">Guardar</button>
-      <button class="ck-btn ck-primary"   type="button" data-action="accept">Aceptar todo</button>
+      <button
+        class="ck-btn ck-secondary"
+        type="button"
+        data-action="reject"
+      >
+        Rechazar
+      </button>
+
+      <button
+        class="ck-btn ck-outline"
+        type="button"
+        data-action="save"
+      >
+        Guardar selección
+      </button>
+
+      <button
+        class="ck-btn ck-primary"
+        type="button"
+        data-action="accept"
+      >
+        Aceptar todo
+      </button>
     </div>
   </div>
 </div>
 
 <style>
   .ck-banner{
-    position: fixed; inset-inline: 0; bottom: 0; z-index: 9999;
-    display: grid; place-items: center; padding: 12px;
-    background: rgba(0,0,0,.4); backdrop-filter: blur(2px);
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 12px;
+    background: rgba(0,0,0,.40);
+    backdrop-filter: blur(3px);
     font-family: Calibri, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   }
+
   .ck-card{
-    width: min(920px, 95vw);
-    background: #fff; color:#0b1a3a; border-radius: 14px;
-    box-shadow: 0 8px 30px rgba(0,0,0,.2);
-    padding: 20px 20px 16px; border: 1px solid #e7ebf3;
+    width: min(960px, 96vw);
+    background: #ffffff;
+    color: #0b1a3a;
+    border-radius: 16px;
+    box-shadow: 0 14px 45px rgba(0,0,0,.22);
+    padding: 20px 22px 18px;
+    border: 1px solid #e7ebf3;
   }
-  .ck-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
-  .ck-header h2{ margin:0; font-size:20px; color:#002060; }
+
+  .ck-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+
+  .ck-header h2{
+    margin:0;
+    font-size:20px;
+    color:#002060;
+  }
+
   .ck-close{
-    all: unset; cursor: pointer; font-size:22px; line-height:1;
-    color:#667085; padding: 6px 8px; border-radius: 8px;
+    all: unset;
+    cursor: pointer;
+    font-size:22px;
+    line-height:1;
+    color:#667085;
+    padding: 6px 8px;
+    border-radius: 8px;
   }
-  .ck-close:hover{ background:#f2f4f7; color:#1f2937; }
-  .ck-text{ margin: 10px 0 14px; line-height:1.5; }
-  .ck-link{ color:#002060; text-decoration: underline; }
+
+  .ck-close:hover{
+    background:#f2f4f7;
+    color:#1f2937;
+  }
+
+  .ck-text{
+    margin: 10px 0 16px;
+    line-height:1.5;
+  }
+
+  .ck-link{
+    color:#002060;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
 
   .ck-categories{
-    display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;
-    padding: 10px; background:#f8fafc; border:1px solid #e7ebf3; border-radius:12px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:12px;
+    padding: 12px;
+    background:#f8fafc;
+    border:1px solid #e7ebf3;
+    border-radius:12px;
   }
+
+  .ck-cat-title{
+    grid-column:1 / -1;
+    font-weight:700;
+    font-size:14px;
+    color:#111827;
+  }
+
   .ck-row{
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding:10px 12px; background:#fff; border-radius:10px; border:1px solid #e7ebf3;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 12px;
+    background:#ffffff;
+    border-radius:10px;
+    border:1px solid #e7ebf3;
   }
-  .ck-row input[type="checkbox"]{ transform: scale(1.15); accent-color:#002060; }
 
-  .ck-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:14px; }
+  .ck-cat-name{
+    display:block;
+    font-weight:600;
+    margin-bottom:2px;
+  }
+
+  .ck-cat-help{
+    display:block;
+    font-size:12px;
+    color:#4b5563;
+    max-width: 260px;
+  }
+
+  .ck-row input[type="checkbox"]{
+    transform: scale(1.18);
+    margin-top: 4px;
+    accent-color:#002060;
+  }
+
+  .ck-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:16px;
+    flex-wrap: wrap;
+  }
+
   .ck-btn{
-    appearance:none; border:0; border-radius:10px; font-weight:700; cursor:pointer;
-    padding:10px 14px; font-size:14px;
+    appearance:none;
+    border:0;
+    border-radius:999px;
+    font-weight:700;
+    cursor:pointer;
+    padding:10px 18px;
+    font-size:14px;
+    white-space: nowrap;
   }
-  .ck-primary{ background:#002060; color:#fff; }
-  .ck-primary:hover{ background:#001544; }
-  .ck-outline{ border:2px solid #002060; color:#002060; background:#fff; }
-  .ck-outline:hover{ background:#eef3ff; }
-  .ck-secondary{ background:#f3f4f6; color:#111827; }
-  .ck-secondary:hover{ background:#e5e7eb; }
 
-  @media (max-width: 768px){
-    .ck-categories{ grid-template-columns:1fr; }
-    .ck-actions{ flex-direction: column-reverse; align-items: stretch; }
-    .ck-btn{ width:100%; }
+  .ck-primary{
+    background:#002060;
+    color:#ffffff;
+  }
+  .ck-primary:hover{
+    background:#001544;
+  }
+
+  .ck-outline{
+    border:2px solid #002060;
+    color:#002060;
+    background:#ffffff;
+  }
+  .ck-outline:hover{
+    background:#eef3ff;
+  }
+
+  .ck-secondary{
+    background:#f3f4f6;
+    color:#111827;
+  }
+  .ck-secondary:hover{
+    background:#e5e7eb;
+  }
+
+  @media (max-width: 900px){
+    .ck-categories{
+      grid-template-columns: 1fr;
+    }
+    .ck-cat-help{
+      max-width:none;
+    }
+  }
+
+  @media (max-width: 640px){
+    .ck-card{
+      padding: 16px 14px 14px;
+    }
+    .ck-actions{
+      flex-direction: column-reverse;
+      align-items: stretch;
+    }
+    .ck-btn{
+      width:100%;
+      text-align:center;
+    }
   }
 </style>
 
@@ -107,16 +289,26 @@
     const BANNER_ID = 'cookie-banner';
     const KEY = 'kervalConsent'; // ← clave usada en todo el sitio
     const banner = document.getElementById(BANNER_ID);
+    if (!banner) return;
+
     const qs = s => banner.querySelector(s);
     let openerBtn = null; // para devolver foco si lo abrió un botón/enlace
 
     /** Lee/guarda consentimiento */
     const getConsent = () => {
-      try{ return JSON.parse(localStorage.getItem(KEY)) || null; } catch { return null; }
+      try {
+        return JSON.parse(localStorage.getItem(KEY)) || null;
+      } catch {
+        return null;
+      }
     };
+
     const saveConsent = (consent) => {
       localStorage.setItem(KEY, JSON.stringify(consent));
+
+      // Notificar al resto de la web (p.ej. BaseLayout → Google Consent Mode)
       window.dispatchEvent(new CustomEvent('kerval:consent', { detail: consent }));
+
       enableDeferredScripts(consent);
     };
 
@@ -124,15 +316,20 @@
     function enableDeferredScripts(consent){
       const enableFor = (cat) => {
         if (!consent[cat]) return;
-        document.querySelectorAll(`script[type="text/plain"][data-consent="${cat}"]`).forEach((node)=>{
-          const s = document.createElement('script');
-          [...node.attributes].forEach(a=>{
-            if(a.name !== 'type' && a.name !== 'data-consent'){ s.setAttribute(a.name, a.value); }
+        document
+          .querySelectorAll(`script[type="text/plain"][data-consent="${cat}"]`)
+          .forEach((node) => {
+            const s = document.createElement('script');
+            [...node.attributes].forEach(a => {
+              if (a.name !== 'type' && a.name !== 'data-consent') {
+                s.setAttribute(a.name, a.value);
+              }
+            });
+            if (node.textContent) s.textContent = node.textContent;
+            node.replaceWith(s);
           });
-          if (node.textContent) s.textContent = node.textContent;
-          node.replaceWith(s);
-        });
       };
+
       enableFor('analytics');
       enableFor('marketing');
     }
@@ -145,35 +342,42 @@
     );
 
     /** UI helpers */
-    const setCheckedFromConsent = (c)=>{
+    const setCheckedFromConsent = (c) => {
       const a = qs('#ck-analytics'); if (a) a.checked = !!c.analytics;
       const m = qs('#ck-marketing'); if (m) m.checked = !!c.marketing;
     };
+
     const readFromUI = () => ({
       necessary: true,
       analytics: !!qs('#ck-analytics')?.checked,
       marketing: !!qs('#ck-marketing')?.checked,
       ts: Date.now()
     });
+
     const show = (returnFocusTo) => {
       openerBtn = returnFocusTo || null;
-      banner.hidden = false; banner.style.display = 'grid';
+      banner.hidden = false;
+      banner.style.display = 'grid';
       // foco al botón primario para accesibilidad
       const primary = banner.querySelector('.ck-primary');
       primary?.focus?.();
       // cerrar con ESC
       document.addEventListener('keydown', onKeyDown);
     };
+
     const hide = () => {
-      banner.hidden = true; banner.style.display = 'none';
+      banner.hidden = true;
+      banner.style.display = 'none';
       document.removeEventListener('keydown', onKeyDown);
       openerBtn?.focus?.();
       openerBtn = null;
     };
+
     const onKeyDown = (e) => {
       if (e.key === 'Escape') {
         const c = readFromUI(); // guardar lo marcado al cerrar con ESC
-        saveConsent(c); hide();
+        saveConsent(c);
+        hide();
       }
     };
 
@@ -181,55 +385,84 @@
     const existing = getConsent();
 
     if (dntOn() && !existing){
-      const onlyNecessary = { necessary:true, analytics:false, marketing:false, ts:Date.now(), dnt:true };
+      const onlyNecessary = {
+        necessary: true,
+        analytics: false,
+        marketing: false,
+        ts: Date.now(),
+        dnt: true
+      };
       saveConsent(onlyNecessary);
       hide();
     } else if (existing){
       setCheckedFromConsent(existing);
-      saveConsent(existing); // por si hay nuevos scripts que habilitar
+      // por si en una nueva visita hay scripts que deban activarse
+      saveConsent(existing);
       hide();
     } else {
       show();
     }
 
     /** Acciones del banner */
-    banner.addEventListener('click', (e)=>{
+    banner.addEventListener('click', (e) => {
       const action = e.target?.dataset?.action;
-      if(!action) return;
+      if (!action) return;
 
       if (action === 'accept'){
-        const c = { necessary:true, analytics:true, marketing:true, ts:Date.now() };
-        saveConsent(c); hide();
+        const c = {
+          necessary: true,
+          analytics: true,
+          marketing: true,
+          ts: Date.now()
+        };
+        saveConsent(c);
+        hide();
       }
+
       if (action === 'reject'){
-        const c = { necessary:true, analytics:false, marketing:false, ts:Date.now() };
+        const c = {
+          necessary: true,
+          analytics: false,
+          marketing: false,
+          ts: Date.now()
+        };
         setCheckedFromConsent(c);
-        saveConsent(c); hide();
+        saveConsent(c);
+        hide();
       }
+
       if (action === 'save'){
         const c = readFromUI();
-        saveConsent(c); hide();
+        saveConsent(c);
+        hide();
       }
+
       if (action === 'close'){
         // Cerrar actúa como "guardar" con lo marcado
         const c = readFromUI();
-        saveConsent(c); hide();
+        saveConsent(c);
+        hide();
       }
     });
 
     // Reaplicar si algo externo cambia el localStorage (otra pestaña)
-    window.addEventListener('storage', (ev)=>{
+    window.addEventListener('storage', (ev) => {
       if (ev.key === KEY){
         try {
           const c = JSON.parse(ev.newValue);
-          if (c){ setCheckedFromConsent(c); enableDeferredScripts(c); }
+          if (c){
+            setCheckedFromConsent(c);
+            enableDeferredScripts(c);
+          }
         } catch {}
       }
     });
 
     /** API pública para reabrir / resetear desde el sitio (footer, header, etc.) */
     window.kervalCookies = {
-      open(el){ show(el || document.activeElement); },
+      open(el){
+        show(el || document.activeElement);
+      },
       reset(el){
         localStorage.removeItem(KEY);
         setCheckedFromConsent({ analytics:false, marketing:false });
