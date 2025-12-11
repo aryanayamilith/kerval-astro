@@ -84,13 +84,28 @@ const {
 
     <!-- Estilos globales -->
     <link rel="stylesheet" href="/src/styles/global.css" />
-    <!-- Google Analytics -->
+    <!-- Google tag (gtag.js) + Consent Mode v2 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JDRJ17NR1K"></script>
 <script is:inline>
+  // @ts-nocheck
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
+
+  // 1) Consentimiento por defecto (nadie ha elegido aún)
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied'
+  });
+
+  // 2) Inicializar Google Analytics
   gtag('js', new Date());
-  gtag('config', 'G-JDRJ17NR1K');
+
+  // 3) Configurar la propiedad GA4 (con IP anonimizada)
+  gtag('config', 'G-JDRJ17NR1K', {
+    'anonymize_ip': true
+  });
 </script>
 
   </head>
