@@ -2,4 +2,4 @@ Contact: mailto:info@kerval.es
 Policy: https://www.kerval.es/aviso-legal
 Preferred-Languages: es, en
 Expires: 2026-01-01T00:00:00Z
-Canonical: https://www.kerval.es/security.txt
+Canonical: https://www.kerval.es/.well-known/security.txt
