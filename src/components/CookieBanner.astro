@@ -52,7 +52,14 @@
             No se pueden desactivar.
           </span>
         </div>
-        <input type="checkbox" checked disabled />
+        <input
+          id="ck-necessary"
+          name="cookies_necessary"
+          type="checkbox"
+          checked
+          disabled
+          autocomplete="off"
+        />
       </label>
 
       <label class="ck-row">
@@ -63,7 +70,13 @@
             y a mejorar contenidos y navegación.
           </span>
         </div>
-        <input id="ck-analytics" type="checkbox" data-cat="analytics" />
+        <input
+          id="ck-analytics"
+          name="cookies_analytics"
+          type="checkbox"
+          data-cat="analytics"
+          autocomplete="off"
+        />
       </label>
 
       <label class="ck-row">
@@ -74,7 +87,13 @@
             Actualmente su uso es limitado en kerval.es.
           </span>
         </div>
-        <input id="ck-marketing" type="checkbox" data-cat="marketing" />
+        <input
+          id="ck-marketing"
+          name="cookies_marketing"
+          type="checkbox"
+          data-cat="marketing"
+          autocomplete="off"
+        />
       </label>
     </div>
 
@@ -471,3 +490,4 @@
     };
   })();
 </script>
+
