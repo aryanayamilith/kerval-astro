@@ -1,26 +1,24 @@
 backend:
   name: git-gateway
-  branch: main  # o la rama principal de tu repo
+  branch: main
 
-media_folder: "public/images/blog"   # dónde se suben las imágenes en el repo
-public_folder: "/images/blog"        # cómo se referencian en la web
-
-locale: "es"
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
 
 collections:
   - name: "blog"
-    label: "Blog"
-    label_singular: "Artículo"
+    label: "Blog - Artículos"
     folder: "src/content/blog"
     create: true
-    slug: "{{slug}}"  # nombre del archivo .md
+    slug: "{{slug}}"
     extension: "md"
     format: "frontmatter"
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Categoría", name: "category", widget: "select", options: ["Noticias", "Tendencias", "M&A", "Opinión"], default: "Noticias" }
-      - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Categoría", name: "category", widget: "select", options: ["Noticias", "Tendencias", "M&A", "Opinión"] }
+      - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
       - { label: "Autor", name: "author", widget: "string", default: "Kerval Advisory Partners" }
-      - { label: "Imagen", name: "image", widget: "image", required: false, allow_multiple: false }
-      - { label: "Descripción (excerpt)", name: "description", widget: "text", required: false }
+      - { label: "Imagen (hero)", name: "image", widget: "image", required: false }
+      - { label: "Descripción (excerpt)", name: "description", widget: "text" }
       - { label: "Contenido", name: "body", widget: "markdown" }
+
