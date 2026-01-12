@@ -1,13 +1,13 @@
 # URLs del sitio (correcto mantenerlas)
 site_url: https://kerval.es
 display_url: https://kerval.es
-
 backend:
   name: github
   repo: aryanayamilith/kerval-astro
   branch: main
   base_url: https://kerval.es
-  auth_endpoint: /.netlify/functions/auth
+  auth_endpoint: /api/auth
+
 
 # (Opcional, NO lo actives ahora)
 # publish_mode: editorial_workflow
