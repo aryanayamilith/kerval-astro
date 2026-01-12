@@ -1,12 +1,15 @@
-# URL del sitio (ayuda a que los links del CMS apunten al dominio correcto)
+# URLs del sitio (correcto mantenerlas)
 site_url: https://kerval.es
 display_url: https://kerval.es
 
 backend:
-  name: git-gateway
+  name: github
+  repo: aryanayamilith/kerval-astro
   branch: main
+  base_url: https://kerval.es
+  auth_endpoint: /.netlify/functions/auth
 
-# (Opcional pero recomendado) si alguna vez cambias a rama editorial workflow
+# (Opcional, NO lo actives ahora)
 # publish_mode: editorial_workflow
 
 media_folder: "public/images/uploads"
@@ -28,3 +31,4 @@ collections:
       - { label: "Imagen (hero)", name: "image", widget: "image", required: false }
       - { label: "Descripción (excerpt)", name: "description", widget: "text" }
       - { label: "Contenido", name: "body", widget: "markdown" }
+
