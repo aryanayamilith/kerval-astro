@@ -5,9 +5,8 @@ backend:
   name: github
   repo: aryanayamilith/kerval-astro
   branch: main
-  base_url: https://kerval.es
-  auth_endpoint: /api/auth
-
+  base_url: https://kerval-cms-oauth.vercel.app
+  auth_endpoint: /auth
 
 # (Opcional, NO lo actives ahora)
 # publish_mode: editorial_workflow
