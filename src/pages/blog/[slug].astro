@@ -29,7 +29,13 @@ const related = allPosts
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article class="post-detalle">
     {post.data.image && (
-      <img src={post.data.image} alt={post.data.title} class="imagen-principal" />
+      <img 
+        src={post.data.image} 
+        alt={post.data.title} 
+        class="imagen-principal"
+        loading="eager"
+        decoding="async"
+      />
     )}
 
     {post.data.category && (
