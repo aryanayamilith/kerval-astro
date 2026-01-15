@@ -1,6 +1,3 @@
-# URLs del sitio (correcto mantenerlas)
-site_url: https://kerval.es
-display_url: https://kerval.es
 backend:
   name: github
   repo: aryanayamilith/kerval-astro
@@ -8,27 +5,27 @@ backend:
   base_url: https://kerval-cms-oauth.vercel.app
   auth_endpoint: auth
 
-
-# (Opcional, NO lo actives ahora)
-# publish_mode: editorial_workflow
-
+# Configuración de medios adaptada a tu carpeta "uploads"
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
   - name: "blog"
     label: "Blog - Artículos"
-    folder: "src/content/blog"
+    folder: "src/content/blog" # Donde Astro lee los archivos .md
     create: true
     slug: "{{slug}}"
     extension: "md"
     format: "frontmatter"
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Categoría", name: "category", widget: "select", options: ["Noticias", "Tendencias", "M&A", "Opinión"] }
-      - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
-      - { label: "Autor", name: "author", widget: "string", default: "Kerval Advisory Partners" }
-      - { label: "Imagen (hero)", name: "image", widget: "image", required: false }
-      - { label: "Descripción (excerpt)", name: "description", widget: "text" }
-      - { label: "Contenido", name: "body", widget: "markdown" }
+      - label: "Categoría"
+        name: "category"
+        widget: "select"
+        options: ["Noticias", "Tendencias", "M&A", "Opinión"]
+      - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Autor", name: "author", widget: "string", default: "Kerval Advisory Partners", required: false }
+      - { label: "Imagen Principal", name: "image", widget: "image", required: false }
+      - { label: "Descripción Corta", name: "description", widget: "text", required: false }
+      - { label: "Cuerpo del Artículo", name: "body", widget: "markdown" }
 
