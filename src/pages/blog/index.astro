@@ -7,23 +7,21 @@ const posts: CollectionEntry<"blog">[] = await getCollection("blog");
 const CATS_ORDER = ["Todos", "Noticias", "Tendencias", "M&A", "Opinión"];
 const categorias = CATS_ORDER;
 
+// 🟢 MEJORA: Ordenación numérica por fecha (más reciente primero)
 const sorted = posts
   .filter((p: CollectionEntry<"blog">) => p.data?.title)
-  .sort((a, b) => (b.data.date || "").localeCompare(a.data.date || ""));
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <BaseLayout
   title="Noticias sobre Asesoramiento Financiero | Kerval Advisory Partners"
   description="Tendencias, análisis y casos de éxito en asesoramiento financiero y M&A en España. Blog oficial de Kerval Advisory Partners."
 >
-  <!-- Banner usando estilos globales (.banner + .banner--blog) -->
   <section class="banner banner--blog">
     <h1>Blog & Noticias</h1>
     <p>Insights estratégicos en Finanzas & Negocios</p>
-    <!-- Antes aquí estaba el botón 'Ver artículos', lo quitamos -->
   </section>
 
-  <!-- Filtros -->
   <section
     style="display:flex; justify-content:space-between; align-items:center; padding: 2rem; gap:1rem; flex-wrap:wrap;"
   >
@@ -60,7 +58,6 @@ const sorted = posts
     </div>
   </section>
 
-  <!-- Grid -->
   <section id="posts">
     {sorted.map(({ slug, data }) => (
       <article class="post-card" data-cat={data.category}>
@@ -71,7 +68,17 @@ const sorted = posts
             <a href={`/blog/${slug}/`}>{data.title}</a>
           </h3>
           {data.description && <p class="desc">{data.description}</p>}
-          {data.date && <p class="date">{data.date}</p>}
+          
+          {/* 🟢 MEJORA: Formateo de fecha para humanos (DD/MM/YYYY) */}
+          {data.date && (
+            <p class="date">
+              {data.date.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+              })}
+            </p>
+          )}
         </div>
       </article>
     ))}
@@ -224,8 +231,7 @@ const sorted = posts
   </style>
 
   <script>
-    // @ts-nocheck  ⬅️ Desactiva los PROBLEMS de TypeScript solo en este script
-
+    // @ts-nocheck
     const chips = document.querySelectorAll(".chip");
     const cards = document.querySelectorAll(".post-card");
     const search = document.getElementById("search");
@@ -245,8 +251,7 @@ const sorted = posts
     }
 
     function applyFilters() {
-      const q =
-        search && search.value ? search.value.toLowerCase() : "";
+      const q = search && search.value ? search.value.toLowerCase() : "";
       let count = 0;
 
       cards.forEach((card) => {
@@ -275,18 +280,12 @@ const sorted = posts
         const cat = c.getAttribute("data-cat") || "";
         const text = (c.textContent || "").toLowerCase();
         const matchCat = activeCat === "Todos" || cat === activeCat;
-
-        const matchText =
-          !search || !search.value
-            ? true
-            : text.includes(search.value.toLowerCase());
-
+        const matchText = !search || !search.value ? true : text.includes(search.value.toLowerCase());
         return matchCat && matchText;
       }).length;
 
       if (showMoreBtn) {
-        showMoreBtn.style.display =
-          totalVisible < totalFiltered ? "inline-block" : "none";
+        showMoreBtn.style.display = totalVisible < totalFiltered ? "inline-block" : "none";
       }
     }
 
@@ -315,9 +314,7 @@ const sorted = posts
     }
 
     const defaultChip = document.querySelector('.chip[data-cat="Todos"]');
-    if (defaultChip) {
-      defaultChip.classList.add("active");
-    }
+    if (defaultChip) defaultChip.classList.add("active");
 
     applyFilters();
   </script>
