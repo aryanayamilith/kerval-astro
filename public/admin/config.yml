@@ -19,13 +19,22 @@ collections:
     format: "frontmatter"
     fields:
       - { label: "Título", name: "title", widget: "string" }
+
       - label: "Categoría"
         name: "category"
         widget: "select"
         options: ["Noticias", "Tendencias", "M&A", "Opinión"]
+
       - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
       - { label: "Autor", name: "author", widget: "string", default: "Kerval Advisory Partners", required: false }
       - { label: "Imagen Principal", name: "image", widget: "image", required: false }
       - { label: "Descripción Corta", name: "description", widget: "text", required: false }
+
+      # ✅ Campos SEO (opcionales, no rompen artículos existentes)
+      - { label: "Título SEO (opcional)", name: "seoTitle", widget: "string", required: false }
+      - { label: "Meta Description (SEO, opcional)", name: "metaDescription", widget: "text", required: false }
+      - { label: "Canonical (opcional)", name: "canonical", widget: "string", required: false }
+      - { label: "No index (no aparecer en Google)", name: "noindex", widget: "boolean", required: false, default: false }
+
       - { label: "Cuerpo del Artículo", name: "body", widget: "markdown" }
 

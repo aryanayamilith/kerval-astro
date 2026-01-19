@@ -7,8 +7,23 @@ import "../styles/global.css";
 const {
   title = "Asesoramiento Financiero en España | Kerval Advisory Partners",
   description = "Boutique de asesoramiento financiero en España especializada en M&A, financiación y estrategia corporativa.",
-  ogImage = "/images/og-default.jpg"
+  ogImage = "/images/og-default.jpg",
+
+  // ✅ Nuevos (opcionales, no rompen nada)
+  canonical,
+  noindex = false,
+  ogType = "website",
 } = Astro.props;
+
+// ✅ Canonical: si no te lo pasan, se queda como antes
+const canonicalUrl = canonical ?? Astro.url.href;
+
+// ✅ OG Image absoluta (mejor para LinkedIn/WhatsApp)
+const origin = Astro.url.origin;
+const ogImageAbs =
+  typeof ogImage === "string" && ogImage.startsWith("http")
+    ? ogImage
+    : `${origin}${typeof ogImage === "string" && ogImage.startsWith("/") ? "" : "/"}${ogImage}`;
 ---
 
 <!doctype html>
@@ -25,21 +40,27 @@ const {
       content="asesoramiento financiero en España, M&A, corporate finance, valoración de empresas, boutique financiera, fusiones y adquisiciones, estrategia corporativa"
     />
     <meta name="author" content="Kerval Advisory Partners" />
-    <link rel="canonical" href={Astro.url.href} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- ✅ Robots (para noindex cuando haga falta) -->
+    <meta
+      name="robots"
+      content={noindex ? "noindex, nofollow" : "index, follow"}
+    />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content={ogImageAbs} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="Kerval Advisory Partners" />
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageAbs} />
 
     <!-- Favicon y manifest -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -83,29 +104,31 @@ const {
     />
 
     <!-- Google tag (gtag.js) + Consent Mode v2 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JDRJ17NR1K"></script>
-<script is:inline>
-  // @ts-nocheck
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JDRJ17NR1K"></script>
+    <script is:inline>
+      // @ts-nocheck
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
 
-  // 1) Consentimiento por defecto (nadie ha elegido aún)
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied',c
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied'
-  });
+      // 1) Consentimiento por defecto (nadie ha elegido aún)
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });
 
-  // 2) Inicializar Google Analytics
-  gtag('js', new Date());
+      // 2) Inicializar Google Analytics
+      gtag('js', new Date());
 
-  // 3) Configurar la propiedad GA4 (con IP anonimizada)
-  gtag('config', 'G-JDRJ17NR1K', {
-    'anonymize_ip': true
-  });
-</script>
+      // 3) Configurar la propiedad GA4 (con IP anonimizada)
+      gtag('config', 'G-JDRJ17NR1K', {
+        'anonymize_ip': true
+      });
+    </script>
 
+    <!-- ✅ Extra head tags opcionales (por si una página necesita algo especial) -->
+    <slot name="head" />
   </head>
 
   <body>
