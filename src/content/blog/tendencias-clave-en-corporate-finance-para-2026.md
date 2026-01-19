@@ -10,8 +10,8 @@ description: >
 seoTitle: "Corporate Finance 2026: tendencias clave para CFOs y directivos | Kerval"
 metaDescription: |
   Corporate Finance 2026: tendencias clave para CFOs y directivos | Kerval
-canonical: https://kerval.es/blog/tendencias-corporate-finance-2026/
-noindex: false
+canonical: ""
+noindex: true
 ---
 **Introducción**
 
