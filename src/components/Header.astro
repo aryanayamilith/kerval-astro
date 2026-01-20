@@ -243,7 +243,7 @@
   .kap-nav__link, .kap-nav__toggle {
     color: #C00000;
     background: none;
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 700;
     padding: 0;
     border: none;
@@ -280,6 +280,14 @@
     display: none;
     min-width: 220px;
     z-index: 2000;
+
+    /* ✅ FIX: reset de estilos mobile para que en desktop NO quede invisible */
+    max-height: none;
+    overflow: visible;
+    opacity: 1;
+    transform: none;
+    transition: none;
+    margin-top: 0;
   }
 
   /* ✅ Mantener abierto por hover y accesible con teclado */
