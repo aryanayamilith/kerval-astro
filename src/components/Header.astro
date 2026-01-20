@@ -258,6 +258,16 @@
 
   .kap-has-dropdown { position: relative; }
 
+  /* ✅ PUENTE INVISIBLE anti "gap" (evita que se cierre al bajar el mouse) */
+  .kap-has-dropdown::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 12px;
+  }
+
   .kap-dropdown {
     position: absolute;
     top: 100%;
@@ -272,7 +282,9 @@
     z-index: 2000;
   }
 
-  .kap-has-dropdown:hover > .kap-dropdown { display: block; }
+  /* ✅ Mantener abierto por hover y accesible con teclado */
+  .kap-has-dropdown:hover > .kap-dropdown,
+  .kap-has-dropdown:focus-within > .kap-dropdown { display: block; }
 
   .kap-arrow { display: none; }
 }
@@ -295,7 +307,6 @@
   }
 }
 </style>
-
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -324,7 +335,11 @@ document.addEventListener("DOMContentLoaded", () => {
   dropdowns.forEach((item) => {
     const toggle = item.querySelector(".kap-nav__toggle");
     if (!toggle) return;
+
     toggle.addEventListener("click", (e) => {
+      // ✅ Solo mobile/tablet (en desktop manda hover)
+      if (window.matchMedia("(min-width: 1024px)").matches) return;
+
       e.stopPropagation();
       const isOpen = item.classList.contains("open");
       dropdowns.forEach((i) => i.classList.remove("open"));
