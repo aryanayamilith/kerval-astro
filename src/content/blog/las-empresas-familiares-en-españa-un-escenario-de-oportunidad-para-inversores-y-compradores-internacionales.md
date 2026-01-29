@@ -19,7 +19,7 @@ Las empresas familiares en España se han consolidado como el núcleo del tejido
 
 En los últimos años, muchas compañías familiares han alcanzado una fase crítica en su ciclo de vida. La combinación de madurez empresarial, necesidad de evolución y desafíos asociados a la sucesión abre un abanico de posibilidades tanto para la profesionalización interna como para la entrada de nuevos socios o la desinversión parcial.
 
-En este contexto, el informe ["Relevancia y supervivencia de la Empresa Familiar: la Empresa Familiar en España en 2025"](https://www.iefamiliar.com/publicaciones/relevancia-y-superviviencia-de-la-empresa-familiar-la-empresa-familiar-en-espana-en-2025/) del Instituto de la Empresa Familiar (IEF) ofrece una visión clara de la magnitud del fenómeno: el 92,4% de las empresas españolas son familiares, responsables de cerca del 70% del empleo privado y del 57% del Valor Añadido Bruto. Además, las empresas familiares presentan mayores tasas de supervivencia y rentabilidad que las no familiares, lo que confirma su fortaleza estructural y su capacidad para generar valor en el largo plazo.
+En este contexto, el informe **["Relevancia y supervivencia de la Empresa Familiar: la Empresa Familiar en España en 2025"](https://www.iefamiliar.com/publicaciones/relevancia-y-superviviencia-de-la-empresa-familiar-la-empresa-familiar-en-espana-en-2025/)** del Instituto de la Empresa Familiar (IEF) ofrece una visión clara de la magnitud del fenómeno: el 92,4% de las empresas españolas son familiares, responsables de cerca del 70% del empleo privado y del 57% del Valor Añadido Bruto. Además, las empresas familiares presentan mayores tasas de supervivencia y rentabilidad que las no familiares, lo que confirma su fortaleza estructural y su capacidad para generar valor en el largo plazo.
 
 ## Un perfil empresarial sólido, con necesidades de transformación
 
@@ -53,7 +53,7 @@ El creciente interés del capital extranjero por la empresa familiar en España 
 
 Desde Kerval Advisory Partners acompañamos a familias propietarias, inversores y compradores estratégicos en todo el ciclo de decisiones relacionado con la empresa familiar. Nuestro enfoque combina rigor financiero, visión estratégica y comprensión del componente emocional y patrimonial característico de este tipo de organizaciones.
 
-Nuestros [servicios](https://kerval.es/servicios) incluyen:
+Nuestros **[servicios](https://kerval.es/servicios)** incluyen:
 
 * Valoración de empresa y estrategia corporativa.
 * Planificación sucesoria y reorganización accionarial.
@@ -61,6 +61,7 @@ Nuestros [servicios](https://kerval.es/servicios) incluyen:
 * Estructuración de financiación con deuda y capital para afrontar crisis.
 * Soluciones de externalización de funciones clave (Management Office).
 * Incorporación temporal de ejecutivos expertos (Interim Management).
+* Un futuro lleno de oportunidades.
 
 ## Un futuro lleno de oportunidades
 
