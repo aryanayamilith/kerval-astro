@@ -61,7 +61,6 @@ Nuestros **[servicios](https://kerval.es/servicios)** incluyen:
 * Estructuración de financiación con deuda y capital para afrontar crisis.
 * Soluciones de externalización de funciones clave (Management Office).
 * Incorporación temporal de ejecutivos expertos (Interim Management).
-* Un futuro lleno de oportunidades.
 
 ## Un futuro lleno de oportunidades
 
