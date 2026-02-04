@@ -5,6 +5,11 @@ category: Tendencias
 date: 2026-01-29
 author: Kerval Advisory Partners
 image: /images/uploads/diseño-sin-título.jpg
+description: "Las empresas familiares en España viven un momento clave marcado
+  por la sucesión, la necesidad de profesionalización y un creciente interés de
+  inversores internacionales. Su peso económico, resiliencia y potencial de
+  crecimiento las convierten en un objetivo estratégico para operaciones de M&A.
+  "
 seoTitle: "Empresas familiares en España: Oportunidades clave para inversores y
   compradores internacionales"
 metaDescription: Las empresas familiares en España viven un momento clave.
