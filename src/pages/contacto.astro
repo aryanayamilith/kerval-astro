@@ -45,9 +45,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <input type="text"   name="subject" placeholder="Asunto" />
           <textarea name="message" placeholder="Mensaje" rows="5" required></textarea>
 
+          <!-- Campos de trazabilidad / consentimiento -->
+          <input type="hidden" name="form_source" value="contact_page_kerval" />
+          <input type="hidden" name="privacy_policy_version" value="2026-03" />
+
           <!-- Checkboxes con enlaces legales -->
           <label class="check">
-            <input type="checkbox" required />
+            <input
+              type="checkbox"
+              name="privacyAccepted"
+              value="yes"
+              required
+            />
             He leído y acepto la
             <a href="/privacidad" target="_blank" rel="noopener noreferrer">
               Política de Privacidad
@@ -55,9 +64,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           </label>
 
           <label class="check">
-            <input type="checkbox" required />
-           Acepto el tratamiento de datos para enviar comunicaciones comerciales.
-            </a>
+            <input
+              type="checkbox"
+              name="marketingConsent"
+              value="yes"
+            />
+            Acepto el tratamiento de datos para recibir comunicaciones comerciales.
           </label>
 
           <!-- Botón enviar -->
@@ -84,7 +96,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       font-weight: bold;
       font-size: 3rem;
       margin-bottom: 2rem;
-      margin-top: 1rem; /* menos espacio en desktop */
+      margin-top: 1rem;
       text-align: left;
     }
 
@@ -92,7 +104,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       .titulo-contacto {
         text-align: center;
         font-size: 2.4rem;
-        margin-top: 0.5rem; /* aún más reducido en mobile */
+        margin-top: 0.5rem;
       }
     }
 
@@ -146,6 +158,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       gap: 0.5rem;
       color: #fff;
       flex-wrap: wrap;
+      line-height: 1.5;
+    }
+
+    .check input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      accent-color: #c00000;
+      flex: 0 0 auto;
     }
 
     .check a {
@@ -232,6 +252,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         e.preventDefault();
 
         const formData = new FormData(form);
+
         try {
           const res = await fetch(endpoint, {
             method: "POST",
