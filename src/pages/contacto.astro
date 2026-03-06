@@ -60,7 +60,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             He leído y acepto la
             <a href="/privacidad" target="_blank" rel="noopener noreferrer">
               Política de Privacidad
-            </a>
+            </a>.
           </label>
 
           <label class="check">
@@ -71,6 +71,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             />
             Acepto el tratamiento de datos para recibir comunicaciones comerciales.
           </label>
+
+          <!-- Texto RGPD -->
+          <p class="rgpd">
+            <strong>Protección de datos personales.</strong>
+            Utilizaremos sus datos para responder consultas, enviar comunicaciones comerciales y realizar análisis estadísticos.
+            Para más información sobre el tratamiento y sus derechos, consulte la
+            <a href="/privacidad" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
+          </p>
 
           <!-- Botón enviar -->
           <button type="submit">Enviar</button>
@@ -159,6 +167,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       color: #fff;
       flex-wrap: wrap;
       line-height: 1.5;
+      .rgpd {
+  font-size: 0.85rem;
+  color: #ffffff;
+  line-height: 1.4;
+  margin-top: 0.5rem;
+}
+
+.rgpd a {
+  color: #ffffff;
+  text-decoration: underline;
+}
     }
 
     .check input[type="checkbox"] {
